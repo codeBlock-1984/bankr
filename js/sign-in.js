@@ -22,7 +22,7 @@ signinButton.addEventListener('click', (e) => {
     messageBox.innerHTML = 'Email or password incorrect!';
     return false;
   }
-  messageBox.innerHTML = 'Logging user in...';
+  messageBox.innerHTML = `Logging user in as ${email}...`;
   setTimeout(login(email), 10000);
   
 });
