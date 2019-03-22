@@ -492,6 +492,8 @@ body {
   font-size: 12px;
   margin-left: 10px;
 }
+
+/* accounts */
 .acc-box {
   height: 550px;
 }
@@ -546,6 +548,8 @@ body {
   width: 400px;
   height: 520px;
 }
+
+/* transactions */
 .detail-table {
   width: 90%;
   margin-left: 10px;
@@ -553,7 +557,7 @@ body {
   border-collapse: collapse;
 }
 .detail-table__row {
-
+  margin-left: 20px;
 }
 .detail-table__row:nth-child(even) {
   background: #ebebeb;
@@ -566,8 +570,35 @@ body {
   padding: 12px 12px;
   text-align: left;
   color: #ffffff;
-  background: #08415c90;
+  background: #08415c40;
 }
 .detail-table__cell {
   font-size: 15px;
+}
+
+/* admin dashboard */
+.action-box {
+  padding: 0;
+}
+.action-detail {
+  padding-left: 20px; 
+}
+.action-title {
+  width: 100%;
+  height: 50px;
+  margin: 0;
+  padding-top: 20px;
+  color: #ffffff;
+  background: #08415c40;
+}
+.action-category {
+  color: #7c7c7c;
+}
+.user-box {
+  padding-top: 0;
+  padding-left: 0;
+  border: none;
+}
+.user-detail {
+  margin: 20px;
 }
