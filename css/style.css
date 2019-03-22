@@ -65,11 +65,24 @@ body {
 .m-sec-bg {
   background: #d54f5a;
 }
+.m-white-bg {
+  background: #ffffff;
+}
 .m-pri-color {
   color: #08415c;
 }
 .m-sec-color {
   color: #d54f5a;
+}
+.l-w-max {
+  width: 100%;
+}
+.l-h-max {
+  height: 100%;
+}
+.l-1000-600 {
+  width: 1000px;
+  height: 600px;
 }
 .l-500-500 {
   width: 500px;
@@ -86,6 +99,10 @@ body {
 .l-500-200 {
   width: 500px;
   height: 200px;
+}
+.l-400-500 {
+  width: 400px;
+  height: 500px;
 }
 .l-400-400 {
   width: 400px;
@@ -184,9 +201,13 @@ body {
   color: #8f2020;
 }
 .reg-form {
-  width: 400px;
-  height: 400px;
   padding: 20px 50px;
+}
+.reg-form__fieldset {
+  margin: 0 20px;
+  padding: 20px 45px;
+  background: #ffffff;
+  border: solid #ebebeb 1px;
 }
 .reg-form__label {
   font-size: 12px;
@@ -370,7 +391,8 @@ body {
 /* Header */
 .page-main {
   width: 100%;
-  height: calc(100% - 60px);
+  min-height: calc(100% - 60px);
+  overflow-y: scroll;
 }
 .box-wrapper {
   width: 100%;
@@ -469,4 +491,58 @@ body {
 .account-balance-desc {
   font-size: 12px;
   margin-left: 10px;
+}
+.acc-box {
+  height: 550px;
+}
+.big-wrapper {
+  position: relative;
+  height: 100%;
+  margin-bottom: 50px;
+  padding-top: 50px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.create-new-link {
+  position: absolute;
+  right: 30px;
+  top: 20px;
+  width: 100px;
+  height: 30px;
+  padding-top: 5px;
+  text-decoration: none;
+  color: #ffffff;
+  background: #08415c;
+  text-align: center;
+  border-radius: 5px;
+}
+.create-new-link:hover {
+  background: #d54f5a;
+}
+.big-box {
+  width: 90%;
+  height: 200px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  border: none;
+}
+.big-box:first-of-type {
+  padding-bottom: 40px;
+  border-bottom: solid #ebebeb 1px;
+}
+.account-form-container {
+  min-height: 100%;
+}
+.account-form-wrapper {
+  height: 150px;
+}
+.account-form {
+  width: 1000px;
+  height: 620px;
+  margin-bottom: 50px;
+  padding-top: 50px;
+}
+.account-form__fieldset {
+  width: 400px;
+  height: 520px;
 }
