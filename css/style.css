@@ -307,7 +307,7 @@ body {
 }
 .bot-list i {
   color: #7c7c7c;
-  margin-right: 5px;
+  margin-right: 1px;
   margin-left: 10px;
 }
 .main-nav__li-item {
@@ -622,6 +622,56 @@ body {
   color: #08415c60;
   cursor: pointer;
 }
+.view-link {
+  text-decoration: none;
+}
 .action-icon:hover {
   color: #d54f5a;
+}
+.single-account-box {
+  width: 90%;
+  height: 500px;
+  padding: 50px;
+  background: #ffffff;
+}
+.single-account-table {
+  width: 400px;
+}
+.single-account-row {
+  background: none;
+  border-bottom: solid #ffffff 1px;;
+}
+.single-account-row:nth-child(even) {
+  background: none;
+}
+.single-detail {
+  width: 200px;
+  margin: 5px;
+  font-size: 14px;
+  color: #7c7c7c;
+  background: none;
+}
+.single-detail__value {
+  margin-left: 10px;
+  font-size: 14px;
+}
+.account-image-box {
+  width: 200px;
+  height: 270px;
+  padding: 20px 25px;
+  background: #ffffff;
+  border: solid #ebebeb 1px;
+}
+.account-image {
+  width: 150px;
+  height: auto;
+}
+.account-signature-box {
+  width: 100%;
+  height: 100px;
+  margin-top: 20px;
+}
+.account-signature-title {
+  font-size: 14px;
+  font-weight: 600;
 }
