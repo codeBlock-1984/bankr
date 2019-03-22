@@ -307,6 +307,8 @@ body {
 }
 .bot-list i {
   color: #7c7c7c;
+  margin-right: 5px;
+  margin-left: 10px;
 }
 .main-nav__li-item {
   display: block;
@@ -573,6 +575,7 @@ body {
   background: #08415c40;
 }
 .detail-table__cell {
+  padding-left: 20px; 
   font-size: 15px;
 }
 
@@ -601,4 +604,24 @@ body {
 }
 .user-detail {
   margin: 20px;
+  font-size: 14px;
+}
+/* all-accounts */
+.action-head {
+  width: 65px;
+  padding-right: 0;
+}
+.action-cell {
+  padding-right: 0;
+  padding-left: 0;
+}
+.action-icon {
+  float: left;
+  margin-right: 15px;
+  font-size: 13px;
+  color: #08415c60;
+  cursor: pointer;
+}
+.action-icon:hover {
+  color: #d54f5a;
 }
