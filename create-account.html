@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Bankr</title>
+  <meta name="author" content="Emmanuel Ihemegbulam">
+  <meta name="description" content="Secure online banking application. Easy to use, efficient, fast.">
+  <meta name="keywords" content="online banking, banking application">
+
+  <!-- favicon link -->
+  <link rel="shortcut icon" href="imgs/favicon.png" type="image/x-icon">
+  <!-- Google fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.0/css/all.css" integrity="sha384-Mmxa0mLqhmOeaE8vgOSbKacftZcsNYDjQzuCOm6D02luYSzBG8vpaOykv9lFQ51Y" crossorigin="anonymous">
+  <!-- Custom styles -->
+  <link rel="stylesheet" href="css/style.css">
+  </head>
+  <body>
+    <div class="page-wrapper page-wrapper--bg--plain l-flex l-flex-row">
+      <nav class="main-nav l-flex l-flex-col">
+        <header class="main-nav__header">
+          <h1 class="main-nav__heading h-40"><a class="home-link" href="index.html">Bankr</a></h1>
+        </header>
+        <ul class="main-nav__list top-list">
+          <li class="main-nav__li-item">
+            <a href="user-dashboard.html" class="main-nav__link">
+              <i class="fas fa-home main-nav__icon"></i>
+              <span class="main-nav__link-desc">Dashboard</span>
+            </a>
+          </li>  
+          <li class="main-nav__li-item active">
+            <a href="accounts.html" class="main-nav__link">
+              <i class="fas fa-wallet main-nav__icon"></i>
+              <span class="main-nav__link-desc">Accounts</span>
+            </a>
+          </li>  
+          <li class="main-nav__li-item">
+            <a href="transactions.html" class="main-nav__link">
+              <i class="fas fa-exchange-alt main-nav__icon"></i>
+              <span class="main-nav__link-desc">Transactions</span>
+            </a>
+          </li>  
+        </ul>
+  
+        <footer class="page-footer page-footer--big">
+            <ul class="main-nav__list bot-list">
+                <li class="main-nav__li-item">
+                  <a href="" class="main-nav__link">
+                    <i class="fas fa-cog main-nav__icon"></i>
+                    <span class="main-nav__link-desc">Settings</span>
+                  </a>
+                </li>  
+                <li class="main-nav__li-item">
+                  <a href="sign-in.html" class="main-nav__link">
+                    <i class="fas fa-sign-out-alt main-nav__icon"></i>
+                    <span class="main-nav__link-desc">Logout</span>
+                  </a>
+                </li>  
+              </ul>
+          <p class="page-footer__text">Copyright &copy; Bankr 2019</p>
+        </footer> 
+      </nav>
+
+      <section class="main-section l-flex l-flex-col">
+        <header class="main-header l-flex l-flex-row">
+          <div class="search">
+            <form action="" class="search__form">
+              <input type="text" class="search__input" placeholder="type to search...">
+              <button type="submit" class="search__button">
+                <i class="fas fa-search search__icon"></i>
+              </button>
+            </form>
+          </div>
+          <div class="profile">
+            <p class="profile__title">Aisha Amaka Wole</p>
+            <img src="http://i.pravatar.cc/50?img=44" alt="user image" class="avatar">
+          </div>
+        </header>
+        <main class="page-main l-flex l-flex-col">
+          <section class="box-wrapper account-form-container l-flex l-flex-col">
+            <h2 class="section-heading">Create New Account</h2>
+            <div class="account-form-wrapper l-flex l-flex-row">
+              <form class="reg-form l-flex l-flex-row m-white-bg account-form" action="" method="">
+                <fieldset class="reg-form__fieldset account-form__fieldset">
+                    <label class="reg-form__label" for="title">Title</label><br>
+                    <select class="reg-form__input" name="title" id="title">
+                      <option value="select">Select</option>
+                      <option value="Mr.">Mr.</option>
+                      <option value="Mrs.">Mrs.</option>
+                      <option value="Ms.">Ms.</option>
+                      <option value="Dr.">Dr.</option>
+                      <option value="Prof.">Prof.</option>
+                    </select class="reg-form__input"> <br>
+                    <label class="reg-form__label" for="fname">First name</label><br>
+                    <input class="reg-form__input" type="text" name="fname" id="fname"><br>
+                    <label class="reg-form__label" for="lname">Last name</label><br>
+                    <input class="reg-form__input" type="text" name="lname" id="lname"><br>
+                    <label class="reg-form__label" for="gender">Gender</label><br>
+                    <select class="reg-form__input" name="gender" id="gender">
+                      <option value="select">Select</option>
+                      <option value="male">Male</option>
+                      <option value="female">Female</option>
+                    </select><br>
+                    <label class="reg-form__label" for="dob">Date of birth</label><br>
+                    <input class="reg-form__input" type="text" name="dob" id="dob"><br>
+                    <label class="reg-form__label" for="nationality">Nationality</label><br>
+                    <select class="reg-form__input" name="nationality" id="nationality">
+                      <option value="select">Select</option>
+                      <option value="nigerian">Nigerian</option>
+                      <option value="foreigner">Foreigner</option>
+                    </select><br>
+                    <label class="reg-form__label" for="pob">Place of birth</label><br>
+                    <input class="reg-form__input" type="text" name="pob" id="pob"><br>
+                    <label class="reg-form__label" for="maiden">Mother's maiden name</label><br>
+                    <input class="reg-form__input" type="text" name="maiden" id="maiden"><br>
+    
+                </fieldset>
+                <fieldset class="reg-form__fieldset account-form__fieldset">
+                    <label class="reg-form__label" for="address">Address</label><br>
+                    <input class="reg-form__input" type="text" name="address" id="address"><br>
+                    <label class="reg-form__label" for="city">City</label><br>
+                    <input class="reg-form__input" type="text" name="city" id="city"><br>
+                    <label class="reg-form__label" for="state">State</label><br>
+                    <input class="reg-form__input" type="text" name="state" id="state"><br>
+                    
+                    <label class="reg-form__label" for="email">Email address</label><br>
+                    <input class="reg-form__input" type="email" name="email" id="email"><br>
+                    <label class="reg-form__label" for="phone">Phone number</label><br>
+                    <input class="reg-form__input" type="text" name="phone" id="phone"><br>
+    
+                    <label class="reg-form__label" for="type">Account type</label><br>
+                    <select class="reg-form__input" name="type" id="type">
+                      <option value="select">Select</option>
+                      <option value="silver premium">Silver Premium</option>
+                      <option value="checking">Checking</option>
+                      <option value="savings">Savings</option>
+                      <option value="current">Current</option>
+                    </select> <br>
+                    <label class="reg-form__label" for="branch">Domicile branch</label><br>
+                    <input class="reg-form__input" type="text" name="branch" id="branch"><br>
+                    <input type="checkbox" name="agree" id="agree"><label for="agree" class="reg-form__label">&nbsp;&nbsp;&nbsp;&nbsp; I agree to the terms & conditions</label><br>
+                    <input class="reg-form__button" type="button" value="Create account" id="create-account-button"><br>
+                </fieldset>
+                
+              </form>
+            </div>
+          </section>
+        </main>
+      </section>
+    </div>
+    
+    
+  </body>
+</html>
