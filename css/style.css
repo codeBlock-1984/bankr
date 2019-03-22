@@ -546,3 +546,28 @@ body {
   width: 400px;
   height: 520px;
 }
+.detail-table {
+  width: 90%;
+  margin-left: 10px;
+  background: #ffffff;
+  border-collapse: collapse;
+}
+.detail-table__row {
+
+}
+.detail-table__row:nth-child(even) {
+  background: #ebebeb;
+}
+.detail-table__head, .detail-table__cell {
+  padding: 8px;
+  border-bottom: solid #ebebeb 1px;
+}
+.detail-table__head {
+  padding: 12px 12px;
+  text-align: left;
+  color: #ffffff;
+  background: #08415c90;
+}
+.detail-table__cell {
+  font-size: 15px;
+}
