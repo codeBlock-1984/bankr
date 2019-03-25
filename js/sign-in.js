@@ -2,7 +2,6 @@ const signinButton = document.getElementById('signin-button');
 const messageBox = document.getElementById('message-box');
 
 signinButton.addEventListener('click', (e) => {
-  debugger;
   e.preventDefault();
   messageBox.innerHTML = '';
   const inputEmail = document.getElementById('email').value;

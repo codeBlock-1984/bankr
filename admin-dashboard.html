@@ -32,7 +32,7 @@
             </a>
           </li>  
           <li class="main-nav__li-item">
-            <a href="all-accounts.html" class="main-nav__link">
+            <a href="accounts-admin.html" class="main-nav__link">
               <i class="fas fa-wallet main-nav__icon"></i>
               <span class="main-nav__link-desc">Accounts</span>
             </a>
@@ -74,35 +74,77 @@
               </button>
             </form>
           </div>
+          <div class="mobile-nav-icon-box">
+            <a href="javascript:void(0)" id="mobile-menu-link" class="mobile-nav-icon-link">
+              <i class="fas fa-bars mobile-nav-icon"></i>
+            </a>
+          </div>
+          <div class="mobile-heading">
+            <h1 class="mobile-heading__text">Dashboard</h1>
+          </div>
           <div class="profile">
             <p class="profile__title">Anthony Cyril Umar</p>
             <img src="http://i.pravatar.cc/50?img=56" alt="user image" class="avatar">
           </div>
         </header>
+        <div id="mobile-menu" class="mobile-nav">
+          <ul class="mobile-nav__list">
+            <li class="mobile-nav__li-item">
+              <a href="admin-dashboard.html" class="mobile-nav__link">
+                <i class="fas fa-home mobile-nav__icon"></i>
+                <span class="mobile-nav__link-desc">Dashboard</span>
+              </a>
+            </li>  
+            <li class="mobile-nav__li-item">
+              <a href="accounts-admin.html" class="mobile-nav__link">
+                <i class="fas fa-wallet mobile-nav__icon"></i>
+                <span class="mobile-nav__link-desc">Accounts</span>
+              </a>
+            </li>  
+            <li class="mobile-nav__li-item">
+              <a href="users.html" class="mobile-nav__link">
+                <i class="fas fa-exchange-alt mobile-nav__icon"></i>
+                <span class="mobile-nav__link-desc">Users</span>
+              </a>
+            </li>
+            <li class="mobile-nav__li-item settings">
+              <a href="" class="mobile-nav__link">
+                <i class="fas fa-cog mobile-nav__icon"></i>
+                <span class="mobile-nav__link-desc">Settings</span>
+              </a>
+            </li>  
+            <li class="mobile-nav__li-item">
+              <a href="sign-in.html" class="mobile-nav__link">
+                <i class="fas fa-sign-out-alt mobile-nav__icon"></i>
+                <span class="mobile-nav__link-desc">Logout</span>
+              </a>
+            </li>   
+          </ul>
+        </div>
         <main class="page-main l-flex l-flex-col">
           <section class="box-wrapper top-box l-flex">
             <h2 class="section-heading">Recent Actions</h2>
             <div class="box l-flex l-flex-row">
               <div class="single-box action-box">
-                <p class="trans-detail action-detail trans-title action-title">Deleted User Account</p>
+                <p class="trans-detail action-detail trans-title action-title">Deleted User</p>
                 <p class="trans-detail action-detail trans-date-time">23 Mar 2019 &nbsp;&nbsp;12:06</p>
                 <p class="trans-detail action-detail trans-vendor">Emeka Jubril Ade</p>
                 <p class="trans-detail action-detail action-category">Category : Users</p>
               </div>
               <div class="single-box action-box">
-                <p class="trans-detail action-detail trans-title action-title">Activated User Account</p>
+                <p class="trans-detail action-detail trans-title action-title">Activated User</p>
                 <p class="trans-detail action-detail trans-date-time">22 Mar 2019 &nbsp;&nbsp;15:33</p>
                 <p class="trans-detail action-detail trans-vendor">Tosin Adedayo</p>
                 <p class="trans-detail action-detail action-category">Category : Users</p>
               </div>
               <div class="single-box action-box">
-                <p class="trans-detail action-detail trans-title action-title">Created User Account</p>
+                <p class="trans-detail action-detail trans-title action-title">Created User</p>
                 <p class="trans-detail action-detail trans-date-time">20 Mar 2019 &nbsp;&nbsp;09:27</p>
                 <p class="trans-detail action-detail trans-vendor">Tosin Adedayo</p>
                 <p class="trans-detail action-detail action-category">Category : Users</p>
               </div>
               <div class="single-box action-box">
-                <p class="trans-detail action-detail trans-title action-title">Deleted Bank Account</p>
+                <p class="trans-detail action-detail trans-title action-title">Deleted Account</p>
                 <p class="trans-detail action-detail trans-date-time">16 Mar 2019 &nbsp;&nbsp;07:49</p>
                 <p class="trans-detail action-detail trans-vendor">Asmau Ibrahim</p>
                 <p class="trans-detail action-detail action-category">Category : Accounts</p>
@@ -122,6 +164,9 @@
             </div>
           </section>
         </main>
+        <footer class="page-footer page-footer--big main-footer">
+          <p class="page-footer__text nav-footer__text">Copyright &copy; Bankr 2019</p>
+        </footer>
       </section>
     </div>
     

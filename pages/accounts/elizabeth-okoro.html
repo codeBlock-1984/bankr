@@ -32,7 +32,7 @@
             </a>
           </li>  
           <li class="main-nav__li-item active">
-            <a href="../../all-accounts.html" class="main-nav__link">
+            <a href="../../accounts-admin.html" class="main-nav__link">
               <i class="fas fa-wallet main-nav__icon"></i>
               <span class="main-nav__link-desc">Accounts</span>
             </a>
@@ -54,7 +54,7 @@
                   </a>
                 </li>  
                 <li class="main-nav__li-item">
-                  <a href="sign-in.html" class="main-nav__link">
+                  <a href="../../sign-in.html" class="main-nav__link">
                     <i class="fas fa-sign-out-alt main-nav__icon"></i>
                     <span class="main-nav__link-desc">Logout</span>
                   </a>
@@ -74,53 +74,97 @@
               </button>
             </form>
           </div>
+          <div class="mobile-nav-icon-box">
+            <a href="javascript:void(0)" id="mobile-menu-link" class="mobile-nav-icon-link">
+              <i class="fas fa-bars mobile-nav-icon"></i>
+            </a>
+          </div>
+          <div class="mobile-heading">
+            <h1 class="mobile-heading__text">Accounts</h1>
+          </div>
           <div class="profile">
             <p class="profile__title">Anthony Cyril Umar</p>
             <img src="http://i.pravatar.cc/50?img=56" alt="user image" class="avatar">
           </div>
         </header>
+        <div id="mobile-menu" class="mobile-nav">
+          <ul class="mobile-nav__list">
+            <li class="mobile-nav__li-item">
+              <a href="../../admin-dashboard.html" class="mobile-nav__link">
+                <i class="fas fa-home mobile-nav__icon"></i>
+                <span class="mobile-nav__link-desc">Dashboard</span>
+              </a>
+            </li>  
+            <li class="mobile-nav__li-item">
+              <a href="../../accounts-admin.html" class="mobile-nav__link">
+                <i class="fas fa-wallet mobile-nav__icon"></i>
+                <span class="mobile-nav__link-desc">Accounts</span>
+              </a>
+            </li>  
+            <li class="mobile-nav__li-item">
+              <a href="../../users.html" class="mobile-nav__link">
+                <i class="fas fa-exchange-alt mobile-nav__icon"></i>
+                <span class="mobile-nav__link-desc">Users</span>
+              </a>
+            </li>
+            <li class="mobile-nav__li-item settings">
+              <a href="" class="mobile-nav__link">
+                <i class="fas fa-cog mobile-nav__icon"></i>
+                <span class="mobile-nav__link-desc">Settings</span>
+              </a>
+            </li>  
+            <li class="mobile-nav__li-item">
+              <a href="../../sign-in.html" class="mobile-nav__link">
+                <i class="fas fa-sign-out-alt mobile-nav__icon"></i>
+                <span class="mobile-nav__link-desc">Logout</span>
+              </a>
+            </li>   
+          </ul>
+        </div>
         <main class="page-main l-flex l-flex-col">
             <section class="box-wrapper account-form-container l-flex l-flex-col">
                 <h2 class="section-heading">Customer Account</h2>
                 <div class="single-account-box l-flex l-flex-col">
-                  <table class="detail-table single-account-table">
-                    <tr class="detail-table__row single-account-row">  
-                      <th class="detail-table__head single-detail">Account name :</th>
-                      <td class="detail-table__cell single-detail__value">Elizabeth Okoro</td>
-                    </tr>
-                    <tr class="detail-table__row single-account-row">
-                      <th class="detail-table__head single-detail">Account type :</th>
-                      <td class="detail-table__cell single-detail__value">Savings</td>
-                    </tr>
-                    <tr class="detail-table__row single-account-row">
-                      <th class="detail-table__head single-detail">Account number :</th>
-                      <td class="detail-table__cell single-detail__value">0012394757</td>
-                    </tr>
-                    <tr class="detail-table__row single-account-row">
-                      <th class="detail-table__head single-detail">Card type :</th>
-                      <td class="detail-table__cell single-detail__value">Visa-Debit card</td>
-                    </tr>
-                    <tr class="detail-table__row single-account-row">
-                      <th class="detail-table__head single-detail">Current balance :</th>
-                      <td class="detail-table__cell single-detail__value">8500.00 &nbsp;NGN</td>
-                    </tr>
-                    <tr class="detail-table__row single-account-row">
-                      <th class="detail-tab le__head single-detail">Available balance :</th>
-                      <td class="detail-table__cell single-detail__value">8500.00 &nbsp;NGN</td>
-                    </tr>
-                    <tr class="detail-table__row single-account-row">
-                      <th class="detail-table__head single-detail">Created :</th>
-                      <td class="detail-table__cell single-detail__value">12-03-2019</td>
-                    </tr>
-                    <tr class="detail-table__row single-account-row">
-                      <th class="detail-table__head single-detail">Activated :</th>
-                      <td class="detail-table__cell single-detail__value">13-03-2019</td>
-                    </tr>
-                    <tr class="detail-table__row single-account-row">
-                      <th class="detail-table__head single-detail">Status :</th>
-                      <td class="detail-table__cell single-detail__value">Active</td>
-                    </tr>
-                  </table>
+                  <div class="single-account-table-wrapper">
+                    <table class="detail-table single-account-table">
+                      <tr class="detail-table__row single-account-row">  
+                        <th class="detail-table__head single-detail">Account name :</th>
+                        <td class="detail-table__cell single-detail__value">Elizabeth Okoro</td>
+                      </tr>
+                      <tr class="detail-table__row single-account-row">
+                        <th class="detail-table__head single-detail">Account type :</th>
+                        <td class="detail-table__cell single-detail__value">Savings</td>
+                      </tr>
+                      <tr class="detail-table__row single-account-row">
+                        <th class="detail-table__head single-detail">Account number :</th>
+                        <td class="detail-table__cell single-detail__value">0012394757</td>
+                      </tr>
+                      <tr class="detail-table__row single-account-row">
+                        <th class="detail-table__head single-detail">Card type :</th>
+                        <td class="detail-table__cell single-detail__value">Visa-Debit card</td>
+                      </tr>
+                      <tr class="detail-table__row single-account-row">
+                        <th class="detail-table__head single-detail">Current balance :</th>
+                        <td class="detail-table__cell single-detail__value">8500.00 &nbsp;NGN</td>
+                      </tr>
+                      <tr class="detail-table__row single-account-row">
+                        <th class="detail-table__head single-detail">Available balance :</th>
+                        <td class="detail-table__cell single-detail__value">8500.00 &nbsp;NGN</td>
+                      </tr>
+                      <tr class="detail-table__row single-account-row">
+                        <th class="detail-table__head single-detail">Created :</th>
+                        <td class="detail-table__cell single-detail__value">12-03-2019</td>
+                      </tr>
+                      <tr class="detail-table__row single-account-row">
+                        <th class="detail-table__head single-detail">Activated :</th>
+                        <td class="detail-table__cell single-detail__value">13-03-2019</td>
+                      </tr>
+                      <tr class="detail-table__row single-account-row">
+                        <th class="detail-table__head single-detail">Status :</th>
+                        <td class="detail-table__cell single-detail__value">Active</td>
+                      </tr>
+                    </table>
+                  </div>
                   <div class="account-image-box">
                     <img class="account-image" src="http://i.pravatar.cc/150?img=16" alt="Elizabeth Okoro">
                     <div class="account-signature-box">
@@ -131,9 +175,12 @@
                 </div>
               </section>
         </main>
+        <footer class="page-footer page-footer--big main-footer">
+          <p class="page-footer__text nav-footer__text">Copyright &copy; Bankr 2019</p>
+        </footer>
       </section>
     </div>
     
-    <script src="js/script.js"></script>
+    <script src="../../js/script.js"></script>
   </body>
 </html>

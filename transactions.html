@@ -74,95 +74,140 @@
               </button>
             </form>
           </div>
+          <div class="mobile-nav-icon-box">
+            <a href="javascript:void(0)" id="mobile-menu-link" class="mobile-nav-icon-link">
+              <i class="fas fa-bars mobile-nav-icon"></i>
+            </a>
+          </div>
+          <div class="mobile-heading">
+            <h1 class="mobile-heading__text">Transactions</h1>
+          </div>
           <div class="profile">
             <p class="profile__title">Aisha Amaka Wole</p>
             <img src="http://i.pravatar.cc/50?img=44" alt="user image" class="avatar">
           </div>
         </header>
+        <div id="mobile-menu" class="mobile-nav">
+          <ul class="mobile-nav__list">
+            <li class="mobile-nav__li-item">
+              <a href="user-dashboard.html" class="mobile-nav__link">
+                <i class="fas fa-home mobile-nav__icon"></i>
+                <span class="mobile-nav__link-desc">Dashboard</span>
+              </a>
+            </li>  
+            <li class="mobile-nav__li-item">
+              <a href="accounts.html" class="mobile-nav__link">
+                <i class="fas fa-wallet mobile-nav__icon"></i>
+                <span class="mobile-nav__link-desc">Accounts</span>
+              </a>
+            </li>  
+            <li class="mobile-nav__li-item">
+              <a href="transactions.html" class="mobile-nav__link">
+                <i class="fas fa-exchange-alt mobile-nav__icon"></i>
+                <span class="mobile-nav__link-desc">Transactions</span>
+              </a>
+            </li>
+            <li class="mobile-nav__li-item settings">
+              <a href="" class="mobile-nav__link">
+                <i class="fas fa-cog mobile-nav__icon"></i>
+                <span class="mobile-nav__link-desc">Settings</span>
+              </a>
+            </li>  
+            <li class="mobile-nav__li-item">
+              <a href="sign-in.html" class="mobile-nav__link">
+                <i class="fas fa-sign-out-alt mobile-nav__icon"></i>
+                <span class="mobile-nav__link-desc">Logout</span>
+              </a>
+            </li>     
+          </ul>
+        </div>
         <main class="page-main l-flex l-flex-col">
           <section class="box-wrapper account-form-container l-flex l-flex-col">
             <h2 class="section-heading">My Transactions</h2>
             <div class="account-form-wrapper l-flex l-flex-row">
               <table class="detail-table">
                 <tr class="detail-table__row">
-                  <th class="detail-table__head">Date</th>
-                  <th class="detail-table__head">Description</th>
-                  <th class="detail-table__head">Merchant</th>
-                  <th class="detail-table__head">Credit</th>
-                  <th class="detail-table__head">Debit</th>
-                  <th class="detail-table__head">Balance</th>
+                  <th class="detail-table__head trans-tb-date-head">Date</th>
+                  <th class="detail-table__head trans-tb-desc-head">Description</th>
+                  <th class="detail-table__head trans-tb-merchant-head">Merchant</th>
+                  <th class="detail-table__head trans-tb-credit-head">Credit</th>
+                  <th class="detail-table__head trans-tb-debit-head">Debit</th>
+                  <th class="detail-table__head trans-tb-balance-head">Balance</th>
                 </tr>
                 <tr class="detail-table__row">
-                  <td class="detail-table__cell">22-03-2019</td>
-                  <td class="detail-table__cell">February Electricity Bill</td>
-                  <td class="detail-table__cell">Ikeja Electric Plc.</td>
-                  <td class="detail-table__cell"></td>
-                  <td class="detail-table__cell">8500.00</td>
-                  <td class="detail-table__cell">408,874.00</td>
+                  <td class="detail-table__cell trans-tb-date">22-03-2019</td>
+                  <td class="detail-table__cell trans-tb-desc">February Electricity Bill</td>
+                  <td class="detail-table__cell trans-tb-merchant">Ikeja Electric Plc.</td>
+                  <td class="detail-table__cell trans-tb-credit"></td>
+                  <td class="detail-table__cell trans-tb-debit">8500.00</td>
+                  <td class="detail-table__cell trans-tb-balance">408,874.00</td>
                 </tr>
                 <tr class="detail-table__row">
-                  <td class="detail-table__cell">19-03-2019</td>
-                  <td class="detail-table__cell">Purchase</td>
-                  <td class="detail-table__cell">Fast Forward Stores, Ikeja</td>
-                  <td class="detail-table__cell"></td>
-                  <td class="detail-table__cell">23,490.00</td>
-                  <td class="detail-table__cell">408,874.00</td>
+                  <td class="detail-table__cell trans-tb-date">19-03-2019</td>
+                  <td class="detail-table__cell trans-tb-desc">Purchase</td>
+                  <td class="detail-table__cell trans-tb-merchant">Fast Forward Stores, Ikeja</td>
+                  <td class="detail-table__cell trans-tb-credit"></td>
+                  <td class="detail-table__cell trans-tb-debit">23,490.00</td>
+                  <td class="detail-table__cell trans-tb-balance">408,874.00</td>
                 </tr>
                 <tr class="detail-table__row">
-                  <td class="detail-table__cell">18-03-2019</td>
-                  <td class="detail-table__cell">Bank Withdrawal</td>
-                  <td class="detail-table__cell">Premium Bank Plc.</td>
-                  <td class="detail-table__cell"></td>
-                  <td class="detail-table__cell">45,000.00</td>
-                  <td class="detail-table__cell">408,874.00</td>
+                  <td class="detail-table__cell trans-tb-date">18-03-2019</td>
+                  <td class="detail-table__cell trans-tb-desc">Bank Withdrawal</td>
+                  <td class="detail-table__cell trans-tb-merchant">Premium Bank Plc.</td>
+                  <td class="detail-table__cell trans-tb-credit"></td>
+                  <td class="detail-table__cell trans-tb-debit">45,000.00</td>
+                  <td class="detail-table__cell trans-tb-balance">408,874.00</td>
                 </tr>
                 <tr class="detail-table__row">
-                  <td class="detail-table__cell">10-03-2019</td>
-                  <td class="detail-table__cell">Online Payment</td>
-                  <td class="detail-table__cell">Amazon Stores</td>
-                  <td class="detail-table__cell"></td>
-                  <td class="detail-table__cell">18,640.00</td>
-                  <td class="detail-table__cell">408,874.00</td>
+                  <td class="detail-table__cell trans-tb-date">10-03-2019</td>
+                  <td class="detail-table__cell trans-tb-desc">Online Payment</td>
+                  <td class="detail-table__cell trans-tb-merchant">Amazon Stores</td>
+                  <td class="detail-table__cell trans-tb-credit"></td>
+                  <td class="detail-table__cell trans-tb-debit">18,640.00</td>
+                  <td class="detail-table__cell trans-tb-balance">408,874.00</td>
                 </tr>
                 <tr class="detail-table__row">
-                  <td class="detail-table__cell">10-03-2019</td>
-                  <td class="detail-table__cell">Cash deposit</td>
-                  <td class="detail-table__cell">Harry Igbokwe</td>
-                  <td class="detail-table__cell">12,000.00</td>
-                  <td class="detail-table__cell"></td>
-                  <td class="detail-table__cell">408,874.00</td>
+                  <td class="detail-table__cell trans-tb-date">10-03-2019</td>
+                  <td class="detail-table__cell trans-tb-desc">Cash deposit</td>
+                  <td class="detail-table__cell trans-tb-merchant">Harry Igbokwe</td>
+                  <td class="detail-table__cell trans-tb-credit">12,000.00</td>
+                  <td class="detail-table__cell trans-tb-debit"></td>
+                  <td class="detail-table__cell trans-tb-balance">408,874.00</td>
                 </tr>
                 <tr class="detail-table__row">
-                  <td class="detail-table__cell">09-03-2019</td>
-                  <td class="detail-table__cell">POS payment</td>
-                  <td class="detail-table__cell">Oando Service Station</td>
-                  <td class="detail-table__cell"></td>
-                  <td class="detail-table__cell">5,600.00</td>
-                  <td class="detail-table__cell">408,874.00</td>
+                  <td class="detail-table__cell trans-tb-date">09-03-2019</td>
+                  <td class="detail-table__cell trans-tb-desc">POS payment</td>
+                  <td class="detail-table__cell trans-tb-merchant">Oando Service Station</td>
+                  <td class="detail-table__cell trans-tb-credit"></td>
+                  <td class="detail-table__cell trans-tb-debit">5,600.00</td>
+                  <td class="detail-table__cell trans-tb-balance">408,874.00</td>
                 </tr>
                 <tr class="detail-table__row">
-                  <td class="detail-table__cell">06-03-2019</td>
-                  <td class="detail-table__cell">Online Transfer</td>
-                  <td class="detail-table__cell">Aminat Mohammed</td>
-                  <td class="detail-table__cell"></td>
-                  <td class="detail-table__cell">1,000.00</td>
-                  <td class="detail-table__cell">408,874.00</td>
+                  <td class="detail-table__cell trans-tb-date">06-03-2019</td>
+                  <td class="detail-table__cell trans-tb-desc">Online Transfer</td>
+                  <td class="detail-table__cell trans-tb-merchant">Aminat Mohammed</td>
+                  <td class="detail-table__cell trans-tb-credit"></td>
+                  <td class="detail-table__cell trans-tb-debit">1,000.00</td>
+                  <td class="detail-table__cell trans-tb-balance">408,874.00</td>
                 </tr>
                 <tr class="detail-table__row">
-                  <td class="detail-table__cell">01-03-2019</td>
-                  <td class="detail-table__cell">February Salary</td>
-                  <td class="detail-table__cell">Anthony, Barbara & Co.</td>
-                  <td class="detail-table__cell">316,000.00</td>
-                  <td class="detail-table__cell"></td>
-                  <td class="detail-table__cell">408,874.00</td>
+                  <td class="detail-table__cell trans-tb-date">01-03-2019</td>
+                  <td class="detail-table__cell trans-tb-desc">February Salary</td>
+                  <td class="detail-table__cell trans-tb-merchant">Anthony, Barbara & Co.</td>
+                  <td class="detail-table__cell trans-tb-credit">316,000.00</td>
+                  <td class="detail-table__cell trans-tb-debit"></td>
+                  <td class="detail-table__cell trans-tb-balance">408,874.00</td>
                 </tr>
               </table>
             </div>
           </section>
         </main>
+        <footer class="page-footer page-footer--big main-footer">
+          <p class="page-footer__text nav-footer__text">Copyright &copy; Bankr 2019</p>
+        </footer>
       </section>
     </div>
     
-    
+    <script src="js/script.js"></script>
   </body>
 </html>

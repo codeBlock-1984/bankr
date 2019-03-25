@@ -74,74 +74,116 @@
               </button>
             </form>
           </div>
+          <div class="mobile-nav-icon-box">
+            <a href="javascript:void(0)" id="mobile-menu-link" class="mobile-nav-icon-link">
+              <i class="fas fa-bars mobile-nav-icon"></i>
+            </a>
+          </div>
+          <div class="mobile-heading">
+            <h1 class="mobile-heading__text">Create Account</h1>
+          </div>
           <div class="profile">
             <p class="profile__title">Aisha Amaka Wole</p>
             <img src="http://i.pravatar.cc/50?img=44" alt="user image" class="avatar">
           </div>
         </header>
+        <div id="mobile-menu" class="mobile-nav">
+          <ul class="mobile-nav__list">
+            <li class="mobile-nav__li-item">
+              <a href="user-dashboard.html" class="mobile-nav__link">
+                <i class="fas fa-home mobile-nav__icon"></i>
+                <span class="mobile-nav__link-desc">Dashboard</span>
+              </a>
+            </li>  
+            <li class="mobile-nav__li-item">
+              <a href="accounts.html" class="mobile-nav__link">
+                <i class="fas fa-wallet mobile-nav__icon"></i>
+                <span class="mobile-nav__link-desc">Accounts</span>
+              </a>
+            </li>  
+            <li class="mobile-nav__li-item">
+              <a href="transactions.html" class="mobile-nav__link">
+                <i class="fas fa-exchange-alt mobile-nav__icon"></i>
+                <span class="mobile-nav__link-desc">Transactions</span>
+              </a>
+            </li>
+            <li class="mobile-nav__li-item settings">
+              <a href="" class="mobile-nav__link">
+                <i class="fas fa-cog mobile-nav__icon"></i>
+                <span class="mobile-nav__link-desc">Settings</span>
+              </a>
+            </li>  
+            <li class="mobile-nav__li-item">
+              <a href="sign-in.html" class="mobile-nav__link">
+                <i class="fas fa-sign-out-alt mobile-nav__icon"></i>
+                <span class="mobile-nav__link-desc">Logout</span>
+              </a>
+            </li>     
+          </ul>
+        </div>
         <main class="page-main l-flex l-flex-col">
           <section class="box-wrapper account-form-container l-flex l-flex-col">
             <h2 class="section-heading">Create New Account</h2>
             <div class="account-form-wrapper l-flex l-flex-row">
               <form class="reg-form l-flex l-flex-row m-white-bg account-form" action="" method="">
                 <fieldset class="reg-form__fieldset account-form__fieldset">
-                    <label class="reg-form__label" for="title">Title</label><br>
-                    <select class="reg-form__input" name="title" id="title">
+                    <label class="reg-form__label create-acc-form__label" for="title">Title</label><br>
+                    <select class="reg-form__input create-acc-form__input" name="title" id="title">
                       <option value="select">Select</option>
                       <option value="Mr.">Mr.</option>
                       <option value="Mrs.">Mrs.</option>
                       <option value="Ms.">Ms.</option>
                       <option value="Dr.">Dr.</option>
                       <option value="Prof.">Prof.</option>
-                    </select class="reg-form__input"> <br>
-                    <label class="reg-form__label" for="fname">First name</label><br>
-                    <input class="reg-form__input" type="text" name="fname" id="fname"><br>
-                    <label class="reg-form__label" for="lname">Last name</label><br>
-                    <input class="reg-form__input" type="text" name="lname" id="lname"><br>
-                    <label class="reg-form__label" for="gender">Gender</label><br>
-                    <select class="reg-form__input" name="gender" id="gender">
+                    </select class="reg-form__input create-acc-form__input"> <br>
+                    <label class="reg-form__label create-acc-form__label" for="fname">First name</label><br>
+                    <input class="reg-form__input create-acc-form__input" type="text" name="fname" id="fname"><br>
+                    <label class="reg-form__label create-acc-form__label" for="lname">Last name</label><br>
+                    <input class="reg-form__input create-acc-form__input" type="text" name="lname" id="lname"><br>
+                    <label class="reg-form__label create-acc-form__label" for="gender">Gender</label><br>
+                    <select class="reg-form__input create-acc-form__input" name="gender" id="gender">
                       <option value="select">Select</option>
                       <option value="male">Male</option>
                       <option value="female">Female</option>
                     </select><br>
-                    <label class="reg-form__label" for="dob">Date of birth</label><br>
-                    <input class="reg-form__input" type="text" name="dob" id="dob"><br>
-                    <label class="reg-form__label" for="nationality">Nationality</label><br>
-                    <select class="reg-form__input" name="nationality" id="nationality">
+                    <label class="reg-form__label create-acc-form__label" for="dob">Date of birth</label><br>
+                    <input class="reg-form__input create-acc-form__input" type="text" name="dob" id="dob"><br>
+                    <label class="reg-form__label create-acc-form__label" for="nationality">Nationality</label><br>
+                    <select class="reg-form__input create-acc-form__input" name="nationality" id="nationality">
                       <option value="select">Select</option>
                       <option value="nigerian">Nigerian</option>
                       <option value="foreigner">Foreigner</option>
                     </select><br>
-                    <label class="reg-form__label" for="pob">Place of birth</label><br>
-                    <input class="reg-form__input" type="text" name="pob" id="pob"><br>
-                    <label class="reg-form__label" for="maiden">Mother's maiden name</label><br>
-                    <input class="reg-form__input" type="text" name="maiden" id="maiden"><br>
+                    <label class="reg-form__label create-acc-form__label" for="pob">Place of birth</label><br>
+                    <input class="reg-form__input create-acc-form__input" type="text" name="pob" id="pob"><br>
+                    <label class="reg-form__label create-acc-form__label" for="maiden">Mother's maiden name</label><br>
+                    <input class="reg-form__input create-acc-form__input" type="text" name="maiden" id="maiden"><br>
     
                 </fieldset>
                 <fieldset class="reg-form__fieldset account-form__fieldset">
-                    <label class="reg-form__label" for="address">Address</label><br>
-                    <input class="reg-form__input" type="text" name="address" id="address"><br>
-                    <label class="reg-form__label" for="city">City</label><br>
-                    <input class="reg-form__input" type="text" name="city" id="city"><br>
-                    <label class="reg-form__label" for="state">State</label><br>
-                    <input class="reg-form__input" type="text" name="state" id="state"><br>
+                    <label class="reg-form__label create-acc-form__label" for="address">Address</label><br>
+                    <input class="reg-form__input create-acc-form__input" type="text" name="address" id="address"><br>
+                    <label class="reg-form__label create-acc-form__label" for="city">City</label><br>
+                    <input class="reg-form__input create-acc-form__input" type="text" name="city" id="city"><br>
+                    <label class="reg-form__label create-acc-form__label" for="state">State</label><br>
+                    <input class="reg-form__input create-acc-form__input" type="text" name="state" id="state"><br>
                     
-                    <label class="reg-form__label" for="email">Email address</label><br>
-                    <input class="reg-form__input" type="email" name="email" id="email"><br>
-                    <label class="reg-form__label" for="phone">Phone number</label><br>
-                    <input class="reg-form__input" type="text" name="phone" id="phone"><br>
+                    <label class="reg-form__label create-acc-form__label" for="email">Email address</label><br>
+                    <input class="reg-form__input create-acc-form__input" type="email" name="email" id="email"><br>
+                    <label class="reg-form__label create-acc-form__label" for="phone">Phone number</label><br>
+                    <input class="reg-form__input create-acc-form__input" type="text" name="phone" id="phone"><br>
     
-                    <label class="reg-form__label" for="type">Account type</label><br>
-                    <select class="reg-form__input" name="type" id="type">
+                    <label class="reg-form__label create-acc-form__label" for="type">Account type</label><br>
+                    <select class="reg-form__input create-acc-form__input" name="type" id="type">
                       <option value="select">Select</option>
                       <option value="silver premium">Silver Premium</option>
                       <option value="checking">Checking</option>
                       <option value="savings">Savings</option>
                       <option value="current">Current</option>
                     </select> <br>
-                    <label class="reg-form__label" for="branch">Domicile branch</label><br>
-                    <input class="reg-form__input" type="text" name="branch" id="branch"><br>
-                    <input type="checkbox" name="agree" id="agree"><label for="agree" class="reg-form__label">&nbsp;&nbsp;&nbsp;&nbsp; I agree to the terms & conditions</label><br>
+                    <label class="reg-form__label create-acc-form__label" for="branch">Domicile branch</label><br>
+                    <input class="reg-form__input create-acc-form__input" type="text" name="branch" id="branch"><br>
+                    <input type="checkbox" name="agree" id="agree"><label for="agree" class="reg-form__label create-acc-form__label">&nbsp;&nbsp;&nbsp;&nbsp; I agree to the terms & conditions</label><br>
                     <input class="reg-form__button" type="button" value="Create account" id="create-account-button"><br>
                 </fieldset>
                 
@@ -149,9 +191,12 @@
             </div>
           </section>
         </main>
+        <footer class="page-footer page-footer--big main-footer">
+          <p class="page-footer__text nav-footer__text">Copyright &copy; Bankr 2019</p>
+        </footer>
       </section>
     </div>
     
-    
+    <script src="js/script.js"></script>
   </body>
 </html>

@@ -26,21 +26,21 @@
         </header>
         <ul class="main-nav__list top-list">
           <li class="main-nav__li-item">
-            <a href="admin-dashboard.html" class="main-nav__link">
+            <a href="staff-dashboard.html" class="main-nav__link">
               <i class="fas fa-home main-nav__icon"></i>
               <span class="main-nav__link-desc">Dashboard</span>
             </a>
           </li>  
           <li class="main-nav__li-item active">
-            <a href="all-accounts.html" class="main-nav__link">
+            <a href="accounts-staff.html" class="main-nav__link">
               <i class="fas fa-wallet main-nav__icon"></i>
               <span class="main-nav__link-desc">Accounts</span>
             </a>
           </li>  
           <li class="main-nav__li-item">
-            <a href="users.html" class="main-nav__link">
+            <a href="credit-debit.html" class="main-nav__link">
               <i class="fas fa-users main-nav__icon"></i>
-              <span class="main-nav__link-desc">Users</span>
+              <span class="main-nav__link-desc">Credit/Debit</span>
             </a>
           </li>  
         </ul>
@@ -74,11 +74,53 @@
               </button>
             </form>
           </div>
+          <div class="mobile-nav-icon-box">
+            <a href="javascript:void(0)" id="mobile-menu-link" class="mobile-nav-icon-link">
+              <i class="fas fa-bars mobile-nav-icon"></i>
+            </a>
+          </div>
+          <div class="mobile-heading">
+            <h1 class="mobile-heading__text">Accounts</h1>
+          </div>
           <div class="profile">
-            <p class="profile__title">Anthony Cyril Umar</p>
-            <img src="http://i.pravatar.cc/50?img=56" alt="user image" class="avatar">
+            <p class="profile__title">Cynthia Aderonke Ahmed</p>
+            <img src="http://i.pravatar.cc/50?img=1" alt="user image" class="avatar">
           </div>
         </header>
+        <div id="mobile-menu" class="mobile-nav">
+          <ul class="mobile-nav__list">
+            <li class="mobile-nav__li-item">
+              <a href="admin-dashboard.html" class="mobile-nav__link">
+                <i class="fas fa-home mobile-nav__icon"></i>
+                <span class="mobile-nav__link-desc">Dashboard</span>
+              </a>
+            </li>  
+            <li class="mobile-nav__li-item">
+              <a href="accounts-staff.html" class="mobile-nav__link">
+                <i class="fas fa-wallet mobile-nav__icon"></i>
+                <span class="mobile-nav__link-desc">Accounts</span>
+              </a>
+            </li>  
+            <li class="mobile-nav__li-item">
+              <a href="credit-debit.html" class="mobile-nav__link">
+                <i class="fas fa-exchange-alt mobile-nav__icon"></i>
+                <span class="mobile-nav__link-desc">Credit/Debit</span>
+              </a>
+            </li>
+            <li class="mobile-nav__li-item settings">
+              <a href="" class="mobile-nav__link">
+                <i class="fas fa-cog mobile-nav__icon"></i>
+                <span class="mobile-nav__link-desc">Settings</span>
+              </a>
+            </li>  
+            <li class="mobile-nav__li-item">
+              <a href="sign-in.html" class="mobile-nav__link">
+                <i class="fas fa-sign-out-alt mobile-nav__icon"></i>
+                <span class="mobile-nav__link-desc">Logout</span>
+              </a>
+            </li>     
+          </ul>
+        </div>
         <main class="page-main l-flex l-flex-col">
             <section class="box-wrapper account-form-container l-flex l-flex-col">
                 <h2 class="section-heading">All Accounts</h2>
@@ -239,6 +281,9 @@
                 </div>
               </section>
         </main>
+        <footer class="page-footer page-footer--big main-footer">
+          <p class="page-footer__text nav-footer__text">Copyright &copy; Bankr 2019</p>
+        </footer>
       </section>
     </div>
     
