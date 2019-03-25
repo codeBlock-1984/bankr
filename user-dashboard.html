@@ -19,9 +19,9 @@
   <link rel="stylesheet" href="css/style.css">
   </head>
   <body>
-    <div class="page-wrapper page-wrapper--bg--plain l-flex l-flex-row">
-      <nav class="main-nav l-flex l-flex-col">
-        <header class="main-nav__header">
+    <div class="page-wrapper page-wrapper--bg--plain main-wrapper">
+      <nav class="main-nav">
+        <header class="main-nav__header l-flex">
           <h1 class="main-nav__heading h-40"><a class="home-link" href="index.html">Bankr</a></h1>
         </header>
         <ul class="main-nav__list top-list">
@@ -45,7 +45,7 @@
           </li>  
         </ul>
   
-        <footer class="page-footer page-footer--big">
+        <footer class="page-footer page-footer--big nav-footer">
             <ul class="main-nav__list bot-list">
                 <li class="main-nav__li-item">
                   <a href="" class="main-nav__link">
@@ -60,11 +60,11 @@
                   </a>
                 </li>  
               </ul>
-          <p class="page-footer__text">Copyright &copy; Bankr 2019</p>
+          <p class="page-footer__text nav-footer__text">Copyright &copy; Bankr 2019</p>
         </footer> 
       </nav>
 
-      <section class="main-section l-flex l-flex-col">
+      <section class="main-section">
         <header class="main-header l-flex l-flex-row">
           <div class="search">
             <form action="" class="search__form">
@@ -74,15 +74,57 @@
               </button>
             </form>
           </div>
+          <div class="mobile-nav-icon-box">
+            <a href="javascript:void(0)" id="mobile-menu-link" class="mobile-nav-icon-link">
+              <i class="fas fa-bars mobile-nav-icon"></i>
+            </a>
+          </div>
+          <div class="mobile-heading">
+            <h1 class="mobile-heading__text">Dashboard</h1>
+          </div>
           <div class="profile">
             <p class="profile__title">Aisha Amaka Wole</p>
             <img src="http://i.pravatar.cc/50?img=44" alt="user image" class="avatar">
           </div>
         </header>
+        <div id="mobile-menu" class="mobile-nav">
+          <ul class="mobile-nav__list">
+            <li class="mobile-nav__li-item">
+              <a href="user-dashboard.html" class="mobile-nav__link">
+                <i class="fas fa-home mobile-nav__icon"></i>
+                <span class="mobile-nav__link-desc">Dashboard</span>
+              </a>
+            </li>  
+            <li class="mobile-nav__li-item">
+              <a href="accounts.html" class="mobile-nav__link">
+                <i class="fas fa-wallet mobile-nav__icon"></i>
+                <span class="mobile-nav__link-desc">Accounts</span>
+              </a>
+            </li>  
+            <li class="mobile-nav__li-item">
+              <a href="transactions.html" class="mobile-nav__link">
+                <i class="fas fa-exchange-alt mobile-nav__icon"></i>
+                <span class="mobile-nav__link-desc">Transactions</span>
+              </a>
+            </li>
+            <li class="mobile-nav__li-item settings">
+              <a href="" class="mobile-nav__link">
+                <i class="fas fa-cog mobile-nav__icon"></i>
+                <span class="mobile-nav__link-desc">Settings</span>
+              </a>
+            </li>  
+            <li class="mobile-nav__li-item">
+              <a href="sign-in.html" class="mobile-nav__link">
+                <i class="fas fa-sign-out-alt mobile-nav__icon"></i>
+                <span class="mobile-nav__link-desc">Logout</span>
+              </a>
+            </li>     
+          </ul>
+        </div>
         <main class="page-main l-flex l-flex-col">
-          <section class="box-wrapper top-box l-flex">
+          <section class="box-wrapper top-box l-flex l-flex-col">
             <h2 class="section-heading">Recent Transactions</h2>
-            <div class="box l-flex l-flex-row">
+            <div class="box .trans-box l-flex l-flex-row">
               <div class="single-box">
                 <p class="trans-detail trans-title">February Electricity bill</p>
                 <p class="trans-detail trans-date-time">22 Mar 2019 &nbsp;&nbsp;14:06</p>
@@ -109,7 +151,7 @@
               </div>
             </div>
           </section>
-          <section class="box-wrapper bot-box l-flex-col">
+          <section class="box-wrapper bot-box l-flex l-flex-col">
               <h2 class="section-heading">My Accounts</h2>
             <div class="account-wrapper l-flex l-flex-row">
               <div class="account-box">
@@ -129,7 +171,11 @@
             </div>
           </section>
         </main>
+        <footer class="page-footer page-footer--big main-footer">
+          <p class="page-footer__text nav-footer__text">Copyright &copy; Bankr 2019</p>
+        </footer>
       </section>
+
     </div>
     
     <script src="js/script.js"></script>

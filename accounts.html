@@ -74,11 +74,53 @@
               </button>
             </form>
           </div>
+          <div class="mobile-nav-icon-box">
+            <a href="javascript:void(0)" id="mobile-menu-link" class="mobile-nav-icon-link">
+              <i class="fas fa-bars mobile-nav-icon"></i>
+            </a>
+          </div>
+          <div class="mobile-heading">
+            <h1 class="mobile-heading__text">Accounts</h1>
+          </div>
           <div class="profile">
             <p class="profile__title">Aisha Amaka Wole</p>
             <img src="http://i.pravatar.cc/50?img=44" alt="user image" class="avatar">
           </div>
         </header>
+        <div id="mobile-menu" class="mobile-nav">
+          <ul class="mobile-nav__list">
+            <li class="mobile-nav__li-item">
+              <a href="user-dashboard.html" class="mobile-nav__link">
+                <i class="fas fa-home mobile-nav__icon"></i>
+                <span class="mobile-nav__link-desc">Dashboard</span>
+              </a>
+            </li>  
+            <li class="mobile-nav__li-item">
+              <a href="accounts.html" class="mobile-nav__link">
+                <i class="fas fa-wallet mobile-nav__icon"></i>
+                <span class="mobile-nav__link-desc">Accounts</span>
+              </a>
+            </li>  
+            <li class="mobile-nav__li-item">
+              <a href="transactions.html" class="mobile-nav__link">
+                <i class="fas fa-exchange-alt mobile-nav__icon"></i>
+                <span class="mobile-nav__link-desc">Transactions</span>
+              </a>
+            </li>
+            <li class="mobile-nav__li-item settings">
+              <a href="" class="mobile-nav__link">
+                <i class="fas fa-cog mobile-nav__icon"></i>
+                <span class="mobile-nav__link-desc">Settings</span>
+              </a>
+            </li>  
+            <li class="mobile-nav__li-item">
+              <a href="sign-in.html" class="mobile-nav__link">
+                <i class="fas fa-sign-out-alt mobile-nav__icon"></i>
+                <span class="mobile-nav__link-desc">Logout</span>
+              </a>
+            </li>     
+          </ul>
+        </div>
         <main class="page-main l-flex l-flex-col">
             <section class="box-wrapper acc-box l-flex-col">
                 <h2 class="section-heading">My Accounts</h2>
@@ -101,9 +143,12 @@
               </div>
             </section>
         </main>
+        <footer class="page-footer page-footer--big main-footer">
+          <p class="page-footer__text nav-footer__text">Copyright &copy; Bankr 2019</p>
+        </footer>
       </section>
     </div>
     
-    
+    <script src="js/script.js"></script>
   </body>
 </html>
