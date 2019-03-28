@@ -1,3 +1,4 @@
+// Mobile menu
 const mobileMenuLink = document.getElementById('mobile-menu-link');
 
 mobileMenuLink.addEventListener('click', showMobileMenu);
@@ -11,39 +12,87 @@ function showMobileMenu() {
     mobileMenu.style.height = '400px';
   }
 }
-// Brand modal
+
+// Modal globals
+let activeModal;
+const brandModalCloseBtns = document.querySelectorAll('.brand-modal-close');
+const cancelDeleteBtns = document.querySelectorAll('.modal-cancel-btn');
+brandModalCloseBtns.forEach((brandModalCloseBtn) => {
+  brandModalCloseBtn.addEventListener('click', closeModal);
+});
+cancelDeleteBtns.forEach((cancelDeleteBtn) => {
+  cancelDeleteBtn.addEventListener('click', closeModal);
+});
+window.addEventListener('click', function(event) {
+    if (event.target == activeModal) {
+      activeModal.style.display = "none";
+    }
+});
+function closeModal() {
+  const modal = activeModal;
+  modal.style.display = 'none';
+  activeModal = null;
+}
+
+
+// Delete confirmation modal
 const brandModal = document.getElementById('del-confirm-dialog');
 const delAccountBtns = document.querySelectorAll('.del-account-btn');
-const brandModalClose = document.getElementsByClassName('brand-modal-close')[0];
 const deleteAccountBtn = document.getElementsByClassName('delete-account-btn')[0];
-const cancelDeleteBtn = document.getElementsByClassName('cancel-delete-btn')[0];
 
 // Add eventlisteners
 delAccountBtns.forEach((delAccountBtn) => {
   delAccountBtn.addEventListener('click', displayModal);
 });
-brandModalClose.addEventListener('click', closeModal);
-window.addEventListener('click', function(event) {
-    if (event.target == brandModal) {
-      brandModal.style.display = "none";
-    }
-});
 deleteAccountBtn.addEventListener('click', deleteAccount);
-cancelDeleteBtn.addEventListener('click', cancelDelete);
 
 // Define callback functions
 function displayModal() {
+  activeModal = brandModal;
   brandModal.style.display = "block";
 }
-function closeModal() {
-  brandModal.style.display = "none";
-}
 function deleteAccount() {
-  //debugger;
   const accountsTable = this.parentNode.parentNode.parentNode;
   const selectedRow = this.parentNode.parentNode;
   accountsTable.removeChild(selectedRow);
 } 
-function cancelDelete() {
-  brandModal.style.display = "none";
+
+// Transactions
+const transactionSendBtn = document.getElementById('transaction-send-btn');
+const transactionCancelBtn = document.getElementById('transaction-cancel-btn');
+const selectType = document.getElementById('transaction-type');
+
+const transactionMessageDialog = document.getElementById('transaction-message-dialog');
+
+transactionSendBtn.addEventListener('click', displayTransactionConfirmModal);
+transactionCancelBtn.addEventListener('click', cancelTransaction);
+
+function displayTransactionConfirmModal() {
+  // debugger;
+  const transactionType = selectType.options[selectType.selectedIndex].value;
+  const debitConfirmModal = document.getElementById('debit-confirm-dialog');
+  const creditConfirmModal = document.getElementById('credit-confirm-dialog');
+  if (transactionType === 'credit') {
+    activeModal = creditConfirmModal;
+    creditConfirmModal.style.display = 'block';
+    const creditSendBtn = document.getElementsByClassName('credit-account-btn')[0];
+    creditSendBtn.addEventListener('click', sendCredit);
+  } else if (transactionType === 'debit') {
+    activeModal = debitConfirmModal;
+    debitConfirmModal.style.display = 'block';
+    const debitSendBtn = document.getElementsByClassName('debit-account-btn')[0];
+    debitSendBtn.addEventListener('click', sendDebit);
+  } else return undefined;
+}
+
+function cancelTransaction() {
+  document.getElementsByClassName('transaction-form')[0].reset();
+}
+function sendCredit() {
+  closeModal();
+  // transactionMessageDialog.style.display = 'block';
+}
+function sendDebit() {
+  closeModal();
+  // transactionMessageDialog.style.display = 'block';
 }

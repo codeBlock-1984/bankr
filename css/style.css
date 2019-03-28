@@ -614,6 +614,7 @@ body {
 .box-wrapper {
   width: 100%;
   padding: 20px;
+  margin-bottom: 20px;
 }
 .top-box {
   flex-direction: column;
@@ -1123,7 +1124,7 @@ body {
   background-color: #ebebeb;
   color: white;
 }
-.delete-account-btn, .cancel-delete-btn {
+.brand-modal-footer a {
   margin: 10px;
 }
 
@@ -1232,4 +1233,102 @@ body {
 .account-signature-title {
   font-size: 14px;
   font-weight: 600;
+}
+
+/* credit-debit */
+/* Media queries */
+@media screen and (max-width: 480px) {
+  .transaction-box {
+    padding: 0 !important;
+  }
+  .transaction-account-search {
+    display: flex !important;
+    width: 90% !important;
+    margin: 0 auto !important;
+    margin-top: 10px !important;
+  }
+  .transaction-account-search form {
+    margin: 0 !important;
+  }
+  .selected-account-detail-box p {
+    font-size: 12px !important;
+  }
+  .transaction-form {
+    padding-top: 0 !important;
+    width: 90% !important;
+    margin: 0 auto !important;
+  }
+  .transaction-form__input, .transaction-form__label {
+    height: 20px !important;
+    margin: 3px 0 !important;
+  }
+}
+@media screen and (max-width: 768px) {
+  .transaction-box {
+    padding: 0 !important;
+  }
+  .transaction-account-search {
+    display: flex !important;
+    width: 90% !important;
+    margin: 0 auto !important;
+    margin-top: 20px !important;
+  }
+  .transaction-account-search form {
+    margin: 0 !important;
+  }
+  .selected-account-detail-box {
+    flex: unset !important;
+    padding-bottom: 0 !important;
+  }
+  .selected-account-detail-box p {
+    font-size: 13px !important;
+  }
+  .transaction-form {
+    padding-top: 1px !important;
+    width: 90% !important;
+    margin: 0 auto !important;
+  }
+  .transaction-form__input, .transaction-form__label {
+    height: 25px !important;
+    margin: 4px 0 !important;
+  }
+}
+
+.transaction-container {
+  height: 90%;
+}
+.transaction-box {
+  display: inline-flex;
+  flex-direction: column;
+  min-height: 80%;
+  padding: 50px 0 50px 100px;
+}
+.transaction-account-search {
+  flex: 1;
+  display: flex;
+  width: 60%;
+  margin: 0;
+}
+.transaction-account-search form {
+  display: flex;
+  width: 95%;
+}
+.transaction-account-search input {
+  flex: 1;
+}
+.selected-account-detail-box {
+  flex: 4;
+  padding: 5px 20px;
+}
+.selected-account-detail-box p {
+  margin: 10px;
+}
+.transaction-form {
+  flex: 8;
+  width: 60%;
+  
+}
+.transaction-form__input, .transaction-box__label {
+  height: 30px;
+  margin: 10px 0;
 }
