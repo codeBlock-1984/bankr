@@ -1332,3 +1332,46 @@ body {
   height: 30px;
   margin: 10px 0;
 }
+
+/* Users */
+@media screen and (max-width: 480px) {
+  .users-table {
+    margin-bottom: 30px !important;
+  }
+  .users-table th, .users-table td  {
+    font-size: 12px !important;
+  }
+}
+@media screen and (max-width: 768px) {
+  .users-table tr th:first-child {
+    width: 12% !important;
+  }
+  .users-table tr th:nth-child(2) {
+    width: 30% !important;
+  }
+  .users-table tr th:last-child {
+    width: 20% !important;
+  }
+}
+@media screen and (max-width: 1400px) {
+  .users-table tr th:first-child {
+    width: 12% !important;
+  }
+  .users-table tr th:nth-child(2) {
+    width: 30% !important;
+  }
+  .users-table tr th:last-child {
+    width: 15% !important;
+  }
+}
+
+.users-table tr th:first-child {
+  width: 8%;
+}
+.users-table tr th:nth-child(2) {
+  width: 50%;
+}
+.users-table tr th:last-child {
+  width: 10%;
+}
+
