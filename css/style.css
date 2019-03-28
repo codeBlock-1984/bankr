@@ -755,19 +755,20 @@ body {
   padding-left: 10px;
   padding-right: 10px;
 }
-.create-new-link {
-  align-self: flex-end;
-  width: 100px;
-  height: 30px;
-  margin-right: 10px;
-  padding-top: 5px;
+.action-btn {
+  padding: 10px 20px;
   text-decoration: none;
   color: #ffffff;
   background: #08415c;
   text-align: center;
   border-radius: 5px;
 }
-.create-new-link:hover {
+.create-new-link {
+  align-self: flex-end;
+  
+  margin-right: 10px;
+}
+.action-btn:hover {
   background: #d54f5a;
 }
 /* New account form */
@@ -865,7 +866,7 @@ body {
     word-break: break-word;
   }
   .detail-table__cell {
-    font-size: 10px !important;
+    font-size: 12px !important;
   }
 }
 @media screen and (min-width: 1400px) {
@@ -902,7 +903,7 @@ body {
 }
 .detail-table__cell {
   padding-left: 20px; 
-  font-size: 15px;
+  font-size: 12px;
 }
 
 /* admin dashboard */
@@ -990,6 +991,33 @@ body {
   font-size: 14px;
 }
 /* all-accounts */
+/* Media queries */
+@media screen and (max-width: 480px) {
+  .brand-modal-inner {
+    width: 90% !important;
+  }
+}
+@media screen and (min-width: 768px) {
+  .brand-modal-inner {
+    width: 40% !important;
+  }
+}
+@media screen and (min-width: 1400px) {
+  .brand-modal-inner {
+    width: 30% !important;
+  }
+}
+@media screen and (min-width: 2000px) {
+  .brand-modal-inner {
+    width: 20% !important;
+  }
+}
+.all-accounts-table tr th:first-child {
+  width: 8%;
+}
+.all-accounts-table tr th:nth-child(2) {
+  width: 25%;
+}
 .action-head {
   width: 65px;
   padding-right: 0;
@@ -1010,6 +1038,93 @@ body {
 }
 .action-icon:hover {
   color: #d54f5a;
+}
+/* Brand modal */
+.brand-modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 200px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+.brand-modal-inner {
+  position: relative;
+  display: flex;
+  flex-flow: column nowrap;
+  background-color: #fefefe;
+  margin: auto;
+  padding: 0;
+  border: 1px solid #888;
+  width: 50%;
+  height: 200px;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+  -webkit-animation-name: animatetop;
+  -webkit-animation-duration: 0.4s;
+  animation-name: animatetop;
+  animation-duration: 0.4s
+}
+
+/* Add Animation */
+@-webkit-keyframes animatetop {
+  from {top:-300px; opacity:0} 
+  to {top:0; opacity:1}
+}
+
+@keyframes animatetop {
+  from {top:-300px; opacity:0}
+  to {top:0; opacity:1}
+}
+
+/* The Close Button */
+.brand-modal-close {
+  color: white;
+  float: right;
+  font-size: 25px;
+  font-weight: bold;
+}
+.brand-modal-close:hover,
+.brand-modal-close:focus {
+  color: #d54f5a;
+  text-decoration: none;
+  cursor: pointer;
+}
+.brand-modal-header {
+  flex: 1;
+  display: flex;
+  padding: 2px 16px;
+  background-color: #08415c60;
+}
+.brand-modal-header h2 {
+  margin: auto;
+  color: #ffffff;
+  font-size: 16px;
+}
+.brand-modal-main {
+  flex: 2.5;
+  display: flex;
+  padding: 2px 16px;
+}
+.brand-modal-main p {
+  margin: auto;
+}
+.brand-modal-footer {
+  flex: 2;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+  padding: 2px 16px;
+  background-color: #ebebeb;
+  color: white;
+}
+.delete-account-btn, .cancel-delete-btn {
+  margin: 10px;
 }
 
 /* User Account view */
