@@ -5,6 +5,8 @@ import morgan from 'morgan';
 import cors from 'cors';
 import path from 'path';
 
+import userRoute from './routes/userRoute';
+
 const app = express();
 const host = '0.0.0.0';
 const port = process.env.PORT || 3000;
@@ -14,6 +16,8 @@ app.use(morgan('tiny'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+
+app.use('/api/v1/auth/', userRoute);
 
 app.get('/', (req, res) => {
   res.statusCode = 200;
