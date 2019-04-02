@@ -23,6 +23,18 @@ class UserController {
       data: newSignup,
     });
   }
+
+  static async signIn(req, res) {
+    const { email } = req.body;
+    const singleUser = allUsers.find((user) => { return user.email === email; });
+    const { id, type } = singleUser;
+    const token = createToken({ id, type });
+    const newSignin = { token, ...singleUser };
+    return res.header('x-auth-token', token).status(200).json({
+      status: 200,
+      data: newSignin,
+    });
+  }
 }
 
 export default UserController;

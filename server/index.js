@@ -18,6 +18,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 
 app.use('/api/v1/auth/', userRoute);
+app.use('/api/v1/auth/', userRoute);
 
 app.get('/', (req, res) => {
   res.statusCode = 200;
