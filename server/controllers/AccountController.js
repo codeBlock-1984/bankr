@@ -24,10 +24,26 @@ class AccountController {
     const {
       firstName, lastName, email, openingBalance, type, ...account
     } = updatedAccount;
-    /* eslint-disable no-unused-vars */
     return res.status(200).json({
       status: 200,
       data: account,
+    });
+  }
+
+  static async deleteAccount(req, res) {
+    const { accountNumber } = req.params;
+    const deletedAccount = allAccounts.find((account) => {
+      return account.accountNumber === accountNumber;
+    });
+    const newAccounts = allAccounts.filter((account) => {
+      return account.accountNumber !== accountNumber;
+    });
+    const deleteSuccess = {
+      message: 'Account successfully deleted!',
+    };
+    return res.status(200).json({
+      status: 200,
+      data: deleteSuccess,
     });
   }
 }
