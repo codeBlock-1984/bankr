@@ -12,6 +12,24 @@ class AccountController {
       data: newAccount,
     });
   }
+
+  static async updateAccountStatus(req, res) {
+    const { status } = req.body;
+    const { accountNumber } = req.params;
+    const updatedAccount = allAccounts.find((account) => {
+      return account.accountNumber === accountNumber;
+    });
+    updatedAccount.status = status;
+    /* eslint-disable no-unused-vars */
+    const {
+      firstName, lastName, email, openingBalance, type, ...account
+    } = updatedAccount;
+    /* eslint-disable no-unused-vars */
+    return res.status(200).json({
+      status: 200,
+      data: account,
+    });
+  }
 }
 
 export default AccountController;
