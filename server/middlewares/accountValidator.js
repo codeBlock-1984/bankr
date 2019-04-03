@@ -1,4 +1,4 @@
-import { body } from 'express-validator/check';
+import { body, param } from 'express-validator/check';
 
 import accounts from '../models/accountModel';
 
@@ -42,11 +42,26 @@ const accountValidator = {
       .isFloat()
       .withMessage('Invalid opening balance value!')
       .trim(),
+  ],
+  accountStatusValidator: [
     body('status')
-      .exists({ checkNull: false, checkFalsy: false })
+      .exists({ checkNull: true, checkFalsy: true })
+      .withMessage('Account status is required!')
       .isIn(['active', 'dormant'])
       .withMessage('Invalid account status!')
       .trim(),
+  ],
+  accountParamValidator: [
+    param('accountNumber')
+      .isNumeric()
+      .withMessage('Account number must be a number!')
+      .trim()
+      .custom((accountNumber) => {
+        return allAccounts.find((account) => {
+          return account.accountNumber === accountNumber;
+        });
+      })
+      .withMessage('Account with specified account number does not exist!'),
   ],
   duplicateValidator: [
     body('accountNumber')

@@ -6,9 +6,12 @@ import accountValidator from '../middlewares/accountValidator';
 
 const router = express.Router();
 
-const { createAccount } = AccountController;
-const { accountFieldsValidator, duplicateValidator } = accountValidator;
+const { createAccount, updateAccountStatus } = AccountController;
+const {
+  accountFieldsValidator, accountStatusValidator, accountParamValidator, duplicateValidator,
+} = accountValidator;
 
-router.post('/', accountFieldsValidator, duplicateValidator, validate, createAccount);
+router.post('/', accountFieldsValidator, accountStatusValidator, duplicateValidator, validate, createAccount);
+router.patch('/:accountNumber', accountParamValidator, accountStatusValidator, validate, updateAccountStatus);
 
 export default router;
