@@ -7,13 +7,17 @@ const { encryptPassword } = Passcode;
 
 const userValidator = {
   signupValidator: [
-    body('firstname')
+    body('firstName')
       .exists({ checkFalsy: true })
       .withMessage('Firstname is required!')
+      .isString()
+      .withMessage('First name must be a string!')
       .trim(),
-    body('lastname')
+    body('lastName')
       .exists({ checkFalsy: true })
       .withMessage('Lastname is required!')
+      .isString()
+      .withMessage('Last name must be a string!')
       .trim(),
     body('email')
       .exists({ checkFalsy: true })
@@ -25,6 +29,14 @@ const userValidator = {
       .exists({ checkFalsy: true })
       .withMessage('Password is required!')
       .isString()
+      .trim(),
+    body('isAdmin')
+      .isBoolean()
+      .withMessage('Only boolean values allowed for isAdmin!')
+      .trim(),
+    body('type')
+      .isIn(['staff', 'client'])
+      .withMessage('Invalid user type!')
       .trim(),
   ],
   signinValidator: [
