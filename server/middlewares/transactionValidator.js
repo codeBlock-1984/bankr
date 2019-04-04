@@ -1,8 +1,11 @@
 import { body, param } from 'express-validator/check';
 
 import accounts from '../models/accountModel';
+import BooleanChecker from '../helpers/BooleanChecker';
+import arrayFinder from '../helpers/arrayFinder';
 
 const allAccounts = accounts;
+const { isExisting } = BooleanChecker;
 
 const transactionValidator = {
   transactionFieldsValidator: [
@@ -38,9 +41,8 @@ const transactionValidator = {
       .trim()
       .custom((accountNumber) => {
         const accNumber = parseInt(accountNumber, 10);
-        return allAccounts.find((account) => {
-          return account.accountNumber === accNumber;
-        });
+        const existingAccount = arrayFinder(allAccounts, 'accountNumber', accNumber);
+        return isExisting(existingAccount);
       })
       .withMessage('Account with specified account number does not exist!'),
   ],

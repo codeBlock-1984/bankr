@@ -5,6 +5,7 @@ import morgan from 'morgan';
 import cors from 'cors';
 import path from 'path';
 
+import authRoute from './routes/authRoute';
 import userRoute from './routes/userRoute';
 import accountRoute from './routes/accountRoute';
 import transactionRoute from './routes/transactionRoute';
@@ -19,8 +20,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 
-app.use('/api/v1/auth/', userRoute);
-app.use('/api/v1/auth/', userRoute);
+app.use('/api/v1/auth/', authRoute);
+app.use('/api/v1/users/', userRoute);
 app.use('/api/v1/accounts/', accountRoute);
 app.use('/api/v1/transactions/', transactionRoute);
 
