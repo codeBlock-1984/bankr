@@ -5,7 +5,7 @@ const accounts = [
     lastName: 'Nwankwo',
     email: 'alicen1995@abc.com',
     type: 'savings',
-    openingBalance: 5000.00,
+    openingBalance: 5000.05,
     status: 'active',
   },
   {
