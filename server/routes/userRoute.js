@@ -5,11 +5,12 @@ import validate from '../middlewares/validate';
 import userValidator from '../middlewares/userValidator';
 
 const router = express.Router();
-const { getUser } = UserController;
+const { getUser, getAllUsers } = UserController;
 const {
   userParamValidator,
 } = userValidator;
 
 router.get('/:userId', userParamValidator, validate, getUser);
+router.get('/', getAllUsers);
 
 export default router;

@@ -13,6 +13,13 @@ class UserController {
       data: singleUser,
     });
   }
+
+  static async getAllUsers(req, res) {
+    return res.status(200).json({
+      status: 200,
+      data: allUsers,
+    });
+  }
 }
 
 export default UserController;
