@@ -1,8 +1,11 @@
 import { body, param } from 'express-validator/check';
 
 import accounts from '../models/accountModel';
+import BooleanChecker from '../helpers/BooleanChecker';
+import arrayFinder from '../helpers/arrayFinder';
 
 const allAccounts = accounts;
+const { isExisting, isDuplicate } = BooleanChecker;
 
 const accountValidator = {
   accountFieldsValidator: [
@@ -57,19 +60,16 @@ const accountValidator = {
       .withMessage('Account number must be a number!')
       .trim()
       .custom((accountNumber) => {
-        return allAccounts.find((account) => {
-          return account.accountNumber === accountNumber;
-        });
+        const existingAccount = arrayFinder(allAccounts, 'accountNumber', accountNumber);
+        return isExisting(existingAccount);
       })
       .withMessage('Account with specified account number does not exist!'),
   ],
   duplicateValidator: [
     body('accountNumber')
       .custom((accountNumber) => {
-        const isNotDuplicate = allAccounts.find((account) => {
-          return account.accountNumber === accountNumber;
-        });
-        return !isNotDuplicate;
+        const duplicateAccount = arrayFinder(allAccounts, 'accountNumber', accountNumber);
+        return isDuplicate(duplicateAccount);
       })
       .withMessage('Account number is linked to an existing account!'),
   ],

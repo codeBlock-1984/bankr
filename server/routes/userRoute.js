@@ -5,15 +5,11 @@ import validate from '../middlewares/validate';
 import userValidator from '../middlewares/userValidator';
 
 const router = express.Router();
-const { signUp, signIn } = UserController;
+const { getUser } = UserController;
 const {
-  signupValidator,
-  signinValidator,
-  duplicateValidator,
-  userAccountValidator,
+  userParamValidator,
 } = userValidator;
 
-router.post('/signup', signupValidator, duplicateValidator, validate, signUp);
-router.post('/signin', signinValidator, userAccountValidator, validate, signIn);
+router.get('/:userId', userParamValidator, validate, getUser);
 
 export default router;
