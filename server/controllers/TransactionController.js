@@ -13,16 +13,29 @@ class TransactionController {
       return account.accountNumber === accountNumber;
     });
     const { openingBalance } = creditedAccount;
-    // console.log(openingBalance);
     const { amount } = newCreditTransaction;
-    const accountBalance = openingBalance + parseFloat(amount);
-    // console.log(accountBalance);
-    // console.log(openingBalance);
-    // console.log(amount);
+    const accountBalance = (openingBalance - parseFloat(amount)).toFixed(2);
     const creditData = { ...newCreditTransaction, accountBalance };
     return res.status(200).json({
       status: 200,
       data: creditData,
+    });
+  }
+
+  static async debitTransaction(req, res) {
+    const newDebitTransaction = req.body;
+    newDebitTransaction.id = allTransactions.length + 1;
+    const accountNumber = parseInt(req.params.accountNumber, 10);
+    const debitedAccount = allAccounts.find((account) => {
+      return account.accountNumber === accountNumber;
+    });
+    const { openingBalance } = debitedAccount;
+    const { amount } = newDebitTransaction;
+    const accountBalance = (openingBalance - parseFloat(amount)).toFixed(2);
+    const debitData = { ...newDebitTransaction, accountBalance };
+    return res.status(200).json({
+      status: 200,
+      data: debitData,
     });
   }
 }
