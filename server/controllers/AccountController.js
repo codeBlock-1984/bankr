@@ -6,6 +6,7 @@ class AccountController {
   static async createAccount(req, res) {
     const newAccount = req.body;
     newAccount.status = newAccount.status || 'dormant';
+    newAccount.balance = newAccount.openingBalance;
     allAccounts.push(newAccount);
     return res.status(201).json({
       status: 201,

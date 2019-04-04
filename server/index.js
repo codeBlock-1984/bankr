@@ -7,6 +7,7 @@ import path from 'path';
 
 import userRoute from './routes/userRoute';
 import accountRoute from './routes/accountRoute';
+import transactionRoute from './routes/transactionRoute';
 
 const app = express();
 const host = '0.0.0.0';
@@ -21,6 +22,7 @@ app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use('/api/v1/auth/', userRoute);
 app.use('/api/v1/auth/', userRoute);
 app.use('/api/v1/accounts/', accountRoute);
+app.use('/api/v1/transactions/', transactionRoute);
 
 app.get('/', (req, res) => {
   res.statusCode = 200;
