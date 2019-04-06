@@ -6,11 +6,14 @@ import transactionValidator from '../middlewares/transactionValidator';
 
 const router = express.Router();
 
-const { creditTransaction, debitTransaction } = transactionController;
-const { transactionFieldsValidator, transactionParamValidator } = transactionValidator;
+const { creditTransaction, debitTransaction, getTransaction } = transactionController;
+const {
+  transactionFieldsValidator, accountNumberParamValidator, transactionIdParamValidator,
+} = transactionValidator;
 
 
-router.post('/:accountNumber/credit', transactionFieldsValidator, transactionParamValidator, validate, creditTransaction);
-router.post('/:accountNumber/debit', transactionFieldsValidator, transactionParamValidator, validate, debitTransaction);
+router.post('/:accountNumber/credit', transactionFieldsValidator, accountNumberParamValidator, validate, creditTransaction);
+router.post('/:accountNumber/debit', transactionFieldsValidator, accountNumberParamValidator, validate, debitTransaction);
+router.get('/:transactionId', transactionIdParamValidator, validate, getTransaction);
 
 export default router;

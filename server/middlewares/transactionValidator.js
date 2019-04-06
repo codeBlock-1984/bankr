@@ -1,10 +1,12 @@
 import { body, param } from 'express-validator/check';
 
 import accounts from '../models/accountModel';
+import transactions from '../models/transactionModel';
 import BooleanChecker from '../helpers/BooleanChecker';
 import arrayFinder from '../helpers/arrayFinder';
 
-const allAccounts = accounts;
+const allAccounts = [...accounts];
+const allTransactions = [...transactions];
 const { isExisting } = BooleanChecker;
 
 const transactionValidator = {
@@ -34,7 +36,7 @@ const transactionValidator = {
       .withMessage('Transaction type must be a string!')
       .trim(),
   ],
-  transactionParamValidator: [
+  accountNumberParamValidator: [
     param('accountNumber')
       .isNumeric()
       .withMessage('Account number must be a number!')
@@ -45,6 +47,18 @@ const transactionValidator = {
         return isExisting(existingAccount);
       })
       .withMessage('Account with specified account number does not exist!'),
+  ],
+  transactionIdParamValidator: [
+    param('transactionId')
+      .isNumeric()
+      .withMessage('Transaction id must be a number!')
+      .trim()
+      .custom((transactionId) => {
+        const transId = parseInt(transactionId, 10);
+        const existingTransaction = arrayFinder(allTransactions, 'id', transId);
+        return isExisting(existingTransaction);
+      })
+      .withMessage('Transaction with specified id does not exist!'),
   ],
 };
 

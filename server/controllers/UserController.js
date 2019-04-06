@@ -1,13 +1,12 @@
 import users from '../models/userModel';
+import arrayFinder from '../helpers/arrayFinder';
 
-const allUsers = users;
+const allUsers = [...users];
 
 class UserController {
   static async getUser(req, res) {
     const userId = parseInt(req.params.userId, 10);
-    const singleUser = allUsers.find((user) => {
-      return user.id === userId;
-    });
+    const singleUser = arrayFinder(allUsers, 'id', userId);
     return res.status(200).json({
       status: 200,
       data: singleUser,

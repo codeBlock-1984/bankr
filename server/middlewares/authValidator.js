@@ -1,11 +1,11 @@
 import { body } from 'express-validator/check';
 
-import UserModel from '../models/userModel';
+import users from '../models/userModel';
 import Passcode from '../helpers/Passcode';
 import BooleanChecker from '../helpers/BooleanChecker';
 import arrayFinder from '../helpers/arrayFinder';
 
-const allUsers = UserModel;
+const allUsers = [...users];
 let existingUser;
 const { verifyPassword } = Passcode;
 const { isDuplicate, isExisting } = BooleanChecker;

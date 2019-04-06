@@ -4,7 +4,7 @@ import Passcode from '../helpers/Passcode';
 
 const { createToken } = Auth;
 const { encryptPassword } = Passcode;
-const allUsers = users;
+const allUsers = [...users];
 const userCount = allUsers.length;
 
 class AuthController {
