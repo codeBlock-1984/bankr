@@ -1,10 +1,10 @@
 import { param } from 'express-validator/check';
 
-import UserModel from '../models/userModel';
+import users from '../models/userModel';
 import BooleanChecker from '../helpers/BooleanChecker';
 import arrayFinder from '../helpers/arrayFinder';
 
-const allUsers = UserModel;
+const allUsers = [...users];
 const { isExisting } = BooleanChecker;
 
 const userValidator = {

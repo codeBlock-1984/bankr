@@ -4,7 +4,7 @@ import accounts from '../models/accountModel';
 import BooleanChecker from '../helpers/BooleanChecker';
 import arrayFinder from '../helpers/arrayFinder';
 
-const allAccounts = accounts;
+const allAccounts = [...accounts];
 const { isExisting, isDuplicate } = BooleanChecker;
 
 const accountValidator = {

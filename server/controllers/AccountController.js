@@ -1,6 +1,7 @@
 import accounts from '../models/accountModel';
+import arrayFinder from '../helpers/arrayFinder';
 
-const allAccounts = accounts;
+const allAccounts = [...accounts];
 
 class AccountController {
   static async createAccount(req, res) {
@@ -17,9 +18,7 @@ class AccountController {
   static async updateAccountStatus(req, res) {
     const { status } = req.body;
     const { accountNumber } = req.params;
-    const updatedAccount = allAccounts.find((account) => {
-      return account.accountNumber === accountNumber;
-    });
+    const updatedAccount = arrayFinder(allAccounts, 'accountNumber', accountNumber);
     updatedAccount.status = status;
     /* eslint-disable no-unused-vars */
     const {
@@ -33,9 +32,7 @@ class AccountController {
 
   static async deleteAccount(req, res) {
     const { accountNumber } = req.params;
-    const deletedAccount = allAccounts.find((account) => {
-      return account.accountNumber === accountNumber;
-    });
+    const deletedAccount = arrayFinder(allAccounts, 'accountNumber', accountNumber);
     const newAccounts = allAccounts.filter((account) => {
       return account.accountNumber !== accountNumber;
     });
