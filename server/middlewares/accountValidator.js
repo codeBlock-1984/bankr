@@ -60,7 +60,8 @@ const accountValidator = {
       .withMessage('Account number must be a number!')
       .trim()
       .custom((accountNumber) => {
-        const existingAccount = arrayFinder(allAccounts, 'accountNumber', accountNumber);
+        const accNumber = parseInt(accountNumber, 10);
+        const existingAccount = arrayFinder(allAccounts, 'accountNumber', accNumber);
         return isExisting(existingAccount);
       })
       .withMessage('Account with specified account number does not exist!'),
@@ -68,7 +69,8 @@ const accountValidator = {
   duplicateValidator: [
     body('accountNumber')
       .custom((accountNumber) => {
-        const duplicateAccount = arrayFinder(allAccounts, 'accountNumber', accountNumber);
+        const accNumber = parseInt(accountNumber, 10);
+        const duplicateAccount = arrayFinder(allAccounts, 'accountNumber', accNumber);
         return isDuplicate(duplicateAccount);
       })
       .withMessage('Account number is linked to an existing account!'),

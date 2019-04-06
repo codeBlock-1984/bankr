@@ -15,6 +15,15 @@ class AccountController {
     });
   }
 
+  static async getAccount(req, res) {
+    const accountNumber = parseInt(req.params.accountNumber, 10);
+    const singleAccount = arrayFinder(allAccounts, 'accountNumber', accountNumber);
+    return res.status(200).json({
+      status: 200,
+      data: singleAccount,
+    });
+  }
+
   static async updateAccountStatus(req, res) {
     const { status } = req.body;
     const { accountNumber } = req.params;
