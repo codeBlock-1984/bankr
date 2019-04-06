@@ -24,6 +24,13 @@ class AccountController {
     });
   }
 
+  static async getAllAccounts(req, res) {
+    return res.status(200).json({
+      status: 200,
+      data: allAccounts,
+    });
+  }
+
   static async updateAccountStatus(req, res) {
     const { status } = req.body;
     const { accountNumber } = req.params;

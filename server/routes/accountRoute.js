@@ -7,7 +7,7 @@ import accountValidator from '../middlewares/accountValidator';
 const router = express.Router();
 
 const {
-  createAccount, getAccount, updateAccountStatus, deleteAccount,
+  createAccount, getAccount, getAllAccounts, updateAccountStatus, deleteAccount,
 } = AccountController;
 const {
   accountFieldsValidator, accountStatusValidator, accountParamValidator, duplicateValidator,
@@ -15,6 +15,7 @@ const {
 
 router.post('/', accountFieldsValidator, accountStatusValidator, duplicateValidator, validate, createAccount);
 router.get('/:accountNumber', accountParamValidator, validate, getAccount);
+router.get('/', getAllAccounts);
 router.patch('/:accountNumber', accountParamValidator, accountStatusValidator, validate, updateAccountStatus);
 router.delete('/:accountNumber', accountParamValidator, validate, deleteAccount);
 
