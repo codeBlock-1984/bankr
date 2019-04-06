@@ -44,6 +44,13 @@ class TransactionController {
       data: singleTransaction,
     });
   }
+
+  static async getAllTransactions(req, res) {
+    return res.status(200).json({
+      status: 200,
+      data: allTransactions,
+    });
+  }
 }
 
 export default TransactionController;
