@@ -1,8 +1,10 @@
 import accounts from '../models/accountModel';
+import users from '../models/userModel';
 import ArraySorter from '../helpers/ArraySorter';
 
-const { arrayFinder, arrayFilterNot } = ArraySorter;
+const { arrayFinder, arrayFilterNot, arrayFilter } = ArraySorter;
 const allAccounts = accounts;
+const allUsers = users;
 
 class AccountController {
   static async createAccount(req, res) {
@@ -35,6 +37,16 @@ class AccountController {
     return res.status(200).json({
       status: 200,
       data: allAccounts,
+    });
+  }
+
+  static async getUserAccounts(req, res) {
+    const id = parseInt(req.params.userId, 10);
+    console.log(id);
+    const userAccounts = arrayFilter(allAccounts, 'owner', id);
+    return res.status(200).json({
+      status: 200,
+      data: userAccounts,
     });
   }
 

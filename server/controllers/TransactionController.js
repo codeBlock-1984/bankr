@@ -59,9 +59,7 @@ class TransactionController {
 
   static async getUserTransactions(req, res) {
     const id = parseInt(req.params.userId, 10);
-    const singleUser = arrayFinder(allUsers, 'id', id);
-    const { email } = singleUser;
-    const userAccounts = arrayFilter(allAccounts, 'email', email);
+    const userAccounts = arrayFilter(allAccounts, 'owner', id);
     const userAccountNumbers = userAccounts.map((account) => {
       return account.accountNumber;
     });
