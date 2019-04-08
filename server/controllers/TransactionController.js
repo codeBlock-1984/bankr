@@ -1,12 +1,10 @@
 import transactions from '../models/transactionModel';
 import accounts from '../models/accountModel';
-import users from '../models/userModel';
 import ArraySorter from '../helpers/ArraySorter';
 
 const { arrayFinder, arrayFilter } = ArraySorter;
 const allTransactions = transactions;
 const allAccounts = accounts;
-const allUsers = users;
 
 class TransactionController {
   static async creditTransaction(req, res) {
