@@ -1,14 +1,16 @@
 import { body } from 'express-validator/check';
+import { sanitizeBody } from 'express-validator/filter';
 
 import users from '../models/userModel';
 import Passcode from '../helpers/Passcode';
 import BooleanChecker from '../helpers/BooleanChecker';
-import arrayFinder from '../helpers/arrayFinder';
+import ArraySorter from '../helpers/ArraySorter';
 
-const allUsers = [...users];
+const allUsers = users;
 let existingUser;
 const { verifyPassword } = Passcode;
 const { isDuplicate, isExisting } = BooleanChecker;
+const { arrayFinder } = ArraySorter;
 
 const authValidator = {
   signupValidator: [
@@ -39,6 +41,7 @@ const authValidator = {
       .isBoolean()
       .withMessage('Only boolean values allowed for isAdmin!')
       .trim(),
+    sanitizeBody('isAdmin').toBoolean({ strict: true }),
     body('type')
       .isIn(['staff', 'client'])
       .withMessage('Invalid user type!')
@@ -61,7 +64,6 @@ const authValidator = {
     body('email')
       .custom((email) => {
         const duplicateUser = arrayFinder(allUsers, 'email', email);
-        console.log(duplicateUser);
         return isDuplicate(duplicateUser);
       })
       .withMessage('Email is linked to an existing user!'),

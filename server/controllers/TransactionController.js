@@ -1,19 +1,23 @@
 import transactions from '../models/transactionModel';
 import accounts from '../models/accountModel';
-import arrayFinder from '../helpers/arrayFinder';
+import users from '../models/userModel';
+import ArraySorter from '../helpers/ArraySorter';
 
-const allTransactions = [...transactions];
-const allAccounts = [...accounts];
+const { arrayFinder, arrayFilter } = ArraySorter;
+const allTransactions = transactions;
+const allAccounts = accounts;
+const allUsers = users;
 
 class TransactionController {
   static async creditTransaction(req, res) {
     const newCreditTransaction = req.body;
     newCreditTransaction.id = allTransactions.length + 1;
-    const accountNumber = parseInt(req.params.accountNumber, 10);
+    const { accountNumber } = req.params;
     const creditedAccount = arrayFinder(allAccounts, 'accountNumber', accountNumber);
-    const { openingBalance } = creditedAccount;
+    const { balance } = creditedAccount;
     const { amount } = newCreditTransaction;
-    const accountBalance = (openingBalance - parseFloat(amount)).toFixed(2);
+    const accBalance = parseFloat(balance - amount).toFixed(2);
+    const accountBalance = parseFloat(accBalance);
     const creditData = { ...newCreditTransaction, accountBalance };
     return res.status(200).json({
       status: 200,
@@ -24,11 +28,12 @@ class TransactionController {
   static async debitTransaction(req, res) {
     const newDebitTransaction = req.body;
     newDebitTransaction.id = allTransactions.length + 1;
-    const accountNumber = parseInt(req.params.accountNumber, 10);
+    const { accountNumber } = req.params;
     const debitedAccount = arrayFinder(allAccounts, 'accountNumber', accountNumber);
-    const { openingBalance } = debitedAccount;
+    const { balance } = debitedAccount;
     const { amount } = newDebitTransaction;
-    const accountBalance = (openingBalance - parseFloat(amount)).toFixed(2);
+    const accBalance = parseFloat(balance - amount).toFixed(2);
+    const accountBalance = parseFloat(accBalance);
     const debitData = { ...newDebitTransaction, accountBalance };
     return res.status(200).json({
       status: 200,
@@ -49,6 +54,23 @@ class TransactionController {
     return res.status(200).json({
       status: 200,
       data: allTransactions,
+    });
+  }
+
+  static async getUserTransactions(req, res) {
+    const id = parseInt(req.params.userId, 10);
+    const singleUser = arrayFinder(allUsers, 'id', id);
+    const { email } = singleUser;
+    const userAccounts = arrayFilter(allAccounts, 'email', email);
+    const userAccountNumbers = userAccounts.map((account) => {
+      return account.accountNumber;
+    });
+    const userTransactions = userAccountNumbers.map((accountNumber) => {
+      return arrayFilter(allTransactions, 'accountNumber', accountNumber);
+    });
+    return res.status(200).json({
+      status: 200,
+      data: userTransactions,
     });
   }
 }

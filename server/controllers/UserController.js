@@ -1,7 +1,8 @@
 import users from '../models/userModel';
-import arrayFinder from '../helpers/arrayFinder';
+import ArraySorter from '../helpers/ArraySorter';
 
-const allUsers = [...users];
+const { arrayFinder } = ArraySorter;
+const allUsers = users;
 
 class UserController {
   static async getUser(req, res) {
