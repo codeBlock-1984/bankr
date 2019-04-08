@@ -18,7 +18,7 @@ const testUser = {
 /* eslint-disable no-unused-vars */
 
 describe('Auth Endpoints', () => {
-  describe('POST /signup', () => {
+  describe('POST /auth/signup', () => {
     it('should create a new user account', (done) => {
       chai.request(app).post('/api/v1/auth/signup').send(testUser).end((err, res) => {
         res.should.have.status(201);
@@ -93,7 +93,7 @@ describe('Auth Endpoints', () => {
       });
     });
   });
-  describe('POST /signin', () => {
+  describe('POST /auth/signin', () => {
     it('should login a user', (done) => {
       chai.request(app).post('/api/v1/auth/signin').send(testUser).end((err, res) => {
         res.should.have.status(200);
