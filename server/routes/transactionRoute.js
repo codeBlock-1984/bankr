@@ -13,7 +13,6 @@ const {
   transactionFieldsValidator, accountNumberParamValidator, transactionIdParamValidator,
 } = transactionValidator;
 
-
 router.post('/:accountNumber/credit', transactionFieldsValidator, accountNumberParamValidator, validate, creditTransaction);
 router.post('/:accountNumber/debit', transactionFieldsValidator, accountNumberParamValidator, validate, debitTransaction);
 router.get('/:transactionId', transactionIdParamValidator, validate, getTransaction);

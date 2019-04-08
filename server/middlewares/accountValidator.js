@@ -1,11 +1,13 @@
 import { body, param } from 'express-validator/check';
+import { sanitizeBody, sanitizeParam } from 'express-validator/filter';
 
 import accounts from '../models/accountModel';
 import BooleanChecker from '../helpers/BooleanChecker';
-import arrayFinder from '../helpers/arrayFinder';
+import ArraySorter from '../helpers/ArraySorter';
 
-const allAccounts = [...accounts];
+const allAccounts = accounts;
 const { isExisting, isDuplicate } = BooleanChecker;
+const { arrayFinder } = ArraySorter;
 
 const accountValidator = {
   accountFieldsValidator: [
@@ -15,6 +17,7 @@ const accountValidator = {
       .isNumeric()
       .withMessage('Account number must be a number!')
       .trim(),
+    sanitizeBody('accountNumber').toInt({ radix: 10 }),
     body('firstName')
       .exists({ checkFalsy: true })
       .withMessage('Firstname is required!')
@@ -32,7 +35,15 @@ const accountValidator = {
       .withMessage('Email is required!')
       .isEmail()
       .withMessage('Invalid email address!')
+      .trim()
+      .normalizeEmail(),
+    body('owner')
+      .exists({ checkFalsy: true })
+      .withMessage('Owner id is required!')
+      .isInt(10)
+      .withMessage('Owner id must be an integer!')
       .trim(),
+    sanitizeBody('owner').toInt({ radix: 10 }),
     body('type')
       .exists({ checkFalsy: true })
       .withMessage('Account type is required!')
@@ -45,6 +56,7 @@ const accountValidator = {
       .isFloat()
       .withMessage('Invalid opening balance value!')
       .trim(),
+    sanitizeBody('openingBalance').toFloat(),
   ],
   accountStatusValidator: [
     body('status')
@@ -55,22 +67,22 @@ const accountValidator = {
       .trim(),
   ],
   accountParamValidator: [
+    sanitizeParam('accountNumber').toInt({ radix: 10 }),
     param('accountNumber')
       .isNumeric()
       .withMessage('Account number must be a number!')
       .trim()
       .custom((accountNumber) => {
-        const accNumber = parseInt(accountNumber, 10);
-        const existingAccount = arrayFinder(allAccounts, 'accountNumber', accNumber);
+        const existingAccount = arrayFinder(allAccounts, 'accountNumber', accountNumber);
         return isExisting(existingAccount);
       })
       .withMessage('Account with specified account number does not exist!'),
   ],
   duplicateValidator: [
+    sanitizeBody('accountNumber').toInt({ radix: 10 }),
     body('accountNumber')
       .custom((accountNumber) => {
-        const accNumber = parseInt(accountNumber, 10);
-        const duplicateAccount = arrayFinder(allAccounts, 'accountNumber', accNumber);
+        const duplicateAccount = arrayFinder(allAccounts, 'accountNumber', accountNumber);
         return isDuplicate(duplicateAccount);
       })
       .withMessage('Account number is linked to an existing account!'),
