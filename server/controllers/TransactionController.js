@@ -17,6 +17,10 @@ class TransactionController {
     const accBalance = parseFloat(balance - amount).toFixed(2);
     const accountBalance = parseFloat(accBalance);
     const creditData = { ...newCreditTransaction, accountBalance };
+    newCreditTransaction.createdOn = new Date();
+    newCreditTransaction.oldBalance = parseFloat(balance);
+    newCreditTransaction.newBalance = accountBalance;
+    allTransactions.push(newCreditTransaction);
     return res.status(200).json({
       status: 200,
       data: creditData,
@@ -33,6 +37,10 @@ class TransactionController {
     const accBalance = parseFloat(balance - amount).toFixed(2);
     const accountBalance = parseFloat(accBalance);
     const debitData = { ...newDebitTransaction, accountBalance };
+    newDebitTransaction.createdOn = new Date();
+    newDebitTransaction.oldBalance = parseFloat(balance);
+    newDebitTransaction.newBalance = accountBalance;
+    allTransactions.push(newDebitTransaction);
     return res.status(200).json({
       status: 200,
       data: debitData,
