@@ -76,4 +76,14 @@ describe('Users Endpoints', () => {
       });
     });
   });
+  describe('GET /users/:userId/transactions', () => {
+    it('should get user transactions by user id', (done) => {
+      chai.request(app).get(`/api/v1/users/1/transactions`).end((err, res) => {
+        res.should.have.status(200);
+        res.body.should.have.property('status').eql(200);
+        res.body.should.have.property('data');
+        done();
+      });
+    });
+  });
 });
