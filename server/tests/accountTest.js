@@ -205,7 +205,7 @@ describe('Accounts Endpoints', () => {
       });
     });
     it('should return a 404 error if account number does not exist', (done) => {
-      chai.request(app).delete(`/api/v1/accounts/${noAccountNumber}`).end((err, res) => {
+      chai.request(app).get(`/api/v1/accounts/${noAccountNumber}`).end((err, res) => {
         res.should.have.status(404);
         res.body.should.have.property('status').eql(404);
         res.body.should.have.property('error').eql('Account with specified account number does not exist!');
