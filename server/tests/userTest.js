@@ -66,4 +66,14 @@ describe('Users Endpoints', () => {
       });
     });
   });
+  describe('GET /users/:userId/accounts', () => {
+    it('should get user accounts by user id', (done) => {
+      chai.request(app).get(`/api/v1/users/1/accounts`).end((err, res) => {
+        res.should.have.status(200);
+        res.body.should.have.property('status').eql(200);
+        res.body.should.have.property('data');
+        done();
+      });
+    });
+  });
 });
