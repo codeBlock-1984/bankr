@@ -4,7 +4,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 const secretKey = process.env.SECRET_KEY;
 
-class auth {
+class Auth {
   static createToken(payload) {
     return jwt.sign(payload, secretKey);
   }
@@ -14,4 +14,4 @@ class auth {
   }
 }
 
-export default auth;
+export default Auth;
