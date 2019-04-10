@@ -132,11 +132,11 @@ describe('BooleanChecker', () => {
   });
 });
 
-describe('Passcode', async () => {
-  const password = 'unecryptedpassword';
-  const hashedPassword = await encryptPassword(password);
+describe('Passcode', () => {
   describe('encryptPassword()', () => {
     it('should create a hash', async () => {
+      const password = 'unecryptedpassword';
+      const hashedPassword = await encryptPassword(password);
       const hashRegex = /^\$2[ayb]\$.{56}$/;
       assert.equal(true, hashRegex.test(hashedPassword));
       assert.equal(60, hashedPassword.length);
@@ -144,6 +144,8 @@ describe('Passcode', async () => {
   });
   describe('verifyPassword()', () => {
     it('should verify password', async () => {
+      const password = 'notSecurePassword';
+      const hashedPassword = await encryptPassword(password);
       const isVerified = await verifyPassword(password, hashedPassword);
       assert.equal(true, isVerified);
     });
