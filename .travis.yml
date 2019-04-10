@@ -1,0 +1,13 @@
+language: node_js
+env:
+  global:
+    - NODE_ENV=test
+    - SECRET_KEY=traeghiteslozae
+node_js: 
+  - "stable"
+cache:
+  directories:
+    - "node_modules"
+script: npm test
+after_success: 'npm run coverage'
+after_failure: 'cat /home/travis/.npm/_logs/2019-04-*-debug.log'
