@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "babel-node ./server/index.js",
-    "test": "NODE_ENV=test ./node_modules/.bin/mocha --require @babel/register ./server/tests/*.js --exit",
+    "test": "NODE_ENV=test nyc --reporter=text ./node_modules/.bin/mocha --require @babel/register ./server/tests/*.js --exit",
     "serve": "node dist/index.js",
     "coveralls": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
     "coverage": "nyc report --reporter=text-lcov | coveralls"
