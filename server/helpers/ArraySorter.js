@@ -10,10 +10,6 @@ class ArraySorter {
   static arrayFilterNot(arrayObj, childProp, matchValue) {
     return arrayObj.filter((arrayChild) => { return arrayChild[childProp] !== matchValue; });
   }
-
-  static arrayFilterProp(arrayObj, childProp, matchValue) {
-    return arrayObj.filter((arrayChild) => { return arrayChild[childProp] !== matchValue; });
-  }
 }
 
 export default ArraySorter;
