@@ -12,7 +12,7 @@ class AuthController {
     const newUser = req.body;
     newUser.id = userCount + 1;
     newUser.password = await encryptPassword(newUser.password);
-    newUser.type = newUser.type || 'client';
+    newUser.type = newUser.type;
     newUser.isAdmin = newUser.isAdmin || false;
     const { id: userId, type: userType } = newUser;
     const token = createToken({ userId, userType });

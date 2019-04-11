@@ -9,7 +9,7 @@ class AccountController {
     const newAccount = req.body;
     newAccount.id = allAccounts.length + 1;
     newAccount.createdOn = new Date();
-    newAccount.status = newAccount.status || 'dormant';
+    newAccount.status = newAccount.status;
     newAccount.balance = newAccount.openingBalance;
     // eslint-disable-next-line
     const { openingBalance, ...account } = newAccount;
