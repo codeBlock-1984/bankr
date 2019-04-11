@@ -1,0 +1,691 @@
+{
+   "swagger": "2.0",
+   "info": {
+      "version": "1.0",
+      "title": "BANKR",
+      "description": "Secure online banking application. Easy to use, efficient, fast."
+   },
+   "schemes": [
+      "https"
+   ],
+   "host": "bankr-server.herokuapp.com",
+   "basePath": "/api/v1",
+   "securityDefinitions": {
+      "Bearer": {
+         "type": "basic"
+      }
+   },
+   "tags": [
+      {
+         "name": "Auth",
+         "description": "Auth endpoints"
+      },
+      {
+         "name": "Users",
+         "description": "Users endpoints"
+      },
+      {
+         "name": "Accounts",
+         "description": "Accounts endpoints"
+      },
+      {
+         "name": "Transactions",
+         "description": "Transactions endpoints"
+      }
+   ],
+   "paths": {
+      "/auth/signup": {
+         "post": {
+            "description": "Create user",
+            "summary": "Create a new user account",
+            "tags": [
+               "Auth"
+            ],
+            "produces": [
+               "application/json"
+            ],
+            "security": [],
+            "parameters": [
+               {
+                  "in": "body",
+                  "name": "body",
+                  "required": true,
+                  "description": "User signup details",
+                  "schema": {
+                     "$ref": "#/components/schemas/signupDetails"
+                  }
+               }
+            ],
+            "responses": {
+               "201": {
+                  "description": "Signup successful"
+               },
+               "400": {
+                  "description": "Empty or invalid field"
+               },
+               "default": {
+                  "description": "Unexpected error"
+               },
+               "schema": {
+                  "$ref": "#/components/schemas/userResponse"
+               }
+            }
+         }
+      },
+      "/auth/signin": {
+         "post": {
+            "description": "Log user in",
+            "summary": "Login authenticated user",
+            "tags": [
+               "Auth"
+            ],
+            "produces": [
+               "application/json"
+            ],
+            "security": [],
+            "parameters": [
+               {
+                  "in": "body",
+                  "name": "body",
+                  "required": true,
+                  "description": "User login details",
+                  "schema": {
+                     "$ref": "#/components/schemas/signinDetails"
+                  }
+               }
+            ],
+            "responses": {
+               "200": {
+                  "description": "Login successful"
+               },
+               "400": {
+                  "description": "Empty or invalid field"
+               },
+               "default": {
+                  "description": "Unexpected error"
+               }
+            }
+         }
+      },
+      "/users": {
+         "get": {
+            "description": "Get users",
+            "summary": "Returns a list of all user accounts",
+            "tags": [
+               "Users"
+            ],
+            "produces": [
+               "application/json"
+            ],
+            "security": [
+               {
+                  "Bearer": []
+               }
+            ],
+            "responses": {
+               "200": {
+                  "description": "Success"
+               },
+               "404": {
+                  "description": "No user records found"
+               },
+               "default": {
+                  "description": "Unexpected error"
+               }
+            }
+         }
+      },
+      "/users/{userId}": {
+         "get": {
+            "description": "Get user",
+            "summary": "Returns a user account with the given userId",
+            "tags": [
+               "Users"
+            ],
+            "produces": [
+               "application/json"
+            ],
+            "security": [
+               {
+                  "Bearer": []
+               }
+            ],
+            "parameters": [
+               {
+                  "in": "path",
+                  "name": "userId",
+                  "required": true,
+                  "description": "The id of the user to fetch"
+               }
+            ],
+            "responses": {
+               "200": {
+                  "description": "Success"
+               },
+               "404": {
+                  "description": "User with given id not Found"
+               },
+               "default": {
+                  "description": "Unexpected error"
+               }
+            }
+         }
+      },
+      "/users/{userId}/accounts": {
+         "get": {
+            "description": "Get user accounts",
+            "summary": "Returns all bank accounts of user with the given userId",
+            "tags": [
+               "Users"
+            ],
+            "produces": [
+               "application/json"
+            ],
+            "security": [
+               {
+                  "Bearer": []
+               }
+            ],
+            "parameters": [
+               {
+                  "in": "path",
+                  "name": "userId",
+                  "required": true,
+                  "description": "The id of the accounts' owner"
+               }
+            ],
+            "responses": {
+               "200": {
+                  "description": "Success"
+               },
+               "404": {
+                  "description": "User with given id not Found"
+               },
+               "default": {
+                  "description": "Unexpected error"
+               }
+            }
+         }
+      },
+      "/users/{userId}/transactions": {
+         "get": {
+            "description": "Get user transactions",
+            "summary": "Returns all transactions of user with the given userId",
+            "tags": [
+               "Users"
+            ],
+            "produces": [
+               "application/json"
+            ],
+            "security": [
+               {
+                  "Bearer": []
+               }
+            ],
+            "parameters": [
+               {
+                  "in": "path",
+                  "name": "userId",
+                  "required": true,
+                  "description": "The id of the user linked to transactions"
+               }
+            ],
+            "responses": {
+               "200": {
+                  "description": "Success"
+               },
+               "404": {
+                  "description": "User with given id not Found"
+               },
+               "default": {
+                  "description": "Unexpected error"
+               }
+            }
+         }
+      },
+      "/accounts/": {
+         "post": {
+            "description": "Create bank account",
+            "summary": "Create a new bank account",
+            "tags": [
+               "Accounts"
+            ],
+            "produces": [
+               "application/json"
+            ],
+            "security": [
+               {
+                  "Bearer": []
+               }
+            ],
+            "parameters": [
+               {
+                  "in": "body",
+                  "name": "body",
+                  "required": true,
+                  "description": "Account creation details",
+                  "schema": {
+                     "$ref": "#/components/schemas/accountDetails"
+                  }
+               }
+            ],
+            "responses": {
+               "201": {
+                  "description": "Account creation was successful"
+               },
+               "400": {
+                  "description": "Empty or invalid field"
+               },
+               "default": {
+                  "description": "Unexpected error"
+               }
+            }
+         },
+         "get": {
+            "description": "Get accounts",
+            "summary": "Returns a list of all bank accounts",
+            "tags": [
+               "Accounts"
+            ],
+            "produces": [
+               "application/json"
+            ],
+            "security": [
+               {
+                  "Bearer": []
+               }
+            ],
+            "responses": {
+               "200": {
+                  "description": "Success"
+               },
+               "404": {
+                  "description": "No account records found"
+               },
+               "default": {
+                  "description": "Unexpected error"
+               },
+               "schema": {
+                  "$ref": "#/responseBody/OfficesResponse"
+               }
+            }
+         }
+      },
+      "/accounts/{accountNumber}": {
+         "get": {
+            "description": "Get account",
+            "summary": "Get the bank account with given accountNumber",
+            "tags": [
+               "Accounts"
+            ],
+            "produces": [
+               "application/json"
+            ],
+            "security": [],
+            "parameters": [
+               {
+                  "in": "path",
+                  "name": "accountNumber",
+                  "required": true,
+                  "description": "The account number of the bank account to be fetched"
+               }
+            ],
+            "responses": {
+               "200": {
+                  "description": "Success"
+               },
+               "404": {
+                  "description": "Bank account not Found"
+               },
+               "default": {
+                  "description": "Unexpected error"
+               }
+            }
+         }
+      },
+      "/transactions/{transactionId}": {
+         "get": {
+            "description": "Get transaction",
+            "summary": "Get the transaction with given transactionId",
+            "tags": [
+               "Transactions"
+            ],
+            "produces": [
+               "application/json"
+            ],
+            "security": [],
+            "parameters": [
+               {
+                  "in": "path",
+                  "name": "transactionId",
+                  "required": true,
+                  "description": "The id of the transaction to be fetched"
+               }
+            ],
+            "responses": {
+               "200": {
+                  "description": "Success"
+               },
+               "404": {
+                  "description": "Transaction record not Found"
+               },
+               "default": {
+                  "description": "Unexpected error"
+               }
+            }
+         }
+      },
+      "/transactions": {
+         "get": {
+            "description": "Get transactions",
+            "summary": "Returns a list of all transaction",
+            "tags": [
+               "Transactions"
+            ],
+            "produces": [
+               "application/json"
+            ],
+            "security": [],
+            "responses": {
+               "200": {
+                  "description": "Success"
+               },
+               "404": {
+                  "description": "No transaction records Found"
+               },
+               "default": {
+                  "description": "Unexpected error"
+               }
+            }
+         }
+      },
+      "/transactions/{accountNumber}/credit": {
+         "post": {
+            "description": "Credit account",
+            "summary": "Credit the bank account with given accountNumber",
+            "tags": [
+               "Transactions"
+            ],
+            "produces": [
+               "application/json"
+            ],
+            "security": [],
+            "parameters": [
+               {
+                  "in": "path",
+                  "name": "accountNumber",
+                  "required": true,
+                  "description": "The account number of the bank account to be credited"
+               },
+               {
+                  "in": "body",
+                  "name": "body",
+                  "required": true,
+                  "description": "Credit transaction details",
+                  "schema": {
+                     "$ref": "#/components/schemas/creditTransaction"
+                  }
+               }
+
+            ],
+            "responses": {
+               "200": {
+                  "description": "Success"
+               },
+               "404": {
+                  "description": "Bank account not Found"
+               },
+               "default": {
+                  "description": "Unexpected error"
+               }
+            }
+         }
+      },
+      "/transactions/{accountNumber}/debit": {
+         "post": {
+            "description": "Debit account",
+            "summary": "Debit the bank account with given accountNumber",
+            "tags": [
+               "Transactions"
+            ],
+            "produces": [
+               "application/json"
+            ],
+            "security": [],
+            "parameters": [
+               {
+                  "in": "path",
+                  "name": "accountNumber",
+                  "required": true,
+                  "description": "The account number of the bank account to be debited"
+               },
+               {
+                  "in": "body",
+                  "name": "body",
+                  "required": true,
+                  "description": "Debit transaction details",
+                  "schema": {
+                     "$ref": "#/components/schemas/debitTransaction"
+                  }
+               }
+            ],
+            "responses": {
+               "200": {
+                  "description": "Success"
+               },
+               "404": {
+                  "description": "Bank account not Found"
+               },
+               "default": {
+                  "description": "Unexpected error"
+               }
+            }
+         }
+      }
+   },
+   "components": {
+      "schemas": {
+         "signupDetails": {
+            "title": "Signup Details",
+            "type": "object",
+            "properties": {
+               "firstName": {
+                  "description": "user firstname",
+                  "type": "string"
+               },
+               "lastName": {
+                  "description": "user lastname",
+                  "type": "string"
+               },
+               "email": {
+                  "description": "user email",
+                  "type": "string"
+               },
+               "password": {
+                  "description": "user password",
+                  "type": "string"
+               },
+               "isAdmin": {
+                  "description": "is user an admin?",
+                  "type": "boolean"
+               },
+               "type": {
+                  "description": "user type",
+                  "type": "string"
+               }
+            },
+            "example": {
+               "firstName": "Ichigo",
+               "lastName": "Kurosaki",
+               "email": "getsugatenshou@bleach.com",
+               "password": "bankai",
+               "isAdmin": true,
+               "type": "staff"
+            },
+            "required": [
+               "firstName, lastName, email, password, isAdmin, type"
+            ]
+         },
+         "signinDetails": {
+            "title": "Signin Details",
+            "type": "object",
+            "properties": {
+               "email": {
+                  "description": "user email",
+                  "type": "string"
+               },
+               "password": {
+                  "description": "user password",
+                  "type": "string"
+               }
+            },
+            "example": {
+               "email": "getsugatenshou@bleach.com",
+               "password": "bankai"
+            },
+            "required": [
+               "email, password"
+            ]
+         },
+         "accountDetails": {
+            "title": "Account Details",
+            "type": "object",
+            "properties": {
+               "accountNumber": {
+                  "description": "new account number",
+                  "type": "integer"
+               },
+               "firstName": {
+                  "description": "user firstname",
+                  "type": "string"
+               },
+               "lastName": {
+                  "description": "user lastname",
+                  "type": "string"
+               },
+               "email": {
+                  "description": "user email",
+                  "type": "string"
+               },
+               "owner": {
+                  "description": "account owner's id",
+                  "type": "integer"
+               },
+               "type": {
+                  "description": "account type",
+                  "type": "string"
+               },
+               "openingBalance": {
+                  "description": "new account opening balance",
+                  "type": "float"
+               },
+               "status": {
+                  "description": "new account status",
+                  "type": "string"
+               }
+            },
+            "example": {
+               "accountNumber": 1029938532,
+               "firstName": "Ichigo",
+               "lastName": "Kurosaki",
+               "email": "getsugatenshou@bleach.com",
+               "owner": 3,
+               "type": "savings",
+               "openingBalance": 4500,
+               "status": "dormant"
+            },
+            "required": [
+               "accountNumber, firstName, lastName, email, owner, type, openingBalance, status"
+            ]
+         },
+         "accountUpdate": {
+            "title": "Account update details",
+            "type": "object",
+            "properties": {
+               "status": {
+                  "description": "new account status",
+                  "type": "string"
+               }
+            },
+            "example": {
+               "status": "active"
+            },
+            "required": [
+               "status"
+            ]
+         },
+         "creditTransaction": {
+            "title": "Credit transaction details",
+            "type": "object",
+            "properties": {
+               "accountNumber": {
+                  "description": "account number to credit",
+                  "type": "integer"
+               },
+               "amount": {
+                  "description": "credit amount",
+                  "type": "float"
+               },
+               "cashier": {
+                  "description": "cashier's user id",
+                  "type": "integer"
+               },
+               "type": {
+                  "description": "transaction type",
+                  "type": "string"
+               }
+            },
+            "example": {
+               "accountNumber": 1012934423,
+               "amount": 20000,
+               "cashier": 2,
+               "type": "credit"
+            },
+            "required": [
+               "accountNumber, amount, cahier, type"
+            ]
+         },
+         "debitTransaction": {
+            "title": "Debit transaction details",
+            "type": "object",
+            "properties": {
+               "accountNumber": {
+                  "description": "account number to debit",
+                  "type": "integer"
+               },
+               "amount": {
+                  "description": "debit amount",
+                  "type": "float"
+               },
+               "cashier": {
+                  "description": "cashier's user id",
+                  "type": "integer"
+               },
+               "type": {
+                  "description": "transaction type",
+                  "type": "string"
+               }
+            },
+            "example": {
+               "accountNumber": 1022900469,
+               "amount": 3400,
+               "cashier": 2,
+               "type": "debit"
+            },
+            "required": [
+               "accountNumber, amount, cashier, type"
+            ]
+         },
+         "userResponse": {
+            "example": {
+               "firstname": "Jonathan",
+               "lastname": "Wick",
+               "email": "johnwick@oriental.com",
+               "password": "solovigilante",
+               "isAdmin": false,
+               "type": "client"
+            }
+         }
+      }
+   }
+}

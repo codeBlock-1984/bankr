@@ -14,7 +14,7 @@ class TransactionController {
     const creditedAccount = arrayFinder(allAccounts, 'accountNumber', accountNumber);
     const { balance } = creditedAccount;
     const { amount } = newCreditTransaction;
-    const accBalance = parseFloat(balance - amount).toFixed(2);
+    const accBalance = parseFloat(balance + amount).toFixed(2);
     const accountBalance = parseFloat(accBalance);
     const creditData = { ...newCreditTransaction, accountBalance };
     newCreditTransaction.createdOn = new Date();
