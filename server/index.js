@@ -10,7 +10,6 @@ import authRoute from './routes/authRoute';
 import userRoute from './routes/userRoute';
 import accountRoute from './routes/accountRoute';
 import transactionRoute from './routes/transactionRoute';
-
 import swaggerDocument from '../swagger.json';
 
 const app = express();
@@ -33,6 +32,17 @@ app.get('/', (req, res) => {
   res.statusCode = 200;
   res.setHeader('Content-Type', "text/html");
   res.send('<h1>Bankr API</h1>');
+});
+
+app.get('*', (req, res) => {
+  res.statusCode = 404;
+  res.setHeader('Content-Type', "text/html");
+  res.send(
+    `<h1>404</h1>
+     <hr>
+     <h3>Page Not Found!</h3>
+    `
+  );
 });
 
 app.listen(port, host, () => {
