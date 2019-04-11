@@ -30,14 +30,14 @@ Follow the steps below to get the development environment running locally
 ```
     git clone https://github.com/codeBlock-1984/bankr.git
 ```
-- Next, run the following comand to install project dependencies
+- Next, navigate into the project root directory and run the following command to install project dependencies
 ```
     npm install
 ```
 
 ## Running the tests
 
-To run the automated tests, run the following command in your terminal
+To run the automated tests, navigate to the project root directory and run the following command in your terminal
 ```
     npm test
 ```
@@ -94,7 +94,7 @@ The main features of this application with respect to the various users are list
 ## Related links
 
 * [User Interface](https://codeblock-1984.github.io/bankr/) - The UI of this application can be accessed here
-* [Documentation]() - The documentation can be accessed here
+* [Documentation](https://bankr-server.herokuapp.com/api-docs/) - The documentation can be accessed here
 
 ## Author
 
