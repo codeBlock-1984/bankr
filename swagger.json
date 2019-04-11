@@ -155,7 +155,10 @@
                   "in": "path",
                   "name": "userId",
                   "required": true,
-                  "description": "The id of the user to fetch"
+                  "description": "The id of the user to fetch",
+                  "schema": {
+                     "$ref": "#/components/schemas/userId"
+                  }
                }
             ],
             "responses": {
@@ -191,7 +194,10 @@
                   "in": "path",
                   "name": "userId",
                   "required": true,
-                  "description": "The id of the accounts' owner"
+                  "description": "The id of the accounts' owner",
+                  "schema": {
+                     "$ref": "#/components/schemas/userId"
+                  }
                }
             ],
             "responses": {
@@ -227,7 +233,10 @@
                   "in": "path",
                   "name": "userId",
                   "required": true,
-                  "description": "The id of the user linked to transactions"
+                  "description": "The id of the user linked to transactions",
+                  "schema": {
+                     "$ref": "#/components/schemas/userId"
+                  }
                }
             ],
             "responses": {
@@ -327,7 +336,10 @@
                   "in": "path",
                   "name": "accountNumber",
                   "required": true,
-                  "description": "The account number of the bank account to be fetched"
+                  "description": "The account number of the bank account to be fetched",
+                  "schema": {
+                     "$ref": "#/components/schemas/accountNumber"
+                  }
                }
             ],
             "responses": {
@@ -359,7 +371,10 @@
                   "in": "path",
                   "name": "transactionId",
                   "required": true,
-                  "description": "The id of the transaction to be fetched"
+                  "description": "The id of the transaction to be fetched",
+                  "schema": {
+                     "$ref": "#/components/schemas/transactionId"
+                  }
                }
             ],
             "responses": {
@@ -415,7 +430,10 @@
                   "in": "path",
                   "name": "accountNumber",
                   "required": true,
-                  "description": "The account number of the bank account to be credited"
+                  "description": "The account number of the bank account to be credited",
+                  "schema": {
+                     "$ref": "#/components/schemas/accountNumber"
+                  }
                },
                {
                   "in": "body",
@@ -457,7 +475,10 @@
                   "in": "path",
                   "name": "accountNumber",
                   "required": true,
-                  "description": "The account number of the bank account to be debited"
+                  "description": "The account number of the bank account to be debited",
+                  "schema": {
+                     "$ref": "#/components/schemas/accountNumber"
+                  }
                },
                {
                   "in": "body",
@@ -547,6 +568,18 @@
                "email, password"
             ]
          },
+         "userId": {
+            "title": "User's id",
+            "type": "integer",
+            "example": 1,
+            "required": true
+         },
+         "accountNumber": {
+            "title": "Account number of bank account",
+            "type": "integer",
+            "example": 1020095776,
+            "required": true
+         },
          "accountDetails": {
             "title": "Account Details",
             "type": "object",
@@ -585,7 +618,7 @@
                }
             },
             "example": {
-               "accountNumber": 1029938532,
+               "accountNumber": 1023004807,
                "firstName": "Ichigo",
                "lastName": "Kurosaki",
                "email": "getsugatenshou@bleach.com",
@@ -614,6 +647,12 @@
                "status"
             ]
          },
+         "transactionId": {
+            "title": "Transaction's id",
+            "type": "integer",
+            "example": 2,
+            "required": true
+         },
          "creditTransaction": {
             "title": "Credit transaction details",
             "type": "object",
@@ -636,13 +675,13 @@
                }
             },
             "example": {
-               "accountNumber": 1012934423,
+               "accountNumber": 1020095776,
                "amount": 20000,
                "cashier": 2,
                "type": "credit"
             },
             "required": [
-               "accountNumber, amount, cahier, type"
+               "accountNumber, amount, cashier, type"
             ]
          },
          "debitTransaction": {
@@ -667,8 +706,8 @@
                }
             },
             "example": {
-               "accountNumber": 1022900469,
-               "amount": 3400,
+               "accountNumber": 1020095776,
+               "amount": 300,
                "cashier": 2,
                "type": "debit"
             },
