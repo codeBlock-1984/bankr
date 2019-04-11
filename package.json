@@ -8,6 +8,7 @@
     "test": "NODE_ENV=test nyc --reporter=text ./node_modules/.bin/mocha --require @babel/register ./server/tests/*.js --exit",
     "serve": "node dist/index.js",
     "dev-start": "nodemon --exec babel-node ./server/index.js",
+    "dev-test": "NODE_ENV=test ./node_modules/.bin/mocha --require @babel/register ./server/tests/*.js --exit",
     "coveralls": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
     "coverage": "nyc report --reporter=text-lcov | coveralls"
   },
