@@ -41,7 +41,7 @@ app.get('*', (req, res) => {
     `<h1>404</h1>
      <hr>
      <h3>Page Not Found!</h3>
-    `
+    `,
   );
 });
 
