@@ -9,7 +9,6 @@ transactionSendBtn.addEventListener('click', displayTransactionConfirmModal);
 transactionCancelBtn.addEventListener('click', cancelTransaction);
 
 function displayTransactionConfirmModal() {
-  // debugger;
   const transactionType = selectType.options[selectType.selectedIndex].value;
   const debitConfirmModal = document.getElementById('debit-confirm-dialog');
   const creditConfirmModal = document.getElementById('credit-confirm-dialog');

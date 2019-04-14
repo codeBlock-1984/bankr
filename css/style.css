@@ -477,14 +477,17 @@ body {
   flex: 1;
   width: 100%;
   overflow-y: scroll;
+  padding-top: 20px;
 }
 .box-wrapper {
   width: 100%;
-  padding: 20px;
-  margin-bottom: 20px;
+  padding: 0 20px;
 }
 .top-box {
   flex-direction: column;
+}
+.bot-box {
+  margin-bottom: 20px;
 }
 .section-heading {
   margin-top: 10px;
@@ -495,11 +498,12 @@ body {
 }
 .trans-box {
   flex-wrap: wrap;
+  justify-content: space-between;
 }
 
 .single-box {
   flex-basis: 249px;
-  margin: 5px;
+  margin-bottom: 30px;
   padding-top: 20px;
   padding-left: 30px;
   background: #ffffff;
@@ -526,26 +530,21 @@ body {
   flex-wrap: wrap;
   justify-content: space-between;
   width: 99%;
-  margin: 15px 5px;
-  padding: 20px 20px;
+  padding: 40px 40px;
   background: #ffffff;
 }
 .account-box {
   display: flex;
   flex-direction: column;
   width: 49%;
-  padding: 15px 50px;
+  padding: 15px 100px;
   border: solid #ebebeb 1px;
 }
+
 .account-detail {
-  font-size: 15px;
-  margin-top: 5px;
+  margin-top: 10px;
   text-transform: uppercase;
-}
-.account-type {
-  font-weight: 500;
-}
-.account-number {
+  font-size: 15px;
   font-weight: 500;
 }
 .account-card {
@@ -579,40 +578,43 @@ body {
 
 /* accounts */
 
-.acc-box {
-  height: 550px;
-}
 .big-wrapper {
   height: 100%;
   margin-bottom: 50px;
-  padding-top: 50px;
-  padding-left: 10px;
-  padding-right: 10px;
+  padding: 40px 60px;
 }
 .action-btn {
   padding: 10px 20px;
   text-decoration: none;
   color: #ffffff;
-  background: #08415c;
+  background: #08415ce0;
   text-align: center;
   border-radius: 5px;
 }
-.create-new-link {
-  align-self: flex-end;
-  
-  margin-right: 10px;
-}
 .action-btn:hover {
   background: #d54f5a;
+}
+.create-new-link {
+  align-self: flex-end;
+  margin-bottom: 0px;
+}
+.view-transactions-link {
+  margin-top: 40px;
 }
 /* New account form */
 
 .big-box {
   width: 90%;
   height: 200px;
-  margin-top: 10px;
-  margin-bottom: 20px;
+  margin: 20px 0;
+  padding: 40px 20px;
   border: none;
+  border-radius: 5px;
+  background: #f7f5f59d;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
 }
 .big-box:first-of-type {
   padding-bottom: 40px;
@@ -682,16 +684,20 @@ body {
   color: #7c7c7c;
 }
 .user-box {
-  padding-top: 0;
-  padding-left: 0;
+  padding-top: 50px;
+  padding-left: 50px;
   border: none;
+  background: #f7f5f59d;
 }
 .user-detail {
   margin: 20px;
   font-size: 14px;
 }
 /* all-accounts */
-
+.account-form-wrapper {
+  padding: 40px 40px;
+  background: #ffffff;
+}
 .all-accounts-table tr th:first-child {
   width: 8%;
 }
@@ -904,8 +910,13 @@ body {
 }
 
 /* Users */
+.users-table-wrapper {
+  margin-bottom: 20px;
+  padding: 30px 40px;
+  background: #ffffff;
+}
 .users-table {
-  width: 70%;
+  width: 99%;
   margin-top: 10px;
 }
 .users-table tr th:first-child {
@@ -969,6 +980,15 @@ Media Queries for Responsive layout
   .main-nav, .search, .profile__title {
     display: none;
   }
+  .box-wrapper {
+    margin-bottom: 0;
+  }
+  .top-box {
+    padding-bottom: 0;
+  }
+  .bot-box {
+    margin-bottom: 20px;
+  }
   .box {
     flex-wrap: nowrap;
     overflow-x: auto;
@@ -977,6 +997,7 @@ Media Queries for Responsive layout
     display: none;
   }
   .single-box {
+    margin-right: 20px;
     padding: 15px;
   }
   .trans-detail {
@@ -1048,17 +1069,16 @@ Media Queries for Responsive layout
   }
   .account-box {
     width: 100%;
-    margin: 10px 0;
-    padding: 30px 40px;
+    padding: 30px 20px;
   }
   .card-logo {
     height: 40px;
   }
   .account-type, .account-number {
-    font-size: 20px;
+    font-size: 15px;
   }
   .account-card {
-    font-size: 20px;
+    font-size: 15px;
   }
   .account-balance {
     font-size: 35px;
@@ -1079,13 +1099,18 @@ Media Queries for Responsive layout
 /* Accounts */
 /* Media queries */
 @media screen and (max-width:480px) {
+  .account-wrapper {
+    justify-content: unset;
+  }
   .big-wrapper {
     flex-wrap: nowrap;
-    padding-top: 20px;
+    padding: 30px 20px;
+    height: unset;
   }
   .big-box {
     height: unset;
-    margin-bottom: 0;
+    margin: 10px 0;
+    padding-top: 30px;
     padding-bottom: 30px;
   }
 }
@@ -1093,12 +1118,11 @@ Media Queries for Responsive layout
   .big-wrapper {
     height: unset;
     flex-wrap: nowrap;
-    padding-top: 20px;
   }
   .big-box {
     height: unset;
     margin-bottom: 0;
-    padding-bottom: 30px;
+    padding: 30px 50px;
   }
 }
 @media screen and (min-width: 1400px) {
@@ -1171,7 +1195,7 @@ Media Queries for Responsive layout
     width: 180px;
   }
   .detail-table {
-    width: 100%;
+    width: 99%;
     table-layout: fixed;
     word-break: break-word;
   }
@@ -1224,14 +1248,14 @@ Media Queries for Responsive layout
     padding-bottom: 10px;
   }
   .account-wrapper {
-    width: 96%;
+    width: 100%;
   }
   .user-detail {
     margin: 10px;
     font-size: 17px;
   }
   .user-box {
-    padding: 10px 5px;
+    padding: 50px 50px;
   }
 }
 @media screen and (min-width: 1400px) {
@@ -1392,6 +1416,9 @@ Media Queries for Responsive layout
   }
 }
 @media screen and (max-width: 768px) {
+  .users-table {
+    width: 99%;
+  }
   .users-table tr th:first-child {
     width: 12%;
   }
@@ -1403,6 +1430,9 @@ Media Queries for Responsive layout
   }
 }
 @media screen and (max-width: 1400px) {
+  .users-table {
+    width: 99%;
+  }
   .users-table tr th:first-child {
     width: 12%;
   }
