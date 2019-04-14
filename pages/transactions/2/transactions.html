@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Bankr</title>
+  <meta name="author" content="Emmanuel Ihemegbulam">
+  <meta name="description" content="Secure online banking application. Easy to use, efficient, fast.">
+  <meta name="keywords" content="online banking, banking application">
+
+  <!-- favicon link -->
+  <link rel="shortcut icon" href="../../../imgs/favicon.png" type="image/x-icon">
+  <!-- Google fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.0/css/all.css" integrity="sha384-Mmxa0mLqhmOeaE8vgOSbKacftZcsNYDjQzuCOm6D02luYSzBG8vpaOykv9lFQ51Y" crossorigin="anonymous">
+  <!-- Custom styles -->
+  <link rel="stylesheet" href="../../../css/style.css">
+  </head>
+  <body>
+    <div class="page-wrapper page-wrapper--bg--plain l-flex l-flex-row">
+      <nav class="main-nav l-flex l-flex-col">
+        <header class="main-nav__header">
+          <h1 class="main-nav__heading h-40"><a class="home-link" href="../../../index.html">Bankr</a></h1>
+        </header>
+        <ul class="main-nav__list top-list">
+          <li class="main-nav__li-item">
+            <a href="../../../user-dashboard.html" class="main-nav__link">
+              <i class="fas fa-home main-nav__icon"></i>
+              <span class="main-nav__link-desc">Dashboard</span>
+            </a>
+          </li>  
+          <li class="main-nav__li-item">
+            <a href="../../../accounts.html" class="main-nav__link">
+              <i class="fas fa-wallet main-nav__icon"></i>
+              <span class="main-nav__link-desc">Accounts</span>
+            </a>
+          </li>  
+          <li class="main-nav__li-item active">
+            <a href="../../../transactions.html" class="main-nav__link">
+              <i class="fas fa-exchange-alt main-nav__icon"></i>
+              <span class="main-nav__link-desc">Transactions</span>
+            </a>
+          </li>  
+        </ul>
+  
+        <footer class="page-footer page-footer--big">
+            <ul class="main-nav__list bot-list">
+                <li class="main-nav__li-item">
+                  <a href="" class="main-nav__link">
+                    <i class="fas fa-cog main-nav__icon"></i>
+                    <span class="main-nav__link-desc">Settings</span>
+                  </a>
+                </li>  
+                <li class="main-nav__li-item">
+                  <a href="../../../sign-in.html" class="main-nav__link">
+                    <i class="fas fa-sign-out-alt main-nav__icon"></i>
+                    <span class="main-nav__link-desc">Logout</span>
+                  </a>
+                </li>  
+              </ul>
+          <p class="page-footer__text">Copyright &copy; Bankr 2019</p>
+        </footer> 
+      </nav>
+
+      <section class="main-section l-flex l-flex-col">
+        <header class="main-header l-flex l-flex-row">
+          <div class="search">
+            <form action="" class="search__form">
+              <input type="text" class="search__input" placeholder="type to search...">
+              <button type="submit" class="search__button">
+                <i class="fas fa-search search__icon"></i>
+              </button>
+            </form>
+          </div>
+          <div class="mobile-nav-icon-box">
+            <a href="javascript:void(0)" id="mobile-menu-link" class="mobile-nav-icon-link">
+              <i class="fas fa-bars mobile-nav-icon"></i>
+            </a>
+          </div>
+          <div class="mobile-heading">
+            <h1 class="mobile-heading__text">Transactions</h1>
+          </div>
+          <div class="profile">
+            <p class="profile__title">Aisha Amaka Wole</p>
+            <img src="http://i.pravatar.cc/50?img=44" alt="user image" class="avatar">
+          </div>
+        </header>
+        <div id="mobile-menu" class="mobile-nav">
+          <ul class="mobile-nav__list">
+            <li class="mobile-nav__li-item">
+              <a href="../../../user-dashboard.html" class="mobile-nav__link">
+                <i class="fas fa-home mobile-nav__icon"></i>
+                <span class="mobile-nav__link-desc">Dashboard</span>
+              </a>
+            </li>  
+            <li class="mobile-nav__li-item">
+              <a href="../../../accounts.html" class="mobile-nav__link">
+                <i class="fas fa-wallet mobile-nav__icon"></i>
+                <span class="mobile-nav__link-desc">Accounts</span>
+              </a>
+            </li>  
+            <li class="mobile-nav__li-item">
+              <a href="../../../transactions.html" class="mobile-nav__link">
+                <i class="fas fa-exchange-alt mobile-nav__icon"></i>
+                <span class="mobile-nav__link-desc">Transactions</span>
+              </a>
+            </li>
+            <li class="mobile-nav__li-item settings">
+              <a href="" class="mobile-nav__link">
+                <i class="fas fa-cog mobile-nav__icon"></i>
+                <span class="mobile-nav__link-desc">Settings</span>
+              </a>
+            </li>  
+            <li class="mobile-nav__li-item">
+              <a href="../../../sign-in.html" class="mobile-nav__link">
+                <i class="fas fa-sign-out-alt mobile-nav__icon"></i>
+                <span class="mobile-nav__link-desc">Logout</span>
+              </a>
+            </li>     
+          </ul>
+        </div>
+        <main class="page-main l-flex l-flex-col">
+          <section class="box-wrapper account-form-container l-flex l-flex-col">
+            <h2 class="section-heading"><a href="../../../accounts.html">0027668401</a>/ &nbsp;&nbsp;Transactions</h2>
+            <div class="account-form-wrapper l-flex l-flex-row">
+              <table class="detail-table">
+                <tr class="detail-table__row">
+                  <th class="detail-table__head trans-tb-date-head">Date</th>
+                  <th class="detail-table__head trans-tb-desc-head">Description</th>
+                  <th class="detail-table__head trans-tb-merchant-head">Merchant</th>
+                  <th class="detail-table__head trans-tb-credit-head">Credit</th>
+                  <th class="detail-table__head trans-tb-debit-head">Debit</th>
+                  <th class="detail-table__head trans-tb-balance-head">Balance</th>
+                </tr>
+                <tr class="detail-table__row">
+                  <td class="detail-table__cell trans-tb-date">22-03-2019</td>
+                  <td class="detail-table__cell trans-tb-desc">February Electricity Bill</td>
+                  <td class="detail-table__cell trans-tb-merchant">Ikeja Electric Plc.</td>
+                  <td class="detail-table__cell trans-tb-credit"></td>
+                  <td class="detail-table__cell trans-tb-debit">8500.00</td>
+                  <td class="detail-table__cell trans-tb-balance">408,874.00</td>
+                </tr>
+                <tr class="detail-table__row">
+                  <td class="detail-table__cell trans-tb-date">19-03-2019</td>
+                  <td class="detail-table__cell trans-tb-desc">Purchase</td>
+                  <td class="detail-table__cell trans-tb-merchant">Fast Forward Stores, Ikeja</td>
+                  <td class="detail-table__cell trans-tb-credit"></td>
+                  <td class="detail-table__cell trans-tb-debit">23,490.00</td>
+                  <td class="detail-table__cell trans-tb-balance">408,874.00</td>
+                </tr>
+                <tr class="detail-table__row">
+                  <td class="detail-table__cell trans-tb-date">18-03-2019</td>
+                  <td class="detail-table__cell trans-tb-desc">Bank Withdrawal</td>
+                  <td class="detail-table__cell trans-tb-merchant">Premium Bank Plc.</td>
+                  <td class="detail-table__cell trans-tb-credit"></td>
+                  <td class="detail-table__cell trans-tb-debit">45,000.00</td>
+                  <td class="detail-table__cell trans-tb-balance">408,874.00</td>
+                </tr>
+                <tr class="detail-table__row">
+                  <td class="detail-table__cell trans-tb-date">10-03-2019</td>
+                  <td class="detail-table__cell trans-tb-desc">Online Payment</td>
+                  <td class="detail-table__cell trans-tb-merchant">Amazon Stores</td>
+                  <td class="detail-table__cell trans-tb-credit"></td>
+                  <td class="detail-table__cell trans-tb-debit">18,640.00</td>
+                  <td class="detail-table__cell trans-tb-balance">408,874.00</td>
+                </tr>
+                <tr class="detail-table__row">
+                  <td class="detail-table__cell trans-tb-date">10-03-2019</td>
+                  <td class="detail-table__cell trans-tb-desc">Cash deposit</td>
+                  <td class="detail-table__cell trans-tb-merchant">Harry Igbokwe</td>
+                  <td class="detail-table__cell trans-tb-credit">12,000.00</td>
+                  <td class="detail-table__cell trans-tb-debit"></td>
+                  <td class="detail-table__cell trans-tb-balance">408,874.00</td>
+                </tr>
+                <tr class="detail-table__row">
+                  <td class="detail-table__cell trans-tb-date">09-03-2019</td>
+                  <td class="detail-table__cell trans-tb-desc">POS payment</td>
+                  <td class="detail-table__cell trans-tb-merchant">Oando Service Station</td>
+                  <td class="detail-table__cell trans-tb-credit"></td>
+                  <td class="detail-table__cell trans-tb-debit">5,600.00</td>
+                  <td class="detail-table__cell trans-tb-balance">408,874.00</td>
+                </tr>
+                <tr class="detail-table__row">
+                  <td class="detail-table__cell trans-tb-date">06-03-2019</td>
+                  <td class="detail-table__cell trans-tb-desc">Online Transfer</td>
+                  <td class="detail-table__cell trans-tb-merchant">Aminat Mohammed</td>
+                  <td class="detail-table__cell trans-tb-credit"></td>
+                  <td class="detail-table__cell trans-tb-debit">1,000.00</td>
+                  <td class="detail-table__cell trans-tb-balance">408,874.00</td>
+                </tr>
+                <tr class="detail-table__row">
+                  <td class="detail-table__cell trans-tb-date">01-03-2019</td>
+                  <td class="detail-table__cell trans-tb-desc">February Salary</td>
+                  <td class="detail-table__cell trans-tb-merchant">Anthony, Barbara & Co.</td>
+                  <td class="detail-table__cell trans-tb-credit">316,000.00</td>
+                  <td class="detail-table__cell trans-tb-debit"></td>
+                  <td class="detail-table__cell trans-tb-balance">408,874.00</td>
+                </tr>
+              </table>
+            </div>
+          </section>
+        </main>
+        <footer class="page-footer page-footer--big main-footer">
+          <p class="page-footer__text nav-footer__text">Copyright &copy; Bankr 2019</p>
+        </footer>
+      </section>
+    </div>
+    
+    <script src="../../../js/script.js"></script>
+  </body>
+</html>
