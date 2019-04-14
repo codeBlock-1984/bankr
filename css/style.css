@@ -702,10 +702,10 @@ body {
   width: 8%;
 }
 .all-accounts-table tr th:nth-child(2) {
-  width: 25%;
+  width: 20%;
 }
 .action-head {
-  width: 65px;
+  width: 10%;
   padding-right: 0;
 }
 .action-cell {
