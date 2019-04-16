@@ -1,7 +1,7 @@
 import { body } from 'express-validator/check';
 import { sanitizeBody } from 'express-validator/filter';
 
-import users from '../models/userModel';
+import users from '../models/users';
 import Passcode from '../helpers/Passcode';
 import BooleanChecker from '../helpers/BooleanChecker';
 import ArraySorter from '../helpers/ArraySorter';

@@ -1,11 +1,11 @@
 import express from 'express';
 
-import AuthController from '../controllers/AuthController';
+import Auth from '../controllers/Auth';
 import validate from '../middlewares/validate';
 import authValidator from '../middlewares/authValidator';
 
 const router = express.Router();
-const { signUp, signIn } = AuthController;
+const { signUp, signIn } = Auth;
 const {
   signupValidator,
   signinValidator,

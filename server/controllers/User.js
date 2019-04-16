@@ -1,4 +1,4 @@
-import users from '../models/userModel';
+import users from '../models/users';
 import ArraySorter from '../helpers/ArraySorter';
 
 const { arrayFinder } = ArraySorter;

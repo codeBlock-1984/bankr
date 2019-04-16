@@ -1,7 +1,7 @@
 import { body, param } from 'express-validator/check';
 import { sanitizeBody, sanitizeParam } from 'express-validator/filter';
 
-import accounts from '../models/accountModel';
+import accounts from '../models/accounts';
 import BooleanChecker from '../helpers/BooleanChecker';
 import ArraySorter from '../helpers/ArraySorter';
 

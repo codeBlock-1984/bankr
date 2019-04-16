@@ -1,6 +1,6 @@
 import express from 'express';
 
-import AccountController from '../controllers/AccountController';
+import Account from '../controllers/Account';
 import validate from '../middlewares/validate';
 import accountValidator from '../middlewares/accountValidator';
 
@@ -8,7 +8,7 @@ const router = express.Router();
 
 const {
   createAccount, getAccount, getAllAccounts, updateAccountStatus, deleteAccount,
-} = AccountController;
+} = Account;
 const {
   accountFieldsValidator, accountStatusValidator, accountParamValidator, duplicateValidator,
 } = accountValidator;
