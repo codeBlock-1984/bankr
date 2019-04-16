@@ -195,18 +195,26 @@ body {
 }
 .form-wrapper__heading {
   padding-top: 15px;
-  padding-bottom: 15px;
+  padding-bottom: 10px;
   flex-basis: 100%;
   color: #ffffff;
   border-bottom: solid #d54f5a 2px;
+}
+.form-wrapper__title {
+  margin-bottom: 10px;
 }
 .home-link {
   text-decoration: none;
   color: #ffffff;
 }
+.home-link_sub {
+  display: block;
+  font-size: 12px;
+  color: #d54f5a;
+}
 .alert-message {
   margin-top: 10px;
-  font-size: 12px;
+  font-size: 13px;
   color: #8f2020;
 }
 .reg-form {
