@@ -1040,25 +1040,33 @@ Media Queries for Responsive layout
   }
   .box {
     flex-wrap: nowrap;
-    overflow-x: auto;
+    flex-direction: column;
   }
   .box::-webkit-scrollbar {
     display: none;
   }
   .single-box {
-    margin-right: 20px;
+    flex-basis: 90px;
     padding: 15px;
-  }
+    margin-bottom: 10px;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
+}
   .trans-detail {
     width: 180px;
-    font-size: 15px;
+    margin-top: 8px;
+    margin-bottom: 5px;
+    font-size: 10px;
   }
   .account-wrapper {
     flex-direction: column;
   }
   .account-box {
     width: 100%;
-    margin: 10px 0;
+    margin: 0px 0;
     padding: 10px 30px;
   }
   .card-logo {
@@ -1159,7 +1167,7 @@ Media Queries for Responsive layout
   }
   .big-box {
     height: unset;
-    margin: 10px 0;
+    margin: 0px 0;
     padding-top: 30px;
     padding-bottom: 30px;
   }
@@ -1274,12 +1282,17 @@ Media Queries for Responsive layout
   }
   .action-title {
     width: 100%;
-    padding-top: 15px;
+    padding-top: 5px;
     padding-left: 25px;
-  }
-  .action-category {
-    font-size: 13px;
-  }
+    margin-top: 0;
+    height: 25px;
+    border-radius: 5px 5px 0 0;
+    -webkit-border-radius: 5px 5px 0 0;
+    -moz-border-radius: 5px 5px 0 0;
+    -ms-border-radius: 5px 5px 0 0;
+    -o-border-radius: 5px 5px 0 0;
+}
+  
   .user-detail {
     margin: 10px;
     font-size: 12px;
