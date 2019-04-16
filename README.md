@@ -99,6 +99,10 @@ The main features of this application with respect to the various users are list
 - View a specific client's bank account record 
 - Delete a specific bank account
 
+## Extra features
+- A client can view his transactions for each account
+- A client can view his own accounts
+
 ## Related links
 
 * [User Interface](https://codeblock-1984.github.io/bankr/) - The UI of this application can be accessed here
