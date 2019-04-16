@@ -13,6 +13,22 @@ function showMobileMenu() {
   }
 }
 
+// ---- User profile panel -------
+const userPanelLink = document.getElementById('user-panel-link');
+let userPanel;
+
+userPanelLink.addEventListener('click', showUserPanel);
+
+function showUserPanel() {
+  userPanel = document.getElementById('user-panel');
+
+  if (userPanel.style.height === '80px') {
+    userPanel.style.height = '0px';
+  } else {
+    userPanel.style.height = '80px';
+  }
+}
+
 // ---- Modal globals -------
 let activeModal;
 const brandModalCloseBtns = document.querySelectorAll('.brand-modal-close');
