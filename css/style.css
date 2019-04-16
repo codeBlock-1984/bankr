@@ -483,23 +483,25 @@ body {
   -ms-transition: height 1s;
   -o-transition: height 1s;
   transition: height 1s;
+  border-bottom: 2px #d54f5a solid;
 }
 .mobile-nav__list {
   display: flex;
   flex-flow: column nowrap;
   justify-content: space-between;
+  margin: 10px 0;
 }
 .mobile-nav__link {
   text-decoration: none;
 }
 .mobile-nav__li-item {
-  padding: 20px 10px;
+  padding: 10px 0;
 }
 .settings {
-  margin-top: 40px;
+  margin-top: 0px;
 }
 .mobile-nav__link-desc {
-  font-size: 20px;
+  font-size: 15px;
   color: #ffffff;
 }
 .mobile-nav__icon {
@@ -657,7 +659,7 @@ body {
   border-bottom: solid #ebebeb 1px;
 }
 .account-form-container {
-  min-height: 100%;
+  margin-bottom: 20px;
 }
 .account-form {
   flex-direction: row;
@@ -674,13 +676,19 @@ body {
 /* transactions */
 
 .detail-table {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
   width: 90%;
   margin-left: 10px;
   background: #ffffff;
   border-collapse: collapse;
 }
 .detail-table__row {
-  margin-left: 20px;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  flex-wrap: nowrap;
 }
 .detail-table__row:nth-child(even) {
   background: #ebebeb;
@@ -690,12 +698,14 @@ body {
   border-bottom: solid #ebebeb 1px;
 }
 .detail-table__head {
-  padding: 12px 12px;
-  text-align: left;
+  flex: 1;
+  flex-shrink: 2;
   color: #ffffff;
   background: #08415c40;
+  font-size: 12px;
 }
 .detail-table__cell {
+  flex: 1;
   padding-left: 20px; 
   font-size: 12px;
 }
@@ -1139,6 +1149,7 @@ Media Queries for Responsive layout
 /* Media queries */
 @media screen and (max-width:480px) {
   .account-wrapper {
+    padding: 0;
     justify-content: unset;
   }
   .big-wrapper {
@@ -1174,6 +1185,9 @@ Media Queries for Responsive layout
 /* New account form */
 /* Media queries */
 @media screen and (max-width:480px) {
+  .account-form-wrapper {
+    padding: 0;
+  }
   .account-form {
     flex-direction: column;
     padding-top: 10px;
@@ -1268,10 +1282,11 @@ Media Queries for Responsive layout
   }
   .user-detail {
     margin: 10px;
-    font-size: 15px;
+    font-size: 12px;
   }
   .user-box {
-    padding: 10px 5px;
+    padding: 50px 20px;
+    margin: 0;
   }
 }
 @media screen and (min-width: 768px) {
@@ -1314,6 +1329,33 @@ Media Queries for Responsive layout
 /* All accounts */
 /* Media queries */
 @media screen and (max-width: 480px) {
+  .all-accounts-table .detail-table__head:nth-child(3),
+  .all-accounts-table .detail-table__head:nth-child(4),
+  .all-accounts-table .detail-table__head:nth-child(5),
+  .all-accounts-table .detail-table__cell:nth-child(3),
+  .all-accounts-table .detail-table__cell:nth-child(4),
+  .all-accounts-table .detail-table__cell:nth-child(5) {
+    display: none;
+  }
+  .all-accounts-table .detail-table__head:nth-child(1),
+  .all-accounts-table .detail-table__cell:nth-child(1) {
+    flex: 0.2;
+  }
+  .all-accounts-table .detail-table__head:nth-child(6),
+  .all-accounts-table .detail-table__cell:nth-child(6) {
+    flex: 0.6;
+  }
+  .all-accounts-table .detail-table__head:nth-child(7),
+  .all-accounts-table .detail-table__cell:nth-child(7) {
+    flex: 1;
+  }
+  .all-accounts-table .detail-table__head,
+  .all-accounts-table .detail-table__cell {
+    padding: 8px 0 8px 4px;
+  }
+  .account-form-wrapper {
+    margin-bottom: 20px;
+  }
   .brand-modal-inner {
     width: 90%;
   }
@@ -1447,16 +1489,22 @@ Media Queries for Responsive layout
 
 /* Users */
 @media screen and (max-width: 480px) {
+  .users-table-wrapper {
+    background: inherit;
+  }
   .users-table {
-    margin-bottom: 30px;
+    margin-bottom: 0px;
   }
   .users-table th, .users-table td  {
+    font-size: 12px;
+  }
+  .create-new-link {
     font-size: 12px;
   }
 }
 @media screen and (max-width: 768px) {
   .users-table {
-    width: 99%;
+    width: 100%;
   }
   .users-table tr th:first-child {
     width: 12%;
@@ -1470,7 +1518,7 @@ Media Queries for Responsive layout
 }
 @media screen and (max-width: 1400px) {
   .users-table {
-    width: 99%;
+    width: 100%;
   }
   .users-table tr th:first-child {
     width: 12%;
