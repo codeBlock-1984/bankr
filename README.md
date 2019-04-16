@@ -34,6 +34,14 @@ Follow the steps below to get the development environment running locally
 ```
     npm install
 ```
+- Run the following command to create a .env file with the necessary environmental variable for the project
+```
+    touch .env && cp .env.example .env
+```
+- To start the development server run
+```
+    npm run dev-start
+```
 
 ## Running the tests
 
