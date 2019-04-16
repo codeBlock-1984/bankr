@@ -1,5 +1,5 @@
-import transactions from '../models/transactionModel';
-import accounts from '../models/accountModel';
+import transactions from '../models/transactions';
+import accounts from '../models/accounts';
 import ArraySorter from '../helpers/ArraySorter';
 
 const { arrayFinder, arrayFilter } = ArraySorter;

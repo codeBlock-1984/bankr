@@ -1,4 +1,4 @@
-import accounts from '../models/accountModel';
+import accounts from '../models/accounts';
 import ArraySorter from '../helpers/ArraySorter';
 
 const { arrayFinder, arrayFilterNot, arrayFilter } = ArraySorter;

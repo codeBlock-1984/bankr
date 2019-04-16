@@ -1,6 +1,6 @@
 import express from 'express';
 
-import transactionController from '../controllers/TransactionController';
+import Transaction from '../controllers/Transaction';
 import validate from '../middlewares/validate';
 import transactionValidator from '../middlewares/transactionValidator';
 
@@ -8,7 +8,7 @@ const router = express.Router();
 
 const {
   creditTransaction, debitTransaction, getTransaction, getAllTransactions,
-} = transactionController;
+} = Transaction;
 const {
   transactionFieldsValidator, accountNumberParamValidator, transactionIdParamValidator,
 } = transactionValidator;

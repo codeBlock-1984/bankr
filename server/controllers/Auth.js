@@ -1,4 +1,4 @@
-import users from '../models/userModel';
+import users from '../models/users';
 import Auth from '../helpers/Auth';
 import Passcode from '../helpers/Passcode';
 

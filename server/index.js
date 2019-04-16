@@ -6,10 +6,10 @@ import morgan from 'morgan';
 import cors from 'cors';
 import path from 'path';
 
-import authRoute from './routes/authRoute';
-import userRoute from './routes/userRoute';
-import accountRoute from './routes/accountRoute';
-import transactionRoute from './routes/transactionRoute';
+import authRoute from './routes/auth';
+import userRoute from './routes/user';
+import accountRoute from './routes/account';
+import transactionRoute from './routes/transaction';
 import swaggerDocument from '../swagger.json';
 
 const app = express();
