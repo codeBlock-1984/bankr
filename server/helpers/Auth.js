@@ -1,7 +1,6 @@
 import jwt from 'jsonwebtoken';
-import dotenv from 'dotenv';
+import '../config/config';
 
-dotenv.config();
 const secretKey = process.env.SECRET_KEY;
 
 // Class for authentication
