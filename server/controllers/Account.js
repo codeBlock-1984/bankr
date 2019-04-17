@@ -38,6 +38,35 @@ class AccountController {
     });
   }
 
+  static async getAccountsByStatus(req, res) {
+    const client = await pool.connect();
+    try {
+      const { status } = req.params;
+      const getAccountsByStatusQuery = `SELECT * FROM accounts WHERE status = $1
+                                  ORDER BY id ASC`;
+      const values = [status];
+      const { rows } = await client.query(getAccountsByStatusQuery, values);
+      if (!rows[0]) {
+        return res.status(404).json({
+          status: 404,
+          error: 'No accounts record found for user with given id!',
+        });
+      }
+      const userAccountsByStatus = rows;
+      return res.status(200).json({
+        status: 200,
+        data: userAccountsByStatus,
+      });
+    } catch (error) {
+      return res.status(500).json({
+        status: 500,
+        error: 'Internal server error!',
+      });
+    } finally {
+      await client.release();
+    }
+  }
+
   static async getAllAccounts(req, res) {
     return res.status(200).json({
       status: 200,
