@@ -5,11 +5,12 @@ import ArraySorter from '../helpers/ArraySorter';
 const { arrayFinder, arrayFilter } = ArraySorter;
 const allTransactions = transactions;
 const allAccounts = accounts;
+const transactionCount = allTransactions.length + 1;
 
 class TransactionController {
   static async creditTransaction(req, res) {
     const newCreditTransaction = req.body;
-    newCreditTransaction.id = allTransactions.length + 1;
+    newCreditTransaction.id = transactionCount;
     const { accountNumber } = req.params;
     const creditedAccount = arrayFinder(allAccounts, 'accountNumber', accountNumber);
     const { balance } = creditedAccount;
@@ -29,7 +30,7 @@ class TransactionController {
 
   static async debitTransaction(req, res) {
     const newDebitTransaction = req.body;
-    newDebitTransaction.id = allTransactions.length + 1;
+    newDebitTransaction.id = transactionCount;
     const { accountNumber } = req.params;
     const debitedAccount = arrayFinder(allAccounts, 'accountNumber', accountNumber);
     const { balance } = debitedAccount;

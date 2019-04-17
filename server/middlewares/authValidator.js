@@ -13,7 +13,7 @@ const { isDuplicate, isExisting } = BooleanChecker;
 const { arrayFinder } = ArraySorter;
 
 const authValidator = {
-  signupValidator: [
+  nameValidator: [
     body('firstName')
       .exists({ checkFalsy: true })
       .withMessage('Firstname is required!')
@@ -26,17 +26,23 @@ const authValidator = {
       .isString()
       .withMessage('Last name must be a string!')
       .trim(),
+  ],
+  emailValidator: [
     body('email')
       .exists({ checkFalsy: true })
       .withMessage('Email is required!')
       .isEmail()
       .withMessage('Invalid email address!')
       .trim(),
+  ],
+  passwordValidator: [
     body('password')
       .exists({ checkFalsy: true })
       .withMessage('Password is required!')
       .isString()
       .trim(),
+  ],
+  signupValidator: [
     body('isAdmin')
       .exists()
       .withMessage('User isAdmin property is required!')
@@ -49,19 +55,6 @@ const authValidator = {
       .withMessage('User type is required!')
       .isIn(['staff', 'client'])
       .withMessage('Invalid user type!')
-      .trim(),
-  ],
-  signinValidator: [
-    body('email')
-      .exists({ checkFalsy: true })
-      .withMessage('Email is required!')
-      .isEmail()
-      .withMessage('Invalid email address!')
-      .trim(),
-    body('password')
-      .exists({ checkFalsy: true })
-      .withMessage('Password is required!')
-      .isString()
       .trim(),
   ],
   duplicateValidator: [
