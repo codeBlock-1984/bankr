@@ -20,7 +20,6 @@ let testAccountNumber;
 let testTransactionId;
 const noTransactionId = 1009;
 
-/* eslint-disable no-unused-vars */
 describe('Transactions Endpoints', () => {
   before('seed accounts dummy data', async () => {
     const response = await chai.request(app).post('/api/v1/accounts').send(testTransactionAccountData);

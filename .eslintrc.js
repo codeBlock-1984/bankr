@@ -16,6 +16,6 @@ module.exports = {
     "quotes": "off",
     "no-console": 0,
     "arrow-body-style": ["error", "always"],
-    "no-unused-vars": ["error", { "vars": "all", "args": "none", "ignoreRestSiblings": false }]
+    "no-unused-vars": ["error", { "vars": "all", "args": "none", "ignoreRestSiblings": true }]
   }
 };

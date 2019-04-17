@@ -19,7 +19,6 @@ class AuthController {
       const token = createToken({ userId, userType });
       allUsers.push(newUser);
       const {
-        // eslint-disable-next-line
         password, isAdmin, type, ...signupDetails
       } = newUser;
       const newSignup = { token, ...signupDetails };
@@ -38,7 +37,6 @@ class AuthController {
     const { id: userId, type: userType } = singleUser;
     const token = createToken({ userId, userType });
     const {
-      // eslint-disable-next-line
       password, isAdmin, type, ...signinDetails
     } = singleUser;
     const newSignin = { token, ...signinDetails };

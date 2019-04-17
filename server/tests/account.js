@@ -21,8 +21,6 @@ let getTestAccountNumber;
 const noAccountNumber = 1112223456;
 // const testStatus = 'active';
 
-/* eslint-disable no-unused-vars */
-
 describe('Accounts Endpoints', () => {
   describe('POST /accounts', () => {
     it('should create a new bank account', (done) => {
