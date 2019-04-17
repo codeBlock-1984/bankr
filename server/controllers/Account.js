@@ -39,10 +39,30 @@ class AccountController {
   }
 
   static async getAllAccounts(req, res) {
-    return res.status(200).json({
-      status: 200,
-      data: allAccounts,
-    });
+    const client = await pool.connect();
+    try {
+      const getAllAccountsQuery = `SELECT * FROM accounts
+                                  ORDER BY id ASC`;
+      const { rows } = await client.query(getAllAccountsQuery);
+      if (!rows[0]) {
+        return res.status(404).json({
+          status: 404,
+          error: 'No account records found!',
+        });
+      }
+      const allBankAccounts = rows;
+      return res.status(200).json({
+        status: 200,
+        data: allBankAccounts,
+      });
+    } catch (error) {
+      return res.status(500).json({
+        status: 500,
+        error: 'Internal server error!',
+      });
+    } finally {
+      await client.release();
+    }
   }
 
   static async getUserAccounts(req, res) {
