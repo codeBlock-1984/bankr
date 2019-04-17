@@ -81,9 +81,13 @@ const authValidator = {
       .withMessage('Email or password incorrect!'),
     body('password')
       .custom(async (password) => {
-        const code = existingUser.password;
-        const isVerified = await verifyPassword(password, code);
-        return isVerified;
+        try {
+          const code = existingUser.password;
+          const isVerified = await verifyPassword(password, code);
+          return isVerified;
+        } catch (error) {
+          console.log(error);
+        }
       })
       .withMessage('Email or password incorrect!'),
   ],

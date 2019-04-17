@@ -20,23 +20,27 @@ const testUser = {
 describe('Auth Endpoints', () => {
   describe('POST /auth/signup', () => {
     it('should create a new user account', (done) => {
-      chai.request(app).post('/api/v1/auth/signup').send(testUser).end((err, res) => {
-        res.should.have.status(201);
-        res.body.should.have.property('status').eql(201);
-        res.body.should.have.property('data');
-        res.body.data.should.be.an('object');
-        res.body.data.should.have.property('token');
-        res.body.data.token.should.be.a('string');
-        res.body.data.should.have.property('firstName');
-        res.body.data.firstName.should.be.a('string');
-        res.body.data.should.have.property('lastName');
-        res.body.data.lastName.should.be.a('string');
-        res.body.data.should.have.property('email');
-        res.body.data.email.should.be.a('string');
-        res.body.data.should.have.property('id');
-        res.body.data.id.should.be.an('number');
-        done();
-      });
+      try {
+        chai.request(app).post('/api/v1/auth/signup').send(testUser).end((err, res) => {
+          res.should.have.status(201);
+          res.body.should.have.property('status').eql(201);
+          res.body.should.have.property('data');
+          res.body.data.should.be.an('object');
+          res.body.data.should.have.property('token');
+          res.body.data.token.should.be.a('string');
+          res.body.data.should.have.property('firstName');
+          res.body.data.firstName.should.be.a('string');
+          res.body.data.should.have.property('lastName');
+          res.body.data.lastName.should.be.a('string');
+          res.body.data.should.have.property('email');
+          res.body.data.email.should.be.a('string');
+          res.body.data.should.have.property('id');
+          res.body.data.id.should.be.an('number');
+          done();
+        });
+      } catch (error) {
+        console.log(error);
+      }
     });
     it('should return 400 error if firstname is empty', (done) => {
       const { firstName, ...partialUserDetails } = testUser;
@@ -95,23 +99,27 @@ describe('Auth Endpoints', () => {
   });
   describe('POST /auth/signin', () => {
     it('should login a user', (done) => {
-      chai.request(app).post('/api/v1/auth/signin').send(testUser).end((err, res) => {
-        res.should.have.status(200);
-        res.body.should.have.property('status').eql(200);
-        res.body.should.have.property('data');
-        res.body.data.should.be.an('object');
-        res.body.data.should.have.property('token');
-        res.body.data.token.should.be.a('string');
-        res.body.data.should.have.property('firstName');
-        res.body.data.firstName.should.be.a('string');
-        res.body.data.should.have.property('lastName');
-        res.body.data.lastName.should.be.a('string');
-        res.body.data.should.have.property('email');
-        res.body.data.email.should.be.a('string');
-        res.body.data.should.have.property('id');
-        res.body.data.id.should.be.an('number');
-        done();
-      });
+      try {
+        chai.request(app).post('/api/v1/auth/signin').send(testUser).end((err, res) => {
+          res.should.have.status(200);
+          res.body.should.have.property('status').eql(200);
+          res.body.should.have.property('data');
+          res.body.data.should.be.an('object');
+          res.body.data.should.have.property('token');
+          res.body.data.token.should.be.a('string');
+          res.body.data.should.have.property('firstName');
+          res.body.data.firstName.should.be.a('string');
+          res.body.data.should.have.property('lastName');
+          res.body.data.lastName.should.be.a('string');
+          res.body.data.should.have.property('email');
+          res.body.data.email.should.be.a('string');
+          res.body.data.should.have.property('id');
+          res.body.data.id.should.be.an('number');
+          done();
+        });
+      } catch (error) {
+        console.log(error);
+      }
     });
     it('should return 400 error if email is empty', (done) => {
       const { email, ...partialUserDetails } = testUser;

@@ -9,23 +9,27 @@ const userCount = allUsers.length;
 
 class AuthController {
   static async signUp(req, res) {
-    const newUser = req.body;
-    newUser.id = userCount + 1;
-    newUser.password = await encryptPassword(newUser.password);
-    newUser.type = newUser.type;
-    newUser.isAdmin = newUser.isAdmin || false;
-    const { id: userId, type: userType } = newUser;
-    const token = createToken({ userId, userType });
-    allUsers.push(newUser);
-    const {
-      // eslint-disable-next-line
-      password, isAdmin, type, ...signupDetails
-    } = newUser;
-    const newSignup = { token, ...signupDetails };
-    return res.header('x-auth-token', token).status(201).json({
-      status: 201,
-      data: newSignup,
-    });
+    try {
+      const newUser = req.body;
+      newUser.id = userCount + 1;
+      newUser.password = await encryptPassword(newUser.password);
+      newUser.type = newUser.type;
+      newUser.isAdmin = newUser.isAdmin || false;
+      const { id: userId, type: userType } = newUser;
+      const token = createToken({ userId, userType });
+      allUsers.push(newUser);
+      const {
+        // eslint-disable-next-line
+        password, isAdmin, type, ...signupDetails
+      } = newUser;
+      const newSignup = { token, ...signupDetails };
+      return res.header('x-auth-token', token).status(201).json({
+        status: 201,
+        data: newSignup,
+      });
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   static async signIn(req, res) {
