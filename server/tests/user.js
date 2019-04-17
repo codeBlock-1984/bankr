@@ -1,21 +1,16 @@
 /* eslint-env mocha */
 import chai from 'chai';
 import chaiHttp from 'chai-http';
+
 import app from '../index';
+import userData from '../testData/users';
 
 chai.use(chaiHttp);
 chai.should();
 
-const testUserData = {
-  firstName: 'Maureen',
-  lastName: 'George',
-  email: 'maumau@yahoo.com',
-  password: 'maureensecurepassword',
-  type: 'staff',
-  isAdmin: true,
-};
 let testUserId;
 const noId = 133;
+const { testUserData } = userData;
 /* eslint-disable no-unused-vars */
 
 describe('Users Endpoints', () => {

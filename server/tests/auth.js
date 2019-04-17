@@ -1,19 +1,14 @@
 /* eslint-env mocha */
 import chai from 'chai';
 import chaiHttp from 'chai-http';
+
 import app from '../index';
+import authData from '../testData/users';
 
 chai.use(chaiHttp);
 chai.should();
 
-const testUser = {
-  firstName: 'Dora',
-  lastName: 'Ofili',
-  email: 'doraofili@yahoo.com',
-  password: 'dorasecurepassword',
-  type: 'client',
-  isAdmin: false,
-};
+const { testUser } = authData;
 
 /* eslint-disable no-unused-vars */
 
