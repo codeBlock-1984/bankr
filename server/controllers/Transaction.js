@@ -1,8 +1,10 @@
+import pool from '../database/db';
+
 import transactions from '../models/transactions';
 import accounts from '../models/accounts';
 import ArraySorter from '../helpers/ArraySorter';
 
-const { arrayFinder, arrayFilter } = ArraySorter;
+const { arrayFinder } = ArraySorter;
 const allTransactions = transactions;
 const allAccounts = accounts;
 const transactionCount = allTransactions.length + 1;
@@ -65,18 +67,33 @@ class TransactionController {
   }
 
   static async getUserTransactions(req, res) {
-    const id = parseInt(req.params.userId, 10);
-    const userAccounts = arrayFilter(allAccounts, 'owner', id);
-    const userAccountNumbers = userAccounts.map((account) => {
-      return account.accountNumber;
-    });
-    const userTransactions = userAccountNumbers.map((accountNumber) => {
-      return arrayFilter(allTransactions, 'accountNumber', accountNumber);
-    });
-    return res.status(200).json({
-      status: 200,
-      data: userTransactions,
-    });
+    const client = await pool.connect();
+    try {
+      const { userId, accountId } = req.params;
+      const getUserTransactionsQuery = `SELECT * FROM transactions WHERE owner = $1 AND account = $2
+                                      ORDER BY id ASC`;
+      const values = [userId, accountId];
+      const { rows: userTransactionsRows } = await client.query(getUserTransactionsQuery, values);
+      if (!userTransactionsRows[0]) {
+        return res.status(404).json({
+          status: 404,
+          error: 'No transactions record matching user id and account id!',
+        });
+      }
+      const userTransactions = userTransactionsRows;
+      return res.status(200).json({
+        status: 200,
+        data: userTransactions,
+      });
+    } catch (error) {
+      console.log(error);
+      return res.status(500).json({
+        status: 500,
+        error: 'Internal server error!',
+      });
+    } finally {
+      await client.release();
+    }
   }
 }
 
