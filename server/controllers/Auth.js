@@ -3,7 +3,7 @@ import Auth from '../helpers/Auth';
 import Passcode from '../helpers/Passcode';
 
 const { createToken } = Auth;
-const { encryptPassword } = Passcode;
+const { encryptPassword, verifyPassword } = Passcode;
 const allUsers = users;
 const userCount = allUsers.length;
 
@@ -32,18 +32,45 @@ class AuthController {
   }
 
   static async signIn(req, res) {
-    const { email } = req.body;
-    const singleUser = allUsers.find((user) => { return user.email === email; });
-    const { id: userId, type: userType } = singleUser;
-    const token = createToken({ userId, userType });
-    const {
-      password, isAdmin, type, ...signinDetails
-    } = singleUser;
-    const newSignin = { token, ...signinDetails };
-    return res.header('x-auth-token', token).status(200).json({
-      status: 200,
-      data: newSignin,
-    });
+    const client = await pool.connect();
+    try {
+      const { email, password } = req.body;
+      const signInQuery = `SELECT * FROM users WHERE email = $1`;
+      const values = [email];
+      const { rows } = await client.query(signInQuery, values);
+      if (!rows[0]) {
+        return res.status(400).json({
+          status: 400,
+          error: 'Email or password incorrect!',
+        });
+      }
+      const singleUser = rows[0];
+      const { password: singleUserPassword } = singleUser;
+      const isVerified = await verifyPassword(password, singleUserPassword);
+      if (!isVerified) {
+        return res.status(400).json({
+          status: 400,
+          error: 'Email or password incorrect!',
+        });
+      }
+      const { id: userId, type: userType } = singleUser;
+      const token = createToken({ userId, userType });
+      const {
+        password: userPassword, isadmin, type, createdon, updatedon, ...signinDetails
+      } = singleUser;
+      const newSignin = { token, ...signinDetails };
+      return res.header('x-auth-token', token).status(200).json({
+        status: 200,
+        data: newSignin,
+      });
+    } catch (error) {
+      return res.status(500).json({
+        status: 500,
+        error: 'Internal server error!',
+      });
+    } finally {
+      await client.release();
+    }
   }
 }
 
