@@ -66,6 +66,36 @@ class TransactionController {
     });
   }
 
+  static async getUserTransaction(req, res) {
+    const client = await pool.connect();
+    try {
+      const { userId, accountId, transactionId } = req.params;
+      const getUserTransactionQuery = `SELECT * FROM transactions LIMIT 1
+                                        WHERE owner = $1 AND account = $2 AND id = $3
+                                        `;
+      const values = [userId, accountId, transactionId];
+      const { rows: userTransactionRows } = await client.query(getUserTransactionQuery, values);
+      if (!userTransactionRows[0]) {
+        return res.status(404).json({
+          status: 404,
+          error: 'No transactions record found with given user id!',
+        });
+      }
+      const userTransaction = userTransactionRows[0];
+      return res.status(200).json({
+        status: 200,
+        data: userTransaction,
+      });
+    } catch (error) {
+      return res.status(500).json({
+        status: 500,
+        error: 'Internal server error!',
+      });
+    } finally {
+      await client.release();
+    }
+  }
+
   static async getUserTransactions(req, res) {
     const client = await pool.connect();
     try {
