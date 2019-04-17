@@ -19,7 +19,7 @@ const debugg = debug('Migrate');
     debugg('migrating transactions...');
     await client.query(transactions);
   } catch (error) {
-    console.log(error);
+    debugg(error);
   } finally {
     await client.release();
     debugg('migration is complete');

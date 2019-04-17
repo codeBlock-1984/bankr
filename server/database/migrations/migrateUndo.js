@@ -12,7 +12,7 @@ const debugg = debug('Migrate undo');
     await client.query('DROP TABLE IF EXISTS accounts CASCADE');
     await client.query('DROP TABLE IF EXISTS users CASCADE');
   } catch (error) {
-    console.log(error);
+    debugg(error);
   } finally {
     await client.release();
     debugg('migration rollback is complete');

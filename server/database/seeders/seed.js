@@ -1,5 +1,9 @@
+import debug from 'debug';
+
 import Passcode from '../../helpers/Passcode';
 import pool from '../db';
+
+const debugg = debug('Migrate undo');
 
 (async function seedDb() {
   const { encryptPassword } = Passcode;
@@ -51,7 +55,7 @@ import pool from '../db';
     await client.query(transaction3);
     await client.query(transaction4);
   } catch (error) {
-    console.log(error);
+    debugg(error);
   } finally {
     await client.release();
   }
