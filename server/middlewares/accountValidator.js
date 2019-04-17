@@ -10,7 +10,7 @@ const { isExisting, isDuplicate } = BooleanChecker;
 const { arrayFinder } = ArraySorter;
 
 const accountValidator = {
-  accountFieldsValidator: [
+  accountNumberValidator: [
     body('accountNumber')
       .exists({ checkFalsy: true })
       .withMessage('Account number is required!')
@@ -18,25 +18,8 @@ const accountValidator = {
       .withMessage('Account number must be a number!')
       .trim(),
     sanitizeBody('accountNumber').toInt({ radix: 10 }),
-    body('firstName')
-      .exists({ checkFalsy: true })
-      .withMessage('Firstname is required!')
-      .isString()
-      .withMessage('First name must be a string!')
-      .trim(),
-    body('lastName')
-      .exists({ checkFalsy: true })
-      .withMessage('Lastname is required!')
-      .isString()
-      .withMessage('Last name must be a string!')
-      .trim(),
-    body('email')
-      .exists({ checkFalsy: true })
-      .withMessage('Email is required!')
-      .isEmail()
-      .withMessage('Invalid email address!')
-      .trim()
-      .normalizeEmail(),
+  ],
+  accountFieldsValidator: [
     body('owner')
       .exists({ checkFalsy: true })
       .withMessage('Owner id is required!')

@@ -1,25 +1,16 @@
 import { body, param } from 'express-validator/check';
 import { sanitizeBody, sanitizeParam } from 'express-validator/filter';
 
-import accounts from '../models/accounts';
 import transactions from '../models/transactions';
 import BooleanChecker from '../helpers/BooleanChecker';
 import ArraySorter from '../helpers/ArraySorter';
 
-const allAccounts = accounts;
 const allTransactions = transactions;
 const { isExisting } = BooleanChecker;
 const { arrayFinder } = ArraySorter;
 
 const transactionValidator = {
   transactionFieldsValidator: [
-    body('accountNumber')
-      .exists({ checkFalsy: true })
-      .withMessage('Account number is required!')
-      .isNumeric()
-      .withMessage('Account number must be a number!')
-      .trim(),
-    sanitizeBody('accountNumber').toInt({ radix: 10 }),
     body('amount')
       .exists({ checkFalsy: true })
       .withMessage('Amount is required!')
@@ -40,18 +31,6 @@ const transactionValidator = {
       .isString()
       .withMessage('Transaction type must be a string!')
       .trim(),
-  ],
-  accountNumberParamValidator: [
-    sanitizeParam('accountNumber').toInt({ radix: 10 }),
-    param('accountNumber')
-      .isNumeric()
-      .withMessage('Account number must be a number!')
-      .trim()
-      .custom((accountNumber) => {
-        const existingAccount = arrayFinder(allAccounts, 'accountNumber', accountNumber);
-        return isExisting(existingAccount);
-      })
-      .withMessage('Account with specified account number does not exist!'),
   ],
   transactionIdParamValidator: [
     sanitizeParam('transactionId').toInt({ radix: 10 }),
