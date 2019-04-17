@@ -1,7 +1,7 @@
 import accounts from '../models/accounts';
 import ArraySorter from '../helpers/ArraySorter';
 
-const { arrayFinder, arrayFilterNot, arrayFilter } = ArraySorter;
+const { arrayFinder, arrayFilter } = ArraySorter;
 const allAccounts = accounts;
 
 class AccountController {
@@ -11,11 +11,16 @@ class AccountController {
     newAccount.createdOn = new Date();
     newAccount.status = newAccount.status;
     newAccount.balance = newAccount.openingBalance;
-    // eslint-disable-next-line
     const { openingBalance, ...account } = newAccount;
     allAccounts.push(account);
-    // eslint-disable-next-line
-    const { id, createdOn, status, owner, balance, ...newAccountDetails } = newAccount;
+    const {
+      id,
+      createdOn,
+      status,
+      owner,
+      balance,
+      ...newAccountDetails
+    } = newAccount;
     return res.status(201).json({
       status: 201,
       data: newAccountDetails,
@@ -53,8 +58,15 @@ class AccountController {
     const updatedAccount = arrayFinder(allAccounts, 'accountNumber', accountNumber);
     updatedAccount.status = status;
     const {
-      // eslint-disable-next-line
-      firstName, lastName, email, balance, type, owner, id, createdOn, ...updatedAccountDetail
+      firstName,
+      lastName,
+      email,
+      balance,
+      type,
+      owner,
+      id,
+      createdOn,
+      ...updatedAccountDetail
     } = updatedAccount;
     return res.status(200).json({
       status: 200,
@@ -64,10 +76,8 @@ class AccountController {
 
   static async deleteAccount(req, res) {
     const accNumber = req.params.accountNumber;
-    // eslint-disable-next-line
     const deletedAccount = arrayFinder(allAccounts, 'accountNumber', accNumber);
-    // eslint-disable-next-line
-    const newAccounts = arrayFilterNot(allAccounts, 'accountNumber', accNumber);
+    allAccounts.splice(allAccounts.indexOf(deletedAccount), 1);
     const deleteSuccess = {
       message: 'Account successfully deleted!',
     };

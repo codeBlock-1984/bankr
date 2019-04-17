@@ -10,8 +10,6 @@ chai.should();
 
 const { testUser } = authData;
 
-/* eslint-disable no-unused-vars */
-
 describe('Auth Endpoints', () => {
   describe('POST /auth/signup', () => {
     it('should create a new user account', (done) => {

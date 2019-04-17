@@ -11,7 +11,6 @@ chai.should();
 let testUserId;
 const noId = 133;
 const { testUserData } = userData;
-/* eslint-disable no-unused-vars */
 
 describe('Users Endpoints', () => {
   describe('GET /users/:userId', () => {
