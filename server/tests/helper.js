@@ -5,38 +5,13 @@ import ArraySorter from '../helpers/ArraySorter';
 import Auth from '../helpers/Auth';
 import BooleanChecker from '../helpers/BooleanChecker';
 import Passcode from '../helpers/Passcode';
+import helperData from '../testData/helpers';
 
 const { arrayFinder, arrayFilter, arrayFilterNot } = ArraySorter;
 const { createToken, verifyToken } = Auth;
 const { isDuplicate, isExisting } = BooleanChecker;
 const { encryptPassword, verifyPassword } = Passcode;
-
-const testArray = [
-  {
-    propAOne: 'valueAOne',
-    propATwo: 'valueATwo',
-    propAThree: 'valueAThree',
-  },
-  {
-    propBOne: 'valueBOne',
-    propBTwo: 'valueBTwo',
-    propBThree: 'valueBThree',
-  },
-  {
-    propCOne: 'valueAOne',
-    propCTwo: 'valueCTwo',
-    propCThree: 'valueCThree',
-  },
-  {
-    propDOne: 'valueDOne',
-    propDTwo: 'valueDTwo',
-    propDThree: 'valueDThree',
-  },
-];
-
-const truthyArray = ['true', true, { true: true, trueToo: 'trueToo' }, 1];
-
-const falsyArray = [false, undefined, null, 0, ''];
+const { testArray, truthyArray, falsyArray } = helperData;
 
 describe('ArraySorter', () => {
   describe('arrayFinder()', () => {

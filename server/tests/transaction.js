@@ -1,43 +1,21 @@
 /* eslint-env mocha */
 import chai from 'chai';
 import chaiHttp from 'chai-http';
+
 import app from '../index';
+import transactionData from '../testData/transactions';
+import accountData from '../testData/accounts';
 
 chai.use(chaiHttp);
 chai.should();
 
-const testCreditTransactionData = {
-  type: 'credit',
-  accountNumber: 1024857699,
-  cashier: 1,
-  amount: 3400.00,
-};
+const {
+  testCreditTransactionData,
+  testDebitTransactionData,
+  testDummyTransactionData,
+} = transactionData;
 
-const testDebitTransactionData = {
-  type: 'debit',
-  accountNumber: 1024857699,
-  cashier: 1,
-  amount: 3400.00,
-};
-
-const testDummyTransactionData = {
-  type: 'credit',
-  accountNumber: 1024857699,
-  cashier: 1,
-  amount: 300.00,
-};
-
-const testAccountData = {
-  accountNumber: 1024857699,
-  owner: 1,
-  firstName: 'Alice',
-  lastName: 'Nwankwo',
-  email: 'alicen1995@yahoo.com',
-  type: 'current',
-  openingBalance: 45000.35,
-  status: 'dormant',
-};
-
+const { testTransactionAccountData } = accountData;
 let testAccountNumber;
 let testTransactionId;
 const noTransactionId = 1009;
@@ -45,7 +23,7 @@ const noTransactionId = 1009;
 /* eslint-disable no-unused-vars */
 describe('Transactions Endpoints', () => {
   before('seed accounts dummy data', async () => {
-    const response = await chai.request(app).post('/api/v1/accounts').send(testAccountData);
+    const response = await chai.request(app).post('/api/v1/accounts').send(testTransactionAccountData);
     testAccountNumber = response.body.data.accountNumber;
   });
   describe('POST /transactions/:accountNumber/credit', () => {

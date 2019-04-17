@@ -1,51 +1,20 @@
 /* eslint-env mocha */
 import chai from 'chai';
 import chaiHttp from 'chai-http';
+
 import app from '../index';
+import accountData from '../testData/accounts';
 
 chai.use(chaiHttp);
 chai.should();
 
-const testAccount = {
-  accountNumber: 1012579609,
-  owner: 1,
-  firstName: 'Alice',
-  lastName: 'Nwankwo',
-  email: 'alicen1995@yahoo.com',
-  type: 'savings',
-  openingBalance: 120350.05,
-  status: 'active',
-};
-const testAccountData = {
-  accountNumber: 1025729475,
-  owner: 1,
-  firstName: 'Alice',
-  lastName: 'Nwankwo',
-  email: 'alicen1995@yahoo.com',
-  type: 'current',
-  openingBalance: 45000.35,
-  status: 'dormant',
-};
-const delTestAccountData = {
-  accountNumber: 1024545001,
-  owner: 1,
-  firstName: 'Alice',
-  lastName: 'Nwankwo',
-  email: 'alicen1995@yahoo.com',
-  type: 'current',
-  openingBalance: 45000.35,
-  status: 'dormant',
-};
-const getTestAccountData = {
-  accountNumber: 1025887203,
-  owner: 1,
-  firstName: 'Alice',
-  lastName: 'Nwankwo',
-  email: 'alicen1995@yahoo.com',
-  type: 'current',
-  openingBalance: 45000.35,
-  status: 'dormant',
-};
+const {
+  testAccount,
+  testAccountData,
+  delTestAccountData,
+  getTestAccountData,
+} = accountData;
+
 let testAccountNumber;
 let delTestAccountNumber;
 let getTestAccountNumber;
