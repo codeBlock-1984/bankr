@@ -159,12 +159,9 @@ class AccountController {
           error: 'No accounts record found for given account number!',
         });
       }
-      const deleteSuccess = {
-        message: 'Account successfully deleted!',
-      };
       return res.status(200).json({
         status: 200,
-        data: deleteSuccess,
+        message: 'Account successfully deleted!',
       });
     } catch (error) {
       return res.status(500).json({
