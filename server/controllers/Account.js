@@ -124,25 +124,33 @@ class AccountController {
   }
 
   static async updateAccountStatus(req, res) {
-    const { status } = req.body;
-    const { accountNumber } = req.params;
-    const updatedAccount = arrayFinder(allAccounts, 'accountNumber', accountNumber);
-    updatedAccount.status = status;
-    const {
-      firstName,
-      lastName,
-      email,
-      balance,
-      type,
-      owner,
-      id,
-      createdOn,
-      ...updatedAccountDetail
-    } = updatedAccount;
-    return res.status(200).json({
-      status: 200,
-      data: updatedAccountDetail,
-    });
+    const client = await pool.connect();
+    try {
+      const { accountNumber } = req.params;
+      const { status } = req.body;
+      const updateAccountStatusQuery = `UPDATE accounts SET status = $1 WHERE accountNumber = $2
+                                  RETURNING accountNumber, status`;
+      const values = [status, accountNumber];
+      const { rows } = await client.query(updateAccountStatusQuery, values);
+      if (!rows[0]) {
+        return res.status(404).json({
+          status: 404,
+          error: 'No accounts record found for given account number!',
+        });
+      }
+      const updatedAccount = rows[0];
+      return res.status(200).json({
+        status: 200,
+        data: updatedAccount,
+      });
+    } catch (error) {
+      return res.status(500).json({
+        status: 500,
+        error: 'Internal server error!',
+      });
+    } finally {
+      await client.release();
+    }
   }
 
   static async deleteAccount(req, res) {
