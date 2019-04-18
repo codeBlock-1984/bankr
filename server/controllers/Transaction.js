@@ -96,23 +96,87 @@ class TransactionController {
   }
 
   static async debitTransaction(req, res) {
-    const newDebitTransaction = req.body;
-    newDebitTransaction.id = transactionCount;
-    const { accountNumber } = req.params;
-    const debitedAccount = arrayFinder(allAccounts, 'accountNumber', accountNumber);
-    const { balance } = debitedAccount;
-    const { amount } = newDebitTransaction;
-    const accBalance = parseFloat(balance - amount).toFixed(2);
-    const accountBalance = parseFloat(accBalance);
-    const debitData = { ...newDebitTransaction, accountBalance };
-    newDebitTransaction.createdOn = new Date();
-    newDebitTransaction.oldBalance = parseFloat(balance);
-    newDebitTransaction.newBalance = accountBalance;
-    allTransactions.push(newDebitTransaction);
-    return res.status(200).json({
-      status: 200,
-      data: debitData,
-    });
+    const client = await pool.connect();
+    try {
+      const {
+        accountNumber: transactionAccountNumber,
+        amount: transactionAmount,
+        account: transactionAccount,
+        owner: transactionOwner,
+        cashier: transactionCashier,
+        type: inputTransactionType,
+      } = req.body;
+      const { accountNumber: accountNumberParam } = req.params;
+      const findAccountQuery = `SELECT * FROM accounts WHERE accountNumber = $1
+                              LIMIT 1`;
+      const findValues = [accountNumberParam];
+      const { rows } = await client.query(findAccountQuery, findValues);
+      if (!rows[0]) {
+        return res.status(404).json({
+          status: 404,
+          error: 'Account with given account number does not exist!',
+        });
+      }
+      const { balance } = rows[0];
+      const newBalance = (balance - transactionAmount).toFixed(2);
+      const debitTransactionQuery = `UPDATE accounts SET balance = $1 WHERE accountNumber = $2
+                                    RETURNING balance`;
+      const debitValues = [newBalance, accountNumberParam];
+      const { rows: rowsDebit } = await client.query(debitTransactionQuery, debitValues);
+      if (rowsDebit[0]) {
+        const debitedAccount = rowsDebit[0];
+        const { balance: debitedAccountBalance } = debitedAccount;
+        const addTransactionQuery = `INSERT INTO transactions(type, accountNumber, account, owner, cashier, amount, oldBalance, newBalance)
+                                    VALUES($1, $2, $3, $4, $5, $6, $7)
+                                    RETURNING id, type, accountNumber, owner, cashier, amount, newBalance`;
+        const addTransactionValues = [
+          inputTransactionType,
+          transactionAccountNumber,
+          transactionAccount,
+          transactionOwner,
+          transactionCashier,
+          transactionAmount,
+          balance,
+          debitedAccountBalance,
+        ];
+        const {
+          rows: rowsAddTransaction,
+        } = await client.query(addTransactionQuery, addTransactionValues);
+        if (rowsAddTransaction[0]) {
+          const {
+            id: transactionId,
+            type: transactionType,
+            accountnumber,
+            account,
+            owner,
+            cashier,
+            amount,
+            newbalance: accountBalance,
+          } = rowsAddTransaction[0];
+          const transactionDetails = {
+            transactionId,
+            accountnumber,
+            amount,
+            account,
+            owner,
+            cashier,
+            transactionType,
+            accountBalance,
+          };
+          return res.status(201).json({
+            status: 201,
+            data: transactionDetails,
+          });
+        }
+      }
+    } catch (error) {
+      return res.status(500).json({
+        status: 500,
+        error: 'Internal server error!',
+      });
+    } finally {
+      await client.release();
+    }
   }
 
   static async getTransaction(req, res) {
