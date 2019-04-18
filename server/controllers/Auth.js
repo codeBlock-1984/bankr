@@ -1,12 +1,9 @@
 import pool from '../database/db';
-
-import users from '../models/users';
 import Auth from '../helpers/Auth';
 import Passcode from '../helpers/Passcode';
 
 const { createToken } = Auth;
 const { encryptPassword, verifyPassword } = Passcode;
-const allUsers = users;
 
 class AuthController {
   static async signUp(req, res) {

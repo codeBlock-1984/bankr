@@ -1,17 +1,6 @@
 import { body } from 'express-validator/check';
 import { sanitizeBody } from 'express-validator/filter';
 
-import users from '../models/users';
-import Passcode from '../helpers/Passcode';
-import BooleanChecker from '../helpers/BooleanChecker';
-import ArraySorter from '../helpers/ArraySorter';
-
-const allUsers = users;
-let existingUser;
-const { verifyPassword } = Passcode;
-const { isDuplicate, isExisting } = BooleanChecker;
-const { arrayFinder } = ArraySorter;
-
 const authValidator = {
   nameValidator: [
     body('firstName')
@@ -56,33 +45,6 @@ const authValidator = {
       .isIn(['staff', 'client'])
       .withMessage('Invalid user type!')
       .trim(),
-  ],
-  duplicateValidator: [
-    body('email')
-      .custom((email) => {
-        const duplicateUser = arrayFinder(allUsers, 'email', email);
-        return isDuplicate(duplicateUser);
-      })
-      .withMessage('Email is linked to an existing user!'),
-  ],
-  userAccountValidator: [
-    body('email')
-      .custom((email) => {
-        existingUser = arrayFinder(allUsers, 'email', email);
-        return isExisting(existingUser);
-      })
-      .withMessage('Email or password incorrect!'),
-    body('password')
-      .custom(async (password) => {
-        try {
-          const code = existingUser.password;
-          const isVerified = await verifyPassword(password, code);
-          return isVerified;
-        } catch (error) {
-          console.log(error);
-        }
-      })
-      .withMessage('Email or password incorrect!'),
   ],
 };
 

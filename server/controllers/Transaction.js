@@ -1,10 +1,5 @@
 import pool from '../database/db';
 
-import ArraySorter from '../helpers/ArraySorter';
-
-const { arrayFinder } = ArraySorter;
-
-
 class TransactionController {
   static async creditTransaction(req, res) {
     const client = await pool.connect();
@@ -37,12 +32,12 @@ class TransactionController {
       if (rowsCredit[0]) {
         const creditedAccount = rowsCredit[0];
         const { balance: creditedAccountBalance } = creditedAccount;
-        const addTransactionQuery = `INSERT INTO transactions(type, accountNumber, account, owner, cashier, amount, oldBalance, newBalance)
-                                    VALUES($1, $2, $3, $4, $5, $6, $7)
+        const addTransactionQuery = `INSERT INTO transactions(accountNumber, type, account, owner, cashier, amount, oldBalance, newBalance)
+                                    VALUES($1, $2, $3, $4, $5, $6, $7, $8)
                                     RETURNING id, type, accountNumber, account, owner, cashier, amount, newBalance`;
         const addTransactionValues = [
-          inputTransactionType,
           transactionAccountNumber,
+          inputTransactionType,
           transactionAccount,
           transactionOwner,
           transactionCashier,
@@ -50,6 +45,7 @@ class TransactionController {
           balance,
           creditedAccountBalance,
         ];
+        console.log(addTransactionValues);
         const {
           rows: rowsAddTransaction,
         } = await client.query(addTransactionQuery, addTransactionValues);
@@ -123,7 +119,7 @@ class TransactionController {
         const debitedAccount = rowsDebit[0];
         const { balance: debitedAccountBalance } = debitedAccount;
         const addTransactionQuery = `INSERT INTO transactions(type, accountNumber, account, owner, cashier, amount, oldBalance, newBalance)
-                                    VALUES($1, $2, $3, $4, $5, $6, $7)
+                                    VALUES($1, $2, $3, $4, $5, $6, $7, $8)
                                     RETURNING id, type, accountNumber, owner, cashier, amount, newBalance`;
         const addTransactionValues = [
           inputTransactionType,
