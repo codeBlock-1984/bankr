@@ -1,13 +1,9 @@
 import pool from '../database/db';
 
-import transactions from '../models/transactions';
-import accounts from '../models/accounts';
 import ArraySorter from '../helpers/ArraySorter';
 
 const { arrayFinder } = ArraySorter;
-const allTransactions = transactions;
-const allAccounts = accounts;
-const transactionCount = allTransactions.length + 1;
+
 
 class TransactionController {
   static async creditTransaction(req, res) {
@@ -209,10 +205,30 @@ class TransactionController {
   }
 
   static async getAllTransactions(req, res) {
-    return res.status(200).json({
-      status: 200,
-      data: allTransactions,
-    });
+    const client = await pool.connect();
+    try {
+      const getAllTransactionsQuery = `SELECT * FROM transactions
+                                  ORDER BY id ASC`;
+      const { rows } = await client.query(getAllTransactionsQuery);
+      if (!rows[0]) {
+        return res.status(404).json({
+          status: 404,
+          error: 'No transaction records found!',
+        });
+      }
+      const allTransactions = rows;
+      return res.status(200).json({
+        status: 200,
+        data: allTransactions,
+      });
+    } catch (error) {
+      return res.status(500).json({
+        status: 500,
+        error: 'Internal server error!',
+      });
+    } finally {
+      await client.release();
+    }
   }
 
   static async getUserTransaction(req, res) {
