@@ -11,11 +11,9 @@ const {
   emailValidator,
   passwordValidator,
   signupValidator,
-  duplicateValidator,
-  userAccountValidator,
 } = authValidator;
 
-router.post('/signup', nameValidator, emailValidator, passwordValidator, signupValidator, duplicateValidator, validate, signUp);
-router.post('/signin', emailValidator, passwordValidator, userAccountValidator, validate, signIn);
+router.post('/signup', nameValidator, emailValidator, passwordValidator, signupValidator, validate, signUp);
+router.post('/signin', emailValidator, passwordValidator, validate, signIn);
 
 export default router;
