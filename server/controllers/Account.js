@@ -1,11 +1,5 @@
 import pool from '../database/db';
 
-import accounts from '../models/accounts';
-import ArraySorter from '../helpers/ArraySorter';
-
-const { arrayFinder } = ArraySorter;
-const allAccounts = accounts;
-
 class AccountController {
   static async createAccount(req, res) {
     const client = await pool.connect();
@@ -60,7 +54,7 @@ class AccountController {
     const client = await pool.connect();
     try {
       const { accountNumber } = req.params;
-      const getAccountQuery = `SELECT * FROM accounts WHERE accountnumber = $1
+      const getAccountQuery = `SELECT * FROM accounts WHERE accountNumber = $1
                               LIMIT 1`;
       const values = [accountNumber];
       const { rows } = await client.query(getAccountQuery, values);

@@ -1,14 +1,6 @@
 import { body, param } from 'express-validator/check';
 import { sanitizeBody, sanitizeParam } from 'express-validator/filter';
 
-import transactions from '../models/transactions';
-import BooleanChecker from '../helpers/BooleanChecker';
-import ArraySorter from '../helpers/ArraySorter';
-
-const allTransactions = transactions;
-const { isExisting } = BooleanChecker;
-const { arrayFinder } = ArraySorter;
-
 const transactionValidator = {
   transactionFieldsValidator: [
     body('amount')
@@ -18,6 +10,20 @@ const transactionValidator = {
       .withMessage('Amount must be a number!')
       .trim(),
     sanitizeBody('amount').toFloat(),
+    body('account')
+      .exists({ checkFalsy: true })
+      .withMessage('Account is required!')
+      .isInt()
+      .withMessage('Account must be a integer!')
+      .trim(),
+    sanitizeBody('account').toInt({ radix: 10 }),
+    body('owner')
+      .exists({ checkFalsy: true })
+      .withMessage('Owner is required!')
+      .isInt()
+      .withMessage('Owner must be a integer!')
+      .trim(),
+    sanitizeBody('owner').toInt({ radix: 10 }),
     body('cashier')
       .exists({ checkFalsy: true })
       .withMessage('Cashier is required!')
@@ -37,13 +43,7 @@ const transactionValidator = {
     param('transactionId')
       .isNumeric()
       .withMessage('Transaction id must be a number!')
-      .trim()
-      .custom((transactionId) => {
-        const transId = parseInt(transactionId, 10);
-        const existingTransaction = arrayFinder(allTransactions, 'id', transId);
-        return isExisting(existingTransaction);
-      })
-      .withMessage('Transaction with specified id does not exist!'),
+      .trim(),
   ],
 };
 

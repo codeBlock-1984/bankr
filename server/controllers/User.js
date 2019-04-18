@@ -1,11 +1,5 @@
 import pool from '../database/db';
 
-import users from '../models/users';
-import ArraySorter from '../helpers/ArraySorter';
-
-const { arrayFinder } = ArraySorter;
-const allUsers = users;
-
 class UserController {
   static async getUser(req, res) {
     const client = await pool.connect();

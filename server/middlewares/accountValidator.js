@@ -1,14 +1,6 @@
 import { body, param } from 'express-validator/check';
 import { sanitizeBody, sanitizeParam } from 'express-validator/filter';
 
-import accounts from '../models/accounts';
-import BooleanChecker from '../helpers/BooleanChecker';
-import ArraySorter from '../helpers/ArraySorter';
-
-const allAccounts = accounts;
-const { isExisting, isDuplicate } = BooleanChecker;
-const { arrayFinder } = ArraySorter;
-
 const accountValidator = {
   accountNumberValidator: [
     body('accountNumber')
@@ -54,21 +46,15 @@ const accountValidator = {
     param('accountNumber')
       .isNumeric()
       .withMessage('Account number must be a number!')
-      .trim()
-      .custom((accountNumber) => {
-        const existingAccount = arrayFinder(allAccounts, 'accountNumber', accountNumber);
-        return isExisting(existingAccount);
-      })
-      .withMessage('Account with specified account number does not exist!'),
+      .trim(),
   ],
-  duplicateValidator: [
-    sanitizeBody('accountNumber').toInt({ radix: 10 }),
-    body('accountNumber')
-      .custom((accountNumber) => {
-        const duplicateAccount = arrayFinder(allAccounts, 'accountNumber', accountNumber);
-        return isDuplicate(duplicateAccount);
-      })
-      .withMessage('Account number is linked to an existing account!'),
+  statusParamValidator: [
+    param('status')
+      .exists({ checkNull: true, checkFalsy: true })
+      .withMessage('Account status is required!')
+      .isIn(['active', 'dormant'])
+      .withMessage('Invalid account status!')
+      .trim(),
   ],
 };
 
