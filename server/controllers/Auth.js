@@ -1,3 +1,5 @@
+import pool from '../database/db';
+
 import users from '../models/users';
 import Auth from '../helpers/Auth';
 import Passcode from '../helpers/Passcode';
@@ -5,29 +7,48 @@ import Passcode from '../helpers/Passcode';
 const { createToken } = Auth;
 const { encryptPassword } = Passcode;
 const allUsers = users;
-const userCount = allUsers.length;
 
 class AuthController {
   static async signUp(req, res) {
+    const client = await pool.connect();
     try {
-      const newUser = req.body;
-      newUser.id = userCount + 1;
-      newUser.password = await encryptPassword(newUser.password);
-      newUser.type = newUser.type;
-      newUser.isAdmin = newUser.isAdmin || false;
-      const { id: userId, type: userType } = newUser;
-      const token = createToken({ userId, userType });
-      allUsers.push(newUser);
       const {
-        password, isAdmin, type, ...signupDetails
-      } = newUser;
-      const newSignup = { token, ...signupDetails };
-      return res.header('x-auth-token', token).status(201).json({
-        status: 201,
-        data: newSignup,
-      });
+        firstName, lastName, email, password: stringPassword, type: userInputType, isAdmin,
+      } = req.body;
+      const securePassword = await encryptPassword(stringPassword);
+
+      const addUserQuery = `INSERT INTO users (firstName, lastName, email, password, type, isAdmin)
+                    VALUES($1, $2, $3, $4, $5, $6)
+                    RETURNING id, firstName, lastName, email`;
+      const values = [firstName, lastName, email, securePassword, userInputType, isAdmin];
+      const { rows } = await client.query(addUserQuery, values);
+      if (rows[0]) {
+        const newUser = rows[0];
+        const { id: userId, type: userType } = newUser;
+        const token = createToken({ userId, userType });
+        const {
+          password, isadmin, type, ...signupDetails
+        } = newUser;
+        const newSignup = { token, ...signupDetails };
+        return res.header('x-auth-token', token).status(201).json({
+          status: 201,
+          data: newSignup,
+        });
+      }
     } catch (error) {
-      console.log(error);
+      const { constraint } = error;
+      if (constraint === 'users_email_key') {
+        return res.status(409).json({
+          status: 409,
+          error: 'Email linked to existing user!',
+        });
+      }
+      return res.status(500).json({
+        status: 500,
+        error: 'Internal server error!',
+      });
+    } finally {
+      await client.release();
     }
   }
 
