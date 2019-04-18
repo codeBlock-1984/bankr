@@ -8,25 +8,52 @@ const allAccounts = accounts;
 
 class AccountController {
   static async createAccount(req, res) {
-    const newAccount = req.body;
-    newAccount.id = allAccounts.length + 1;
-    newAccount.createdOn = new Date();
-    newAccount.status = newAccount.status;
-    newAccount.balance = newAccount.openingBalance;
-    const { openingBalance, ...account } = newAccount;
-    allAccounts.push(account);
-    const {
-      id,
-      createdOn,
-      status,
-      owner,
-      balance,
-      ...newAccountDetails
-    } = newAccount;
-    return res.status(201).json({
-      status: 201,
-      data: newAccountDetails,
-    });
+    const client = await pool.connect();
+    try {
+      const {
+        accountNumber,
+        firstName,
+        lastName,
+        email: accountEmail,
+        owner: accountOwner,
+        type: accountType,
+        status,
+        openingBalance: accountOpeningBalance,
+      } = req.body;
+      const createAccountQuery = `INSERT INTO accounts (accountNumber, firstName, lastName, email, owner, type, status, balance)
+                                  VALUES($1, $2, $3, $4, $5, $6, $7, $8)
+                                  RETURNING accountNumber, firstName, lastName, email, type, balance`;
+      const values = [
+        accountNumber,
+        firstName,
+        lastName,
+        accountEmail,
+        accountOwner,
+        accountType,
+        status,
+        accountOpeningBalance,
+      ];
+      const { rows } = await client.query(createAccountQuery, values);
+      if (rows[0]) {
+        const newAccount = rows[0];
+        const {
+          accountnumber, firstname, lastname, email, type, balance: openingBalance,
+        } = newAccount;
+        return res.status(201).json({
+          status: 201,
+          data: {
+            accountnumber, firstname, lastname, email, type, balance: openingBalance,
+          },
+        });
+      }
+    } catch (error) {
+      return res.status(500).json({
+        status: 500,
+        error: 'Internal server error!',
+      });
+    } finally {
+      await client.release();
+    }
   }
 
   static async getAccount(req, res) {
