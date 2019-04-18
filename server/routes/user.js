@@ -8,7 +8,7 @@ import Account from '../controllers/Account';
 
 const router = express.Router();
 const { getUser, getAllUsers } = User;
-const { getUserTransactions } = Transaction;
+const { getUserTransaction, getUserTransactions } = Transaction;
 const { getUserAccounts } = Account;
 const {
   userParamValidator,
@@ -16,7 +16,8 @@ const {
 
 router.get('/:userId', userParamValidator, validate, getUser);
 router.get('/', getAllUsers);
-router.get('/:userId/transactions', userParamValidator, validate, getUserTransactions);
+router.get('/:userId/accounts/accountId/transactions/:transactionId', userParamValidator, validate, getUserTransaction);
+router.get('/:userId/accounts/:accountId/transactions', userParamValidator, validate, getUserTransactions);
 router.get('/:userId/accounts', userParamValidator, validate, getUserAccounts);
 
 export default router;
