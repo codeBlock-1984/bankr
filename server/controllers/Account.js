@@ -57,12 +57,32 @@ class AccountController {
   }
 
   static async getAccount(req, res) {
-    const { accountNumber } = req.params;
-    const singleAccount = arrayFinder(allAccounts, 'accountNumber', accountNumber);
-    return res.status(200).json({
-      status: 200,
-      data: singleAccount,
-    });
+    const client = await pool.connect();
+    try {
+      const { accountNumber } = req.params;
+      const getAccountQuery = `SELECT * FROM accounts WHERE accountnumber = $1
+                              LIMIT 1`;
+      const values = [accountNumber];
+      const { rows } = await client.query(getAccountQuery, values);
+      if (!rows[0]) {
+        return res.status(404).json({
+          status: 404,
+          error: 'Account with account number not found!',
+        });
+      }
+      const singleAccount = rows[0];
+      return res.status(200).json({
+        status: 200,
+        data: singleAccount,
+      });
+    } catch (error) {
+      return res.status(500).json({
+        status: 500,
+        error: 'Internal server error!',
+      });
+    } finally {
+      await client.release();
+    }
   }
 
   static async getAccountsByStatus(req, res) {
