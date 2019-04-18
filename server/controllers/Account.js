@@ -201,16 +201,31 @@ class AccountController {
   }
 
   static async deleteAccount(req, res) {
-    const accNumber = req.params.accountNumber;
-    const deletedAccount = arrayFinder(allAccounts, 'accountNumber', accNumber);
-    allAccounts.splice(allAccounts.indexOf(deletedAccount), 1);
-    const deleteSuccess = {
-      message: 'Account successfully deleted!',
-    };
-    return res.status(200).json({
-      status: 200,
-      data: deleteSuccess,
-    });
+    const client = await pool.connect();
+    try {
+      const { accountNumber } = req.params;
+      const deleteAccountQuery = `DELETE FROM accounts WHERE accountNumber = $1
+                                  RETURNING id`;
+      const values = [accountNumber];
+      const { rows } = await client.query(deleteAccountQuery, values);
+      if (!rows[0]) {
+        return res.status(404).json({
+          status: 404,
+          error: 'No accounts record found for given account number!',
+        });
+      }
+      return res.status(200).json({
+        status: 200,
+        message: 'Account successfully deleted!',
+      });
+    } catch (error) {
+      return res.status(500).json({
+        status: 500,
+        error: 'Internal server error!',
+      });
+    } finally {
+      await client.release();
+    }
   }
 }
 
