@@ -37,7 +37,6 @@ describe('Accounts Endpoints', () => {
     });
     it('should not create a new account if account number already exists', (done) => {
       chai.request(app).post('/api/v1/accounts').send(postAccount).end((err, res) => {
-        console.log(res.body);
         res.should.have.status(409);
         res.body.should.have.property('status').eql(409);
         res.body.should.have.property('error').eql('Account number is linked to an existing account!');

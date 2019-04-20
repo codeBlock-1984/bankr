@@ -54,7 +54,6 @@ class AccountController {
       return res.status(500).json({
         status: 500,
         error: 'Internal server error!',
-        newerror: error,
       });
     } finally {
       await client.release();
