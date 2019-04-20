@@ -237,9 +237,6 @@
                },
                "default": {
                   "description": "Unexpected error"
-               },
-               "schema": {
-                  "$ref": "#/components/schemas/accounts"
                }
             }
          }
@@ -820,6 +817,12 @@
             "title": "Transaction's id",
             "type": "integer",
             "example": 2,
+            "required": true
+         },
+         "email": {
+            "title": "User's email",
+            "type": "string",
+            "example": "alicen1995@yahoo.com",
             "required": true
          },
          "creditTransaction": {
