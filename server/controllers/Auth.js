@@ -29,7 +29,7 @@ class AuthController {
         const newSignup = { token, ...signupDetails };
         return res.header('x-auth-token', token).status(201).json({
           status: 201,
-          data: newSignup,
+          data: [newSignup],
         });
       }
     } catch (error) {
@@ -79,7 +79,7 @@ class AuthController {
       const newSignin = { token, ...signinDetails };
       return res.header('x-auth-token', token).status(200).json({
         status: 200,
-        data: newSignin,
+        data: [newSignin],
       });
     } catch (error) {
       return res.status(500).json({

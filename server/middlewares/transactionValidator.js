@@ -10,20 +10,6 @@ const transactionValidator = {
       .withMessage('Amount must be a number!')
       .trim(),
     sanitizeBody('amount').toFloat(),
-    body('account')
-      .exists({ checkFalsy: true })
-      .withMessage('Account is required!')
-      .isInt()
-      .withMessage('Account must be a integer!')
-      .trim(),
-    sanitizeBody('account').toInt({ radix: 10 }),
-    body('owner')
-      .exists({ checkFalsy: true })
-      .withMessage('Owner is required!')
-      .isInt()
-      .withMessage('Owner must be a integer!')
-      .trim(),
-    sanitizeBody('owner').toInt({ radix: 10 }),
     body('cashier')
       .exists({ checkFalsy: true })
       .withMessage('Cashier is required!')

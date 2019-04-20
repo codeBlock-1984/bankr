@@ -3,41 +3,35 @@ import chai from 'chai';
 import chaiHttp from 'chai-http';
 
 import app from '../index';
-import userData from '../testData/users';
 
 chai.use(chaiHttp);
 chai.should();
 
-let testUserId;
-const noId = 133;
-const { testUserData } = userData;
+const testUserId = 1;
+const noId = 1033;
 
 describe('Users Endpoints', () => {
   describe('GET /users/:userId', () => {
-    before('seed users dummy data', async () => {
-      const response = await chai.request(app).post('/api/v1/auth/signup').send(testUserData);
-      testUserId = response.body.data.id;
-    });
     it('should get a single user with the specified id', (done) => {
       chai.request(app).get(`/api/v1/users/${testUserId}`).end((err, res) => {
         res.should.have.status(200);
         res.body.should.have.property('status').eql(200);
         res.body.should.have.property('data');
-        res.body.data.should.be.an('object');
-        res.body.data.should.have.property('firstName');
-        res.body.data.firstName.should.be.a('string');
-        res.body.data.should.have.property('lastName');
-        res.body.data.lastName.should.be.a('string');
-        res.body.data.should.have.property('email');
-        res.body.data.email.should.be.a('string');
-        res.body.data.should.have.property('password');
-        res.body.data.password.should.be.a('string');
-        res.body.data.should.have.property('isAdmin');
-        res.body.data.isAdmin.should.be.a('boolean');
-        res.body.data.should.have.property('type');
-        res.body.data.type.should.be.a('string');
-        res.body.data.should.have.property('id');
-        res.body.data.id.should.be.an('number');
+        res.body.data.should.be.an('array');
+        res.body.data[0].should.have.property('firstname');
+        res.body.data[0].firstname.should.be.a('string');
+        res.body.data[0].should.have.property('lastname');
+        res.body.data[0].lastname.should.be.a('string');
+        res.body.data[0].should.have.property('email');
+        res.body.data[0].email.should.be.a('string');
+        res.body.data[0].should.have.property('password');
+        res.body.data[0].password.should.be.a('string');
+        res.body.data[0].should.have.property('isadmin');
+        res.body.data[0].isadmin.should.be.a('boolean');
+        res.body.data[0].should.have.property('type');
+        res.body.data[0].type.should.be.a('string');
+        res.body.data[0].should.have.property('id');
+        res.body.data[0].id.should.be.an('number');
         done();
       });
     });
@@ -56,26 +50,21 @@ describe('Users Endpoints', () => {
         res.should.have.status(200);
         res.body.should.have.property('status').eql(200);
         res.body.should.have.property('data');
-        done();
-      });
-    });
-  });
-  describe('GET /users/:userId/accounts', () => {
-    it('should get user accounts by user id', (done) => {
-      chai.request(app).get(`/api/v1/users/1/accounts`).end((err, res) => {
-        res.should.have.status(200);
-        res.body.should.have.property('status').eql(200);
-        res.body.should.have.property('data');
-        done();
-      });
-    });
-  });
-  describe('GET /users/:userId/transactions', () => {
-    it('should get user transactions by user id', (done) => {
-      chai.request(app).get(`/api/v1/users/1/transactions`).end((err, res) => {
-        res.should.have.status(200);
-        res.body.should.have.property('status').eql(200);
-        res.body.should.have.property('data');
+        res.body.data.should.be.an('array');
+        res.body.data[0].should.have.property('firstname');
+        res.body.data[0].firstname.should.be.a('string');
+        res.body.data[0].should.have.property('lastname');
+        res.body.data[0].lastname.should.be.a('string');
+        res.body.data[0].should.have.property('email');
+        res.body.data[0].email.should.be.a('string');
+        res.body.data[0].should.have.property('password');
+        res.body.data[0].password.should.be.a('string');
+        res.body.data[0].should.have.property('isadmin');
+        res.body.data[0].isadmin.should.be.a('boolean');
+        res.body.data[0].should.have.property('type');
+        res.body.data[0].type.should.be.a('string');
+        res.body.data[0].should.have.property('id');
+        res.body.data[0].id.should.be.an('number');
         done();
       });
     });

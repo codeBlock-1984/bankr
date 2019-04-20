@@ -3,32 +3,35 @@ import chai from 'chai';
 import chaiHttp from 'chai-http';
 
 import app from '../index';
+import pool from '../database/db';
 import authData from '../testData/users';
 
 chai.use(chaiHttp);
 chai.should();
 
 const { testUser } = authData;
+const { email: testUserEmail } = testUser;
 
 describe('Auth Endpoints', () => {
   describe('POST /auth/signup', () => {
     it('should create a new user account', (done) => {
       try {
         chai.request(app).post('/api/v1/auth/signup').send(testUser).end((err, res) => {
+          console.log(testUserEmail);
           res.should.have.status(201);
           res.body.should.have.property('status').eql(201);
           res.body.should.have.property('data');
-          res.body.data.should.be.an('object');
-          res.body.data.should.have.property('token');
-          res.body.data.token.should.be.a('string');
-          res.body.data.should.have.property('firstName');
-          res.body.data.firstName.should.be.a('string');
-          res.body.data.should.have.property('lastName');
-          res.body.data.lastName.should.be.a('string');
-          res.body.data.should.have.property('email');
-          res.body.data.email.should.be.a('string');
-          res.body.data.should.have.property('id');
-          res.body.data.id.should.be.an('number');
+          res.body.data.should.be.an('array');
+          res.body.data[0].should.have.property('token');
+          res.body.data[0].token.should.be.a('string');
+          res.body.data[0].should.have.property('firstname');
+          res.body.data[0].firstname.should.be.a('string');
+          res.body.data[0].should.have.property('lastname');
+          res.body.data[0].lastname.should.be.a('string');
+          res.body.data[0].should.have.property('email');
+          res.body.data[0].email.should.be.a('string');
+          res.body.data[0].should.have.property('id');
+          res.body.data[0].id.should.be.an('number');
           done();
         });
       } catch (error) {
@@ -92,22 +95,24 @@ describe('Auth Endpoints', () => {
   });
   describe('POST /auth/signin', () => {
     it('should login a user', (done) => {
+      const { email, password } = testUser;
+      const signinDetails = { email, password };
       try {
-        chai.request(app).post('/api/v1/auth/signin').send(testUser).end((err, res) => {
+        chai.request(app).post('/api/v1/auth/signin').send(signinDetails).end((err, res) => {
           res.should.have.status(200);
           res.body.should.have.property('status').eql(200);
           res.body.should.have.property('data');
-          res.body.data.should.be.an('object');
-          res.body.data.should.have.property('token');
-          res.body.data.token.should.be.a('string');
-          res.body.data.should.have.property('firstName');
-          res.body.data.firstName.should.be.a('string');
-          res.body.data.should.have.property('lastName');
-          res.body.data.lastName.should.be.a('string');
-          res.body.data.should.have.property('email');
-          res.body.data.email.should.be.a('string');
-          res.body.data.should.have.property('id');
-          res.body.data.id.should.be.an('number');
+          res.body.data.should.be.an('array');
+          res.body.data[0].should.have.property('token');
+          res.body.data[0].token.should.be.a('string');
+          res.body.data[0].should.have.property('firstname');
+          res.body.data[0].firstname.should.be.a('string');
+          res.body.data[0].should.have.property('lastname');
+          res.body.data[0].lastname.should.be.a('string');
+          res.body.data[0].should.have.property('email');
+          res.body.data[0].email.should.be.a('string');
+          res.body.data[0].should.have.property('id');
+          res.body.data[0].id.should.be.an('number');
           done();
         });
       } catch (error) {
@@ -132,5 +137,17 @@ describe('Auth Endpoints', () => {
         done();
       });
     });
+  });
+  after('Remove new user account', async () => {
+    const client = await pool.connect();
+    try {
+      const removeUserQuery = `DELETE FROM users WHERE email = $1 `;
+      const value = [testUserEmail];
+      await client.query(removeUserQuery, value);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      await client.release();
+    }
   });
 });
