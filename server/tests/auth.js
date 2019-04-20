@@ -83,17 +83,6 @@ describe('Auth Endpoints', () => {
           done();
         });
     });
-    it('should return 400 error if isAdmin is empty', (done) => {
-      const { isAdmin, ...partialUserDetails } = testUser;
-      chai.request(app).post('/api/v1/auth/signup')
-        .send(partialUserDetails)
-        .end((err, res) => {
-          res.should.have.status(400);
-          res.body.should.have.property('status').eql(400);
-          res.body.should.have.property('error').eql('User isAdmin property is required!');
-          done();
-        });
-    });
     it('should return 400 error if user type is empty', (done) => {
       const { type, ...partialUserDetails } = testUser;
       chai.request(app).post('/api/v1/auth/signup')

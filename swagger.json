@@ -6,15 +6,18 @@
       "description": "Secure online banking application. Easy to use, efficient, fast."
    },
    "schemes": [
+      "http",
       "https"
    ],
-   "host": "bankr-server.herokuapp.com",
-   "basePath": "/api/v1",
    "securityDefinitions": {
       "Bearer": {
-         "type": "basic"
+         "type": "apiKey",
+         "name": "Authorization",
+         "in": "header"
       }
    },
+   "host": "bankr-server.herokuapp.com",
+   "basePath": "/api/v1",
    "tags": [
       {
          "name": "Auth",
@@ -48,7 +51,7 @@
             "parameters": [
                {
                   "in": "body",
-                  "name": "body",
+                  "name": "signup details",
                   "required": true,
                   "description": "User signup details",
                   "schema": {
@@ -86,7 +89,7 @@
             "parameters": [
                {
                   "in": "body",
-                  "name": "body",
+                  "name": "login details",
                   "required": true,
                   "description": "User login details",
                   "schema": {
@@ -138,7 +141,7 @@
       "/users/{userId}": {
          "get": {
             "description": "Get user",
-            "summary": "Returns a user account with the given userId",
+            "summary": "Returns a user with the given userId",
             "tags": [
                "Users"
             ],
@@ -156,84 +159,6 @@
                   "name": "userId",
                   "required": true,
                   "description": "The id of the user to fetch",
-                  "schema": {
-                     "$ref": "#/components/schemas/userId"
-                  }
-               }
-            ],
-            "responses": {
-               "200": {
-                  "description": "Success"
-               },
-               "404": {
-                  "description": "User with given id not Found"
-               },
-               "default": {
-                  "description": "Unexpected error"
-               }
-            }
-         }
-      },
-      "/users/{userId}/accounts": {
-         "get": {
-            "description": "Get user accounts",
-            "summary": "Returns all bank accounts of user with the given userId",
-            "tags": [
-               "Users"
-            ],
-            "produces": [
-               "application/json"
-            ],
-            "security": [
-               {
-                  "Bearer": []
-               }
-            ],
-            "parameters": [
-               {
-                  "in": "path",
-                  "name": "userId",
-                  "required": true,
-                  "description": "The id of the accounts' owner",
-                  "schema": {
-                     "$ref": "#/components/schemas/userId"
-                  }
-               }
-            ],
-            "responses": {
-               "200": {
-                  "description": "Success"
-               },
-               "404": {
-                  "description": "User with given id not Found"
-               },
-               "default": {
-                  "description": "Unexpected error"
-               }
-            }
-         }
-      },
-      "/users/{userId}/transactions": {
-         "get": {
-            "description": "Get user transactions",
-            "summary": "Returns all transactions of user with the given userId",
-            "tags": [
-               "Users"
-            ],
-            "produces": [
-               "application/json"
-            ],
-            "security": [
-               {
-                  "Bearer": []
-               }
-            ],
-            "parameters": [
-               {
-                  "in": "path",
-                  "name": "userId",
-                  "required": true,
-                  "description": "The id of the user linked to transactions",
                   "schema": {
                      "$ref": "#/components/schemas/userId"
                   }
@@ -315,7 +240,124 @@
                   "description": "Unexpected error"
                },
                "schema": {
-                  "$ref": "#/responseBody/OfficesResponse"
+                  "$ref": "#/components/schemas/accounts"
+               }
+            }
+         }
+      },
+      "/accounts?status=active": {
+         "get": {
+            "description": "Get the list of active accounts",
+            "summary": "Returna all active accounts",
+            "tags": [
+               "Accounts"
+            ],
+            "produces": [
+               "application/json"
+            ],
+            "security": [
+               {
+                  "Bearer": []
+               }
+            ],
+            "parameters": [
+               {
+                  "in": "query",
+                  "name": "status",
+                  "required": true,
+                  "description": "Accounts' status",
+                  "schema": {
+                     "$ref": "#/components/schemas/statusActive"
+                  }
+               }
+            ],
+            "responses": {
+               "201": {
+                  "description": "Success"
+               },
+               "400": {
+                  "description": "Empty or invalid field"
+               },
+               "default": {
+                  "description": "Unexpected error"
+               }
+            }
+         }
+      },
+      "/accounts?status=dormant": {
+         "get": {
+            "description": "Get the list of dormant accounts",
+            "summary": "Returns all dormant accounts",
+            "tags": [
+               "Accounts"
+            ],
+            "produces": [
+               "application/json"
+            ],
+            "security": [
+               {
+                  "Bearer": []
+               }
+            ],
+            "parameters": [
+               {
+                  "in": "query",
+                  "name": "status",
+                  "required": true,
+                  "description": "Accounts' status",
+                  "schema": {
+                     "$ref": "#/components/schemas/statusDormant"
+                  }
+               }
+            ],
+            "responses": {
+               "201": {
+                  "description": "Success"
+               },
+               "400": {
+                  "description": "Empty or invalid field"
+               },
+               "default": {
+                  "description": "Unexpected error"
+               }
+            }
+         }
+      },
+      "/users/{email}/accounts": {
+         "get": {
+            "description": "Get user accounts",
+            "summary": "Returns all accounts of user with the given email",
+            "tags": [
+               "Accounts"
+            ],
+            "produces": [
+               "application/json"
+            ],
+            "security": [
+               {
+                  "Bearer": []
+               }
+            ],
+            "parameters": [
+               {
+                  "in": "path",
+                  "name": "email",
+                  "required": true,
+                  "description": "The email of the account owner",
+                  "schema": {
+                     "$ref": "#/components/schemas/email"
+                  }
+               }
+            ],
+            "responses": {
+               "200": {
+                  "description": "Success"
+               },
+               "404": {
+                  "description": "Account with given email not Found"
+               },
+               "default": {
+                  "description": "Unexpected error"
                }
             }
          }
@@ -323,7 +365,7 @@
       "/accounts/{accountNumber}": {
          "get": {
             "description": "Get account",
-            "summary": "Get the bank account with given accountNumber",
+            "summary": "Get the account with given account number",
             "tags": [
                "Accounts"
             ],
@@ -348,6 +390,120 @@
                },
                "404": {
                   "description": "Bank account not Found"
+               },
+               "default": {
+                  "description": "Unexpected error"
+               }
+            }
+         },
+         "patch": {
+            "description": "Update account",
+            "summary": "Update the account with given account number",
+            "tags": [
+               "Accounts"
+            ],
+            "produces": [
+               "application/json"
+            ],
+            "security": [],
+            "parameters": [
+               {
+                  "in": "path",
+                  "name": "accountNumber",
+                  "required": true,
+                  "description": "The account number of the account to be updated",
+                  "schema": {
+                     "$ref": "#/components/schemas/accountNumber"
+                  }
+               },
+               {
+                  "in": "body",
+                  "name": "status",
+                  "required": true,
+                  "description": "The new status to set the account to",
+                  "schema": {
+                     "$ref": "#/components/schemas/accountUpdate"
+                  }
+               }
+            ],
+            "responses": {
+               "200": {
+                  "description": "Success"
+               },
+               "404": {
+                  "description": "Bank account not Found"
+               },
+               "default": {
+                  "description": "Unexpected error"
+               }
+            }
+         },
+         "delete": {
+            "description": "Delete account",
+            "summary": "Delete the account with given accountNumber",
+            "tags": [
+               "Accounts"
+            ],
+            "produces": [
+               "application/json"
+            ],
+            "security": [],
+            "parameters": [
+               {
+                  "in": "path",
+                  "name": "accountNumber",
+                  "required": true,
+                  "description": "The account number of the account to be deleted",
+                  "schema": {
+                     "$ref": "#/components/schemas/accountNumber"
+                  }
+               }
+            ],
+            "responses": {
+               "200": {
+                  "description": "Success"
+               },
+               "404": {
+                  "description": "Bank account not Found"
+               },
+               "default": {
+                  "description": "Unexpected error"
+               }
+            }
+         }
+      },
+      "/accounts/{accountNumber}/transactions": {
+         "get": {
+            "description": "View account transaction history",
+            "summary": "Returns the transaction history of the given account number",
+            "tags": [
+               "Transactions"
+            ],
+            "produces": [
+               "application/json"
+            ],
+            "security": [
+               {
+                  "Bearer": []
+               }
+            ],
+            "parameters": [
+               {
+                  "in": "path",
+                  "name": "accountNumber",
+                  "required": true,
+                  "description": "The account number of the account transactions",
+                  "schema": {
+                     "$ref": "#/components/schemas/accountNumber"
+                  }
+               }
+            ],
+            "responses": {
+               "200": {
+                  "description": "Success"
+               },
+               "404": {
+                  "description": "No transactions found for given account"
                },
                "default": {
                   "description": "Unexpected error"
@@ -416,8 +572,8 @@
       },
       "/transactions/{accountNumber}/credit": {
          "post": {
-            "description": "Credit account",
-            "summary": "Credit the bank account with given accountNumber",
+            "description": "Credit an account",
+            "summary": "Credit the account with the given account number",
             "tags": [
                "Transactions"
             ],
@@ -430,21 +586,20 @@
                   "in": "path",
                   "name": "accountNumber",
                   "required": true,
-                  "description": "The account number of the bank account to be credited",
+                  "description": "The account number of the account to be credited",
                   "schema": {
                      "$ref": "#/components/schemas/accountNumber"
                   }
                },
                {
                   "in": "body",
-                  "name": "body",
+                  "name": "Credit data",
                   "required": true,
                   "description": "Credit transaction details",
                   "schema": {
                      "$ref": "#/components/schemas/creditTransaction"
                   }
                }
-
             ],
             "responses": {
                "200": {
@@ -482,7 +637,7 @@
                },
                {
                   "in": "body",
-                  "name": "body",
+                  "name": "debit data",
                   "required": true,
                   "description": "Debit transaction details",
                   "schema": {
@@ -505,6 +660,13 @@
       }
    },
    "components": {
+      "securitySchemes": {
+         "bearerAuth": {
+            "type": "http",
+            "scheme": "bearer",
+            "bearerFormat": "JWT"
+         }
+      },
       "schemas": {
          "signupDetails": {
             "title": "Signup Details",
@@ -526,25 +688,20 @@
                   "description": "user password",
                   "type": "string"
                },
-               "isAdmin": {
-                  "description": "is user an admin?",
-                  "type": "boolean"
-               },
                "type": {
                   "description": "user type",
                   "type": "string"
                }
             },
             "example": {
-               "firstName": "Ichigo",
-               "lastName": "Kurosaki",
-               "email": "getsugatenshou@bleach.com",
-               "password": "bankai",
-               "isAdmin": true,
-               "type": "staff"
+               "firstName": "Mubarak",
+               "lastName": "Aderopo",
+               "email": "ademubarak@gmail.com",
+               "password": "truenigerian",
+               "type": "client"
             },
             "required": [
-               "firstName, lastName, email, password, isAdmin, type"
+               "firstName, lastName, email, password, type"
             ]
          },
          "signinDetails": {
@@ -561,8 +718,8 @@
                }
             },
             "example": {
-               "email": "getsugatenshou@bleach.com",
-               "password": "bankai"
+               "email": "ademubarak@gmail.com",
+               "password": "truenigerian"
             },
             "required": [
                "email, password"
@@ -577,7 +734,7 @@
          "accountNumber": {
             "title": "Account number of bank account",
             "type": "integer",
-            "example": 1020095776,
+            "example": 1012934423,
             "required": true
          },
          "accountDetails": {
@@ -587,18 +744,6 @@
                "accountNumber": {
                   "description": "new account number",
                   "type": "integer"
-               },
-               "firstName": {
-                  "description": "user firstname",
-                  "type": "string"
-               },
-               "lastName": {
-                  "description": "user lastname",
-                  "type": "string"
-               },
-               "email": {
-                  "description": "user email",
-                  "type": "string"
                },
                "owner": {
                   "description": "account owner's id",
@@ -619,16 +764,13 @@
             },
             "example": {
                "accountNumber": 1023004807,
-               "firstName": "Ichigo",
-               "lastName": "Kurosaki",
-               "email": "getsugatenshou@bleach.com",
-               "owner": 3,
+               "owner": 2,
                "type": "savings",
                "openingBalance": 4500,
                "status": "dormant"
             },
             "required": [
-               "accountNumber, firstName, lastName, email, owner, type, openingBalance, status"
+               "accountNumber, owner, type, openingBalance, status"
             ]
          },
          "accountUpdate": {
@@ -657,10 +799,6 @@
             "title": "Credit transaction details",
             "type": "object",
             "properties": {
-               "accountNumber": {
-                  "description": "account number to credit",
-                  "type": "integer"
-               },
                "amount": {
                   "description": "credit amount",
                   "type": "float"
@@ -675,23 +813,30 @@
                }
             },
             "example": {
-               "accountNumber": 1020095776,
                "amount": 20000,
-               "cashier": 2,
+               "cashier": 4,
                "type": "credit"
             },
             "required": [
-               "accountNumber, amount, cashier, type"
+               "amount, cashier, type"
             ]
+         },
+         "statusActive": {
+            "title": "Active status query parameter",
+            "type": "string",
+            "example": "active",
+            "required": true
+         },
+         "statusDormant": {
+            "title": "Dormant status query parameter",
+            "type": "string",
+            "example": "dormant",
+            "required": true
          },
          "debitTransaction": {
             "title": "Debit transaction details",
             "type": "object",
             "properties": {
-               "accountNumber": {
-                  "description": "account number to debit",
-                  "type": "integer"
-               },
                "amount": {
                   "description": "debit amount",
                   "type": "float"
@@ -706,23 +851,22 @@
                }
             },
             "example": {
-               "accountNumber": 1020095776,
                "amount": 300,
-               "cashier": 2,
+               "cashier": 3,
                "type": "debit"
             },
             "required": [
-               "accountNumber, amount, cashier, type"
+               "amount, cashier, type"
             ]
          },
          "userResponse": {
             "example": {
-               "firstname": "Jonathan",
-               "lastname": "Wick",
-               "email": "johnwick@oriental.com",
-               "password": "solovigilante",
-               "isAdmin": false,
-               "type": "client"
+               "firstname": "Esther",
+               "lastname": "Obi",
+               "email": "estherobi@live.com",
+               "password": "africangirl",
+               "type": "client",
+               "isAdmin": false
             }
          }
       }
