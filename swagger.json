@@ -6,7 +6,6 @@
       "description": "Secure online banking application. Easy to use, efficient, fast."
    },
    "schemes": [
-      "http",
       "https"
    ],
    "securityDefinitions": {
@@ -372,7 +371,11 @@
             "produces": [
                "application/json"
             ],
-            "security": [],
+            "security": [
+               {
+                  "Bearer": []
+               }
+            ],
             "parameters": [
                {
                   "in": "path",
@@ -405,7 +408,11 @@
             "produces": [
                "application/json"
             ],
-            "security": [],
+            "security": [
+               {
+                  "Bearer": []
+               }
+            ],
             "parameters": [
                {
                   "in": "path",
@@ -447,7 +454,11 @@
             "produces": [
                "application/json"
             ],
-            "security": [],
+            "security": [
+               {
+                  "Bearer": []
+               }
+            ],
             "parameters": [
                {
                   "in": "path",
@@ -521,7 +532,11 @@
             "produces": [
                "application/json"
             ],
-            "security": [],
+            "security": [
+               {
+                  "Bearer": []
+               }
+            ],
             "parameters": [
                {
                   "in": "path",
@@ -556,7 +571,11 @@
             "produces": [
                "application/json"
             ],
-            "security": [],
+            "security": [
+               {
+                  "Bearer": []
+               }
+            ],
             "responses": {
                "200": {
                   "description": "Success"
@@ -580,7 +599,11 @@
             "produces": [
                "application/json"
             ],
-            "security": [],
+            "security": [
+               {
+                  "Bearer": []
+               }
+            ],
             "parameters": [
                {
                   "in": "path",
@@ -624,7 +647,11 @@
             "produces": [
                "application/json"
             ],
-            "security": [],
+            "security": [
+               {
+                  "Bearer": []
+               }
+            ],
             "parameters": [
                {
                   "in": "path",

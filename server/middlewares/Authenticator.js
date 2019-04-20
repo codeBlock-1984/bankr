@@ -76,7 +76,6 @@ class Authenticator {
       return res.status(401).json({
         status: 401,
         error: 'Request exclusive to cashier or client',
-        data: userType,
       });
     }
     return next();
