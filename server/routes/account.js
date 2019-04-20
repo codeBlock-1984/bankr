@@ -4,6 +4,7 @@ import AccountController from '../controllers/Account';
 import TransactionController from '../controllers/Transaction';
 import validate from '../middlewares/validate';
 import accountValidator from '../middlewares/accountValidator';
+import Authenticator from '../middlewares/Authenticator';
 
 const router = express.Router();
 
@@ -13,7 +14,9 @@ const {
   getAllAccounts,
   updateAccountStatus, deleteAccount,
 } = AccountController;
+
 const { getUserTransactions } = TransactionController;
+
 const {
   accountNumberValidator,
   accountFieldsValidator,
@@ -21,11 +24,13 @@ const {
   accountParamValidator,
 } = accountValidator;
 
-router.post('/', accountNumberValidator, accountFieldsValidator, accountStatusValidator, validate, createAccount);
-router.get('/:accountNumber', accountParamValidator, validate, getAccount);
-router.get('/', getAllAccounts);
-router.get('/:accountNumber/transactions', accountParamValidator, validate, getUserTransactions);
-router.patch('/:accountNumber', accountParamValidator, accountStatusValidator, validate, updateAccountStatus);
-router.delete('/:accountNumber', accountParamValidator, validate, deleteAccount);
+const { isAuth, levelFour, levelFive } = Authenticator;
+
+router.post('/', isAuth, levelFour, accountNumberValidator, accountFieldsValidator, accountStatusValidator, validate, createAccount);
+router.get('/:accountNumber', isAuth, accountParamValidator, validate, getAccount);
+router.get('/', isAuth, levelFive, getAllAccounts);
+router.get('/:accountNumber/transactions', isAuth, accountParamValidator, validate, getUserTransactions);
+router.patch('/:accountNumber', isAuth, levelFive, accountParamValidator, accountStatusValidator, validate, updateAccountStatus);
+router.delete('/:accountNumber', isAuth, levelFive, accountParamValidator, validate, deleteAccount);
 
 export default router;

@@ -16,7 +16,7 @@ class AuthController {
 
       const addUserQuery = `INSERT INTO users (firstName, lastName, email, password, type, isAdmin)
                     VALUES($1, $2, $3, $4, $5, $6)
-                    RETURNING id, firstName, lastName, email`;
+                    RETURNING id, firstName, lastName, email, type`;
       const values = [firstName, lastName, email, securePassword, userInputType, isAdmin];
       const { rows } = await client.query(addUserQuery, values);
       if (rows[0]) {

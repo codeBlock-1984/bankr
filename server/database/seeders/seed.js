@@ -7,10 +7,12 @@ const debugg = debug('Migrate undo');
 
 (async function seedDb() {
   const { encryptPassword } = Passcode;
-  const clientOnePassword = await encryptPassword('securepassword');
-  const clientTwoPassword = await encryptPassword('verysecurepassword');
-  const cashierOnePassword = await encryptPassword('strongandsecurepassword');
-  const cashierTwoPassword = await encryptPassword('verystrongandsecurepassword');
+  const clientOnePassword = await encryptPassword('securepassword1');
+  const clientTwoPassword = await encryptPassword('securepassword2');
+  const cashierOnePassword = await encryptPassword('strongpassword1');
+  const cashierTwoPassword = await encryptPassword('strongpassword2');
+  const adminOnePassword = await encryptPassword('adminpassword1');
+  const adminTwoPassword = await encryptPassword('adminpassword2');
 
   const clientOne = `INSERT INTO users(firstName, lastName, email, password, type, isAdmin)
                      VALUES('Alice', 'Nwankwo', 'alicen1995@yahoo.com', '${clientOnePassword}', 'client', false)`;
@@ -19,10 +21,16 @@ const debugg = debug('Migrate undo');
                      VALUES('Leonard', 'Mustapha', 'leomustapha@yahoo.com', '${clientTwoPassword}', 'client', false)`;
 
   const cashierOne = `INSERT INTO users(firstName, lastName, email, password, type, isAdmin)
-                      VALUES('Cyril', 'Umar', 'cyrilu@gmail.com', '${cashierOnePassword}', 'staff', true)`;
+                      VALUES('Cyril', 'Umar', 'cyrilu@gmail.com', '${cashierOnePassword}', 'cashier', true)`;
 
   const cashierTwo = `INSERT INTO users(firstName, lastName, email, password, type, isAdmin)
-                      VALUES('Michael', 'Bankole', 'mikebanks@live.com', '${cashierTwoPassword}', 'staff', true)`;
+                      VALUES('Michael', 'Bankole', 'mikebanks@live.com', '${cashierTwoPassword}', 'cashier', true)`;
+
+  const adminOne = `INSERT INTO users(firstName, lastName, email, password, type, isAdmin)
+                      VALUES('Jessica', 'Chastain', 'misssloane@live.com', '${adminOnePassword}', 'admin', true)`;
+
+  const adminTwo = `INSERT INTO users(firstName, lastName, email, password, type, isAdmin)
+                      VALUES('Christian', 'Bale', 'darknight@live.com', '${adminTwoPassword}', 'admin', true)`;
 
   const accountOne = `INSERT INTO accounts(accountNumber, owner, type, status, balance)
                       VALUES(1012934423, 1, 'savings', 'active', 5000.05)`;
@@ -51,6 +59,8 @@ const debugg = debug('Migrate undo');
     await client.query(clientTwo);
     await client.query(cashierOne);
     await client.query(cashierTwo);
+    await client.query(adminOne);
+    await client.query(adminTwo);
     await client.query(accountOne);
     await client.query(accountTwo);
     await client.query(accountThree);

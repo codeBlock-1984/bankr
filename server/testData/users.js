@@ -15,7 +15,14 @@ const testUserData = {
   isAdmin: true,
 };
 
+const client = { email: 'alicen1995@yahoo.com', password: 'securepassword1' };
+const cashier = { email: 'cyrilu@gmail.com', password: 'strongpassword1' };
+const admin = { email: 'darknight@live.com', password: 'adminpassword2' };
+
 export default {
+  client,
+  cashier,
+  admin,
   testUser,
   testUserData,
 };
