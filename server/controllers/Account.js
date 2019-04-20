@@ -6,22 +6,17 @@ class AccountController {
     try {
       const {
         accountNumber,
-        firstName,
-        lastName,
-        email: accountEmail,
         owner: accountOwner,
         type: accountType,
         status,
         openingBalance: accountOpeningBalance,
       } = req.body;
-      const createAccountQuery = `INSERT INTO accounts (accountNumber, firstName, lastName, email, owner, type, status, balance)
-                                  VALUES($1, $2, $3, $4, $5, $6, $7, $8)
-                                  RETURNING accountNumber, firstName, lastName, email, type, balance`;
+
+      const createAccountQuery = `INSERT INTO accounts (accountNumber, owner, type, status, balance)
+                                  VALUES($1, $2, $3, $4, $5)
+                                  RETURNING accountNumber, type, balance`;
       const values = [
         accountNumber,
-        firstName,
-        lastName,
-        accountEmail,
         accountOwner,
         accountType,
         status,
@@ -31,16 +26,31 @@ class AccountController {
       if (rows[0]) {
         const newAccount = rows[0];
         const {
-          accountnumber, firstname, lastname, email, type, balance: openingBalance,
+          accountnumber, type, balance: openingBalance,
         } = newAccount;
+
+        const getUserQuery = `SELECT firstName, lastName, email FROM users
+                              INNER JOIN accounts ON users.id = accounts."owner"
+                              WHERE accounts.accountnumber = $1`;
+        const getUserValue = [accountNumber];
+        const { rows: userRows } = await client.query(getUserQuery, getUserValue);
+        const { firstname, lastname, email } = userRows[0];
+        const newAccountDetails = {
+          firstname, lastname, email, accountnumber, type, openingBalance,
+        };
         return res.status(201).json({
           status: 201,
-          data: {
-            accountnumber, firstname, lastname, email, type, balance: openingBalance,
-          },
+          data: [newAccountDetails],
         });
       }
     } catch (error) {
+      const { constraint } = error;
+      if (constraint === 'accounts_accountnumber_key') {
+        return res.status(409).json({
+          status: 409,
+          error: 'Account number is linked to an existing account!',
+        });
+      }
       return res.status(500).json({
         status: 500,
         error: 'Internal server error!',
@@ -54,49 +64,28 @@ class AccountController {
     const client = await pool.connect();
     try {
       const { accountNumber } = req.params;
-      const getAccountQuery = `SELECT * FROM accounts WHERE accountNumber = $1
-                              LIMIT 1`;
+      const getAccountQuery = `SELECT accounts.createdOn, accounts.accountNumber, email,
+                               accounts.type, status, balance FROM users INNER JOIN accounts
+                               ON users.id = accounts.owner WHERE accounts.accountnumber = $1`;
       const values = [accountNumber];
       const { rows } = await client.query(getAccountQuery, values);
       if (!rows[0]) {
         return res.status(404).json({
           status: 404,
-          error: 'Account with account number not found!',
+          error: 'Account with specified account number does not exist!',
         });
       }
       const singleAccount = rows[0];
-      return res.status(200).json({
-        status: 200,
-        data: singleAccount,
-      });
-    } catch (error) {
-      return res.status(500).json({
-        status: 500,
-        error: 'Internal server error!',
-      });
-    } finally {
-      await client.release();
-    }
-  }
+      const {
+        createdon, accountnumber, email: ownerEmail, type, status, balance,
+      } = singleAccount;
+      const retrievedAccount = {
+        createdon, accountnumber, ownerEmail, type, status, balance,
+      };
 
-  static async getAccountsByStatus(req, res) {
-    const client = await pool.connect();
-    try {
-      const { status } = req.params;
-      const getAccountsByStatusQuery = `SELECT * FROM accounts WHERE status = $1
-                                  ORDER BY id ASC`;
-      const values = [status];
-      const { rows } = await client.query(getAccountsByStatusQuery, values);
-      if (!rows[0]) {
-        return res.status(404).json({
-          status: 404,
-          error: 'No accounts record found for user with given id!',
-        });
-      }
-      const userAccountsByStatus = rows;
       return res.status(200).json({
         status: 200,
-        data: userAccountsByStatus,
+        data: [retrievedAccount],
       });
     } catch (error) {
       return res.status(500).json({
@@ -111,8 +100,25 @@ class AccountController {
   static async getAllAccounts(req, res) {
     const client = await pool.connect();
     try {
-      const getAllAccountsQuery = `SELECT * FROM accounts
-                                  ORDER BY id ASC`;
+      const statusQuery = req.query.status;
+      if (statusQuery) {
+        const getAccountsByStatusQuery = `SELECT * FROM accounts WHERE status = $1
+                                          ORDER BY id ASC`;
+        const values = [statusQuery];
+        const { rows } = await client.query(getAccountsByStatusQuery, values);
+        if (!rows[0]) {
+          return res.status(404).json({
+            status: 404,
+            error: `No ${statusQuery} accounts found!`,
+          });
+        }
+        const userAccountsByStatus = rows;
+        return res.status(200).json({
+          status: 200,
+          data: userAccountsByStatus,
+        });
+      }
+      const getAllAccountsQuery = `SELECT * FROM accounts ORDER BY id ASC`;
       const { rows } = await client.query(getAllAccountsQuery);
       if (!rows[0]) {
         return res.status(404).json({
@@ -138,15 +144,16 @@ class AccountController {
   static async getUserAccounts(req, res) {
     const client = await pool.connect();
     try {
-      const { userId } = req.params;
-      const getUserAccountsQuery = `SELECT * FROM accounts WHERE owner = $1
-                                  ORDER BY id ASC`;
-      const values = [userId];
+      const { email } = req.params;
+      const getUserAccountsQuery = `SELECT accounts.createdOn, accountNumber, accounts.type, accounts.status, balance
+                                    FROM users INNER JOIN accounts ON users.id = accounts.owner
+                                    WHERE users.email = $1 ORDER BY accounts.id ASC;`;
+      const values = [email];
       const { rows } = await client.query(getUserAccountsQuery, values);
       if (!rows[0]) {
         return res.status(404).json({
           status: 404,
-          error: 'No accounts record found for user with given id!',
+          error: 'No accounts record found with the specified email!',
         });
       }
       const userAccounts = rows;
@@ -176,13 +183,13 @@ class AccountController {
       if (!rows[0]) {
         return res.status(404).json({
           status: 404,
-          error: 'No accounts record found for given account number!',
+          error: 'Account with specified account number does not exist!',
         });
       }
       const updatedAccount = rows[0];
       return res.status(200).json({
         status: 200,
-        data: updatedAccount,
+        data: [updatedAccount],
       });
     } catch (error) {
       return res.status(500).json({
@@ -205,7 +212,7 @@ class AccountController {
       if (!rows[0]) {
         return res.status(404).json({
           status: 404,
-          error: 'No accounts record found for given account number!',
+          error: 'Account with specified account number does not exist!',
         });
       }
       return res.status(200).json({

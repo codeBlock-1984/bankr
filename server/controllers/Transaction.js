@@ -5,10 +5,7 @@ class TransactionController {
     const client = await pool.connect();
     try {
       const {
-        accountNumber: transactionAccountNumber,
         amount: transactionAmount,
-        account: transactionAccount,
-        owner: transactionOwner,
         cashier: transactionCashier,
         type: inputTransactionType,
       } = req.body;
@@ -26,26 +23,26 @@ class TransactionController {
       const { balance } = rows[0];
       const newBalance = (balance + transactionAmount).toFixed(2);
       const creditTransactionQuery = `UPDATE accounts SET balance = $1 WHERE accountNumber = $2
-                                    RETURNING balance`;
+                                    RETURNING id, accountNumber, balance`;
       const creditValues = [newBalance, accountNumberParam];
       const { rows: rowsCredit } = await client.query(creditTransactionQuery, creditValues);
       if (rowsCredit[0]) {
         const creditedAccount = rowsCredit[0];
-        const { balance: creditedAccountBalance } = creditedAccount;
-        const addTransactionQuery = `INSERT INTO transactions(accountNumber, type, account, owner, cashier, amount, oldBalance, newBalance)
-                                    VALUES($1, $2, $3, $4, $5, $6, $7, $8)
-                                    RETURNING id, type, accountNumber, account, owner, cashier, amount, newBalance`;
+        const {
+          id, accountnumber: creditedAccountNumber, balance: creditedAccountBalance,
+        } = creditedAccount;
+        const addTransactionQuery = `INSERT INTO transactions(accountNumber, type, account, cashier, amount, oldBalance, newBalance)
+                                    VALUES($1, $2, $3, $4, $5, $6, $7)
+                                    RETURNING id, type, accountNumber, cashier, amount, newBalance`;
         const addTransactionValues = [
-          transactionAccountNumber,
+          creditedAccountNumber,
           inputTransactionType,
-          transactionAccount,
-          transactionOwner,
+          id,
           transactionCashier,
           transactionAmount,
           balance,
           creditedAccountBalance,
         ];
-        console.log(addTransactionValues);
         const {
           rows: rowsAddTransaction,
         } = await client.query(addTransactionQuery, addTransactionValues);
@@ -54,8 +51,6 @@ class TransactionController {
             id: transactionId,
             type: transactionType,
             accountnumber,
-            account,
-            owner,
             cashier,
             amount,
             newbalance: accountBalance,
@@ -64,15 +59,13 @@ class TransactionController {
             transactionId,
             accountnumber,
             amount,
-            account,
-            owner,
             cashier,
             transactionType,
             accountBalance,
           };
-          return res.status(201).json({
-            status: 201,
-            data: transactionDetails,
+          return res.status(200).json({
+            status: 200,
+            data: [transactionDetails],
           });
         }
       }
@@ -91,10 +84,7 @@ class TransactionController {
     const client = await pool.connect();
     try {
       const {
-        accountNumber: transactionAccountNumber,
         amount: transactionAmount,
-        account: transactionAccount,
-        owner: transactionOwner,
         cashier: transactionCashier,
         type: inputTransactionType,
       } = req.body;
@@ -112,20 +102,21 @@ class TransactionController {
       const { balance } = rows[0];
       const newBalance = (balance - transactionAmount).toFixed(2);
       const debitTransactionQuery = `UPDATE accounts SET balance = $1 WHERE accountNumber = $2
-                                    RETURNING balance`;
+                                    RETURNING id, accountNumber, balance`;
       const debitValues = [newBalance, accountNumberParam];
       const { rows: rowsDebit } = await client.query(debitTransactionQuery, debitValues);
       if (rowsDebit[0]) {
-        const debitedAccount = rowsDebit[0];
-        const { balance: debitedAccountBalance } = debitedAccount;
-        const addTransactionQuery = `INSERT INTO transactions(type, accountNumber, account, owner, cashier, amount, oldBalance, newBalance)
-                                    VALUES($1, $2, $3, $4, $5, $6, $7, $8)
-                                    RETURNING id, type, accountNumber, owner, cashier, amount, newBalance`;
+        const creditedAccount = rowsDebit[0];
+        const {
+          id, accountnumber: debitedAccountNumber, balance: debitedAccountBalance,
+        } = creditedAccount;
+        const addTransactionQuery = `INSERT INTO transactions(accountNumber, type, account, cashier, amount, oldBalance, newBalance)
+                                    VALUES($1, $2, $3, $4, $5, $6, $7)
+                                    RETURNING id, type, accountNumber, cashier, amount, newBalance`;
         const addTransactionValues = [
+          debitedAccountNumber,
           inputTransactionType,
-          transactionAccountNumber,
-          transactionAccount,
-          transactionOwner,
+          id,
           transactionCashier,
           transactionAmount,
           balance,
@@ -139,8 +130,6 @@ class TransactionController {
             id: transactionId,
             type: transactionType,
             accountnumber,
-            account,
-            owner,
             cashier,
             amount,
             newbalance: accountBalance,
@@ -149,48 +138,18 @@ class TransactionController {
             transactionId,
             accountnumber,
             amount,
-            account,
-            owner,
             cashier,
             transactionType,
             accountBalance,
           };
-          return res.status(201).json({
-            status: 201,
-            data: transactionDetails,
+          return res.status(200).json({
+            status: 200,
+            data: [transactionDetails],
           });
         }
       }
     } catch (error) {
-      return res.status(500).json({
-        status: 500,
-        error: 'Internal server error!',
-      });
-    } finally {
-      await client.release();
-    }
-  }
-
-  static async getTransaction(req, res) {
-    const client = await pool.connect();
-    try {
-      const { transactionId } = req.params;
-      const getTransactionQuery = `SELECT * FROM transactions WHERE id = $1
-                              LIMIT 1`;
-      const values = [transactionId];
-      const { rows } = await client.query(getTransactionQuery, values);
-      if (!rows[0]) {
-        return res.status(404).json({
-          status: 404,
-          error: 'Transaction with given id not found!',
-        });
-      }
-      const singleTransaction = rows[0];
-      return res.status(200).json({
-        status: 200,
-        data: singleTransaction,
-      });
-    } catch (error) {
+      console.log(error);
       return res.status(500).json({
         status: 500,
         error: 'Internal server error!',
@@ -203,8 +162,9 @@ class TransactionController {
   static async getAllTransactions(req, res) {
     const client = await pool.connect();
     try {
-      const getAllTransactionsQuery = `SELECT * FROM transactions
-                                  ORDER BY id ASC`;
+      const getAllTransactionsQuery = `SELECT id AS transactionId, createdOn, type, accountNumber, amount, oldBalance, newBalance
+                                       FROM transactions ORDER BY id ASC`;
+
       const { rows } = await client.query(getAllTransactionsQuery);
       if (!rows[0]) {
         return res.status(404).json({
@@ -230,22 +190,22 @@ class TransactionController {
   static async getUserTransaction(req, res) {
     const client = await pool.connect();
     try {
-      const { userId, accountId, transactionId } = req.params;
-      const getUserTransactionQuery = `SELECT * FROM transactions LIMIT 1
-                                        WHERE owner = $1 AND account = $2 AND id = $3
-                                        `;
-      const values = [userId, accountId, transactionId];
+      const { transactionId } = req.params;
+
+      const getUserTransactionQuery = `SELECT id AS transactionId, createdOn, type, accountNumber, amount, oldBalance, newBalance FROM transactions
+                                        WHERE id = $1`;
+      const values = [transactionId];
       const { rows: userTransactionRows } = await client.query(getUserTransactionQuery, values);
       if (!userTransactionRows[0]) {
         return res.status(404).json({
           status: 404,
-          error: 'No transactions record found with given user id!',
+          error: 'Transaction with specified id does not exist!',
         });
       }
       const userTransaction = userTransactionRows[0];
       return res.status(200).json({
         status: 200,
-        data: userTransaction,
+        data: [userTransaction],
       });
     } catch (error) {
       return res.status(500).json({
@@ -260,15 +220,28 @@ class TransactionController {
   static async getUserTransactions(req, res) {
     const client = await pool.connect();
     try {
-      const { userId, accountId } = req.params;
-      const getUserTransactionsQuery = `SELECT * FROM transactions WHERE owner = $1 AND account = $2
-                                      ORDER BY id ASC`;
-      const values = [userId, accountId];
+      const { accountNumber } = req.params;
+
+      const checkExistingAccountQuery = `SELECT * FROM accounts
+                                         WHERE accountNumber = $1`;
+      const checkValue = [accountNumber];
+
+      const { rows } = await client.query(checkExistingAccountQuery, checkValue);
+      if (!rows[0]) {
+        return res.status(404).json({
+          status: 404,
+          error: 'Account with specified account number does not exist!',
+        });
+      }
+
+      const getUserTransactionsQuery = `SELECT id AS transactionId, createdOn, type, accountNumber, amount, oldBalance, newBalance FROM transactions
+                                        WHERE accountNumber = $1`;
+      const values = [accountNumber];
       const { rows: userTransactionsRows } = await client.query(getUserTransactionsQuery, values);
       if (!userTransactionsRows[0]) {
         return res.status(404).json({
           status: 404,
-          error: 'No transactions record matching user id and account id!',
+          error: 'No transactions record found for the account!',
         });
       }
       const userTransactions = userTransactionsRows;

@@ -9,43 +9,42 @@ chai.use(chaiHttp);
 chai.should();
 
 const {
-  testAccount,
-  testAccountData,
-  delTestAccountData,
-  getTestAccountData,
+  postAccount,
 } = accountData;
 
 let testAccountNumber;
-let delTestAccountNumber;
-let getTestAccountNumber;
 const noAccountNumber = 1112223456;
-// const testStatus = 'active';
+const testEmail = 'alicen1995@yahoo.com';
+const noEmail = 'nonexistingemail@yahoo.com';
 
 describe('Accounts Endpoints', () => {
   describe('POST /accounts', () => {
     it('should create a new bank account', (done) => {
-      chai.request(app).post('/api/v1/accounts').send(testAccount).end((err, res) => {
+      chai.request(app).post('/api/v1/accounts').send(postAccount).end((err, res) => {
+        testAccountNumber = res.body.data[0].accountnumber;
         res.should.have.status(201);
         res.body.should.have.property('status').eql(201);
         res.body.should.have.property('data');
-        res.body.data.should.be.an('object');
-        res.body.data.should.have.property('accountNumber');
-        res.body.data.accountNumber.should.be.a('number');
-        res.body.data.should.have.property('firstName');
-        res.body.data.firstName.should.be.a('string');
-        res.body.data.should.have.property('lastName');
-        res.body.data.lastName.should.be.a('string');
-        res.body.data.should.have.property('email');
-        res.body.data.email.should.be.a('string');
-        res.body.data.should.have.property('type');
-        res.body.data.type.should.be.a('string');
-        res.body.data.should.have.property('openingBalance');
-        res.body.data.openingBalance.should.be.an('number');
+        res.body.data.should.be.an('array');
+        res.body.data[0].should.have.property('accountnumber');
+        res.body.data[0].accountnumber.should.be.a('number');
+        res.body.data[0].should.have.property('type');
+        res.body.data[0].type.should.be.a('string');
+        res.body.data[0].should.have.property('openingBalance');
+        res.body.data[0].openingBalance.should.be.an('number');
+        done();
+      });
+    });
+    it('should not create a new account if account number already exists', (done) => {
+      chai.request(app).post('/api/v1/accounts').send(postAccount).end((err, res) => {
+        res.should.have.status(409);
+        res.body.should.have.property('status').eql(409);
+        res.body.should.have.property('error').eql('Account number is linked to an existing account!');
         done();
       });
     });
     it('should return 400 error if account number is empty', (done) => {
-      const { accountNumber, ...partialAccountDetails } = testAccount;
+      const { accountNumber, ...partialAccountDetails } = postAccount;
       chai.request(app).post('/api/v1/accounts').send(partialAccountDetails).end((err, res) => {
         res.should.have.status(400);
         res.body.should.have.property('status').eql(400);
@@ -53,35 +52,8 @@ describe('Accounts Endpoints', () => {
         done();
       });
     });
-    it('should return 400 error if first name is empty', (done) => {
-      const { firstName, ...partialAccountDetails } = testAccount;
-      chai.request(app).post('/api/v1/accounts').send(partialAccountDetails).end((err, res) => {
-        res.should.have.status(400);
-        res.body.should.have.property('status').eql(400);
-        res.body.should.have.property('error').eql('Firstname is required!');
-        done();
-      });
-    });
-    it('should return 400 error if last name is empty', (done) => {
-      const { lastName, ...partialAccountDetails } = testAccount;
-      chai.request(app).post('/api/v1/accounts').send(partialAccountDetails).end((err, res) => {
-        res.should.have.status(400);
-        res.body.should.have.property('status').eql(400);
-        res.body.should.have.property('error').eql('Lastname is required!');
-        done();
-      });
-    });
-    it('should return 400 error if email is empty', (done) => {
-      const { email, ...partialAccountDetails } = testAccount;
-      chai.request(app).post('/api/v1/accounts').send(partialAccountDetails).end((err, res) => {
-        res.should.have.status(400);
-        res.body.should.have.property('status').eql(400);
-        res.body.should.have.property('error').eql('Email is required!');
-        done();
-      });
-    });
     it('should return 400 error if type is empty', (done) => {
-      const { type, ...partialAccountDetails } = testAccount;
+      const { type, ...partialAccountDetails } = postAccount;
       chai.request(app).post('/api/v1/accounts').send(partialAccountDetails).end((err, res) => {
         res.should.have.status(400);
         res.body.should.have.property('status').eql(400);
@@ -90,7 +62,7 @@ describe('Accounts Endpoints', () => {
       });
     });
     it('should return 400 error if openingBalance is empty', (done) => {
-      const { openingBalance, ...partialAccountDetails } = testAccount;
+      const { openingBalance, ...partialAccountDetails } = postAccount;
       chai.request(app).post('/api/v1/accounts').send(partialAccountDetails).end((err, res) => {
         res.should.have.status(400);
         res.body.should.have.property('status').eql(400);
@@ -99,21 +71,141 @@ describe('Accounts Endpoints', () => {
       });
     });
   });
-  describe('PATCH /accounts/:accountNumber', () => {
-    before('seed accounts dummy data', async () => {
-      const response = await chai.request(app).post('/api/v1/accounts').send(testAccountData);
-      testAccountNumber = response.body.data.accountNumber;
+  describe('GET /accounts/:accountNumber', () => {
+    it('should get the account with the specified account number', (done) => {
+      chai.request(app).get(`/api/v1/accounts/${testAccountNumber}`).end((err, res) => {
+        res.should.have.status(200);
+        res.body.should.have.property('status').eql(200);
+        res.body.should.have.property('data');
+        res.body.data[0].should.be.an('object');
+        res.body.data[0].should.have.property('createdon');
+        res.body.data[0].createdon.should.be.a('string');
+        res.body.data[0].should.have.property('accountnumber');
+        res.body.data[0].accountnumber.should.be.a('number');
+        res.body.data[0].should.have.property('type');
+        res.body.data[0].type.should.be.a('string');
+        res.body.data[0].should.have.property('status');
+        res.body.data[0].status.should.be.a('string');
+        res.body.data[0].should.have.property('balance');
+        res.body.data[0].balance.should.be.an('number');
+        done();
+      });
     });
+    it('should return a 404 error if account number does not exist', (done) => {
+      chai.request(app).get(`/api/v1/accounts/${noAccountNumber}`).end((err, res) => {
+        res.should.have.status(404);
+        res.body.should.have.property('status').eql(404);
+        res.body.should.have.property('error').eql('Account with specified account number does not exist!');
+        done();
+      });
+    });
+  });
+  describe('GET /accounts?status=active', () => {
+    it('should get all active accounts', (done) => {
+      chai.request(app).get('/api/v1/accounts?status=active').end((err, res) => {
+        res.should.have.status(200);
+        res.body.should.have.property('status').eql(200);
+        res.body.should.have.property('data');
+        res.body.data.should.be.an('array');
+        res.body.data[0].should.be.an('object');
+        res.body.data[0].should.have.property('createdon');
+        res.body.data[0].createdon.should.be.a('string');
+        res.body.data[0].should.have.property('accountnumber');
+        res.body.data[0].accountnumber.should.be.a('number');
+        res.body.data[0].should.have.property('type');
+        res.body.data[0].type.should.be.a('string');
+        res.body.data[0].should.have.property('status').eql('active');
+        res.body.data[0].status.should.be.a('string');
+        res.body.data[0].should.have.property('balance');
+        res.body.data[0].balance.should.be.an('number');
+        done();
+      });
+    });
+  });
+  describe('GET /accounts?status=dormant', () => {
+    it('should get all dormant accounts', (done) => {
+      chai.request(app).get('/api/v1/accounts?status=dormant').end((err, res) => {
+        res.should.have.status(200);
+        res.body.should.have.property('status').eql(200);
+        res.body.should.have.property('data');
+        res.body.data.should.be.an('array');
+        res.body.data[0].should.be.an('object');
+        res.body.data[0].should.have.property('createdon');
+        res.body.data[0].createdon.should.be.a('string');
+        res.body.data[0].should.have.property('accountnumber');
+        res.body.data[0].accountnumber.should.be.a('number');
+        res.body.data[0].should.have.property('type');
+        res.body.data[0].type.should.be.a('string');
+        res.body.data[0].should.have.property('status').eql('dormant');
+        res.body.data[0].status.should.be.a('string');
+        res.body.data[0].should.have.property('balance');
+        res.body.data[0].balance.should.be.an('number');
+        done();
+      });
+    });
+  });
+  describe('GET /accounts', () => {
+    it('should get all accounts', (done) => {
+      chai.request(app).get('/api/v1/accounts').end((err, res) => {
+        res.should.have.status(200);
+        res.body.should.have.property('status').eql(200);
+        res.body.should.have.property('data');
+        res.body.data.should.be.an('array');
+        res.body.data[0].should.be.an('object');
+        res.body.data[0].should.have.property('createdon');
+        res.body.data[0].createdon.should.be.a('string');
+        res.body.data[0].should.have.property('accountnumber');
+        res.body.data[0].accountnumber.should.be.a('number');
+        res.body.data[0].should.have.property('type');
+        res.body.data[0].type.should.be.a('string');
+        res.body.data[0].should.have.property('status');
+        res.body.data[0].status.should.be.a('string');
+        res.body.data[0].should.have.property('balance');
+        res.body.data[0].balance.should.be.an('number');
+        done();
+      });
+    });
+  });
+  describe('GET /users/:email/accounts', () => {
+    it('should get all accounts of user with given email', (done) => {
+      chai.request(app).get(`/api/v1/users/${testEmail}/accounts`).end((err, res) => {
+        res.should.have.status(200);
+        res.body.should.have.property('status').eql(200);
+        res.body.should.have.property('data');
+        res.body.data.should.be.an('array');
+        res.body.data[0].should.have.property('createdon');
+        res.body.data[0].createdon.should.be.a('string');
+        res.body.data[0].should.have.property('accountnumber');
+        res.body.data[0].accountnumber.should.be.a('number');
+        res.body.data[0].should.have.property('type');
+        res.body.data[0].type.should.be.a('string');
+        res.body.data[0].should.have.property('status');
+        res.body.data[0].status.should.be.a('string');
+        res.body.data[0].should.have.property('balance');
+        res.body.data[0].balance.should.be.an('number');
+        done();
+      });
+    });
+    it('should return 404 error if account with given email is not found', (done) => {
+      chai.request(app).get(`/api/v1/users/${noEmail}/accounts`).end((err, res) => {
+        res.should.have.status(404);
+        res.body.should.have.property('status').eql(404);
+        res.body.should.have.property('error').eql('No accounts record found with the specified email!');
+        done();
+      });
+    });
+  });
+  describe('PATCH /accounts/:accountNumber', () => {
     it('should update an account status', (done) => {
       chai.request(app).patch(`/api/v1/accounts/${testAccountNumber}`).send({ status: 'active' }).end((err, res) => {
         res.should.have.status(200);
         res.body.should.have.property('status').eql(200);
         res.body.should.have.property('data');
-        res.body.data.should.be.an('object');
-        res.body.data.should.have.property('accountNumber');
-        res.body.data.accountNumber.should.be.a('number');
-        res.body.data.should.have.property('status');
-        res.body.data.status.should.be.a('string');
+        res.body.data.should.be.an('array');
+        res.body.data[0].should.have.property('accountnumber');
+        res.body.data[0].accountnumber.should.be.a('number');
+        res.body.data[0].should.have.property('status');
+        res.body.data[0].status.should.be.a('string');
         done();
       });
     });
@@ -135,16 +227,12 @@ describe('Accounts Endpoints', () => {
     });
   });
   describe('DELETE /accounts/:accountNumber', () => {
-    before('seed accounts dummy data for delete', async () => {
-      const response = await chai.request(app).post('/api/v1/accounts').send(delTestAccountData);
-      delTestAccountNumber = response.body.data.accountNumber;
-    });
     it('should delete the account with the specified account number', (done) => {
-      chai.request(app).delete(`/api/v1/accounts/${delTestAccountNumber}`).end((err, res) => {
+      chai.request(app).delete(`/api/v1/accounts/${testAccountNumber}`).end((err, res) => {
         res.should.have.status(200);
         res.body.should.have.property('status').eql(200);
-        res.body.should.have.property('data');
-        res.body.data.should.be.an('object');
+        res.body.should.have.property('message');
+        res.body.message.should.be.a('string');
         done();
       });
     });
@@ -153,39 +241,6 @@ describe('Accounts Endpoints', () => {
         res.should.have.status(404);
         res.body.should.have.property('status').eql(404);
         res.body.should.have.property('error').eql('Account with specified account number does not exist!');
-        done();
-      });
-    });
-  });
-  describe('GET /accounts/:accountNumber', () => {
-    before('seed accounts dummy data', async () => {
-      const response = await chai.request(app).post('/api/v1/accounts').send(getTestAccountData);
-      getTestAccountNumber = response.body.data.accountNumber;
-    });
-    it('should get the account with the specified account number', (done) => {
-      chai.request(app).get(`/api/v1/accounts/${getTestAccountNumber}`).end((err, res) => {
-        res.should.have.status(200);
-        res.body.should.have.property('status').eql(200);
-        res.body.should.have.property('data');
-        res.body.data.should.be.an('object');
-        done();
-      });
-    });
-    it('should return a 404 error if account number does not exist', (done) => {
-      chai.request(app).get(`/api/v1/accounts/${noAccountNumber}`).end((err, res) => {
-        res.should.have.status(404);
-        res.body.should.have.property('status').eql(404);
-        res.body.should.have.property('error').eql('Account with specified account number does not exist!');
-        done();
-      });
-    });
-  });
-  describe('GET /accounts', () => {
-    it('should get all accounts', (done) => {
-      chai.request(app).get('/api/v1/accounts').end((err, res) => {
-        res.should.have.status(200);
-        res.body.should.have.property('status').eql(200);
-        res.body.should.have.property('data');
         done();
       });
     });

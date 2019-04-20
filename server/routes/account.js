@@ -1,9 +1,9 @@
 import express from 'express';
 
-import Account from '../controllers/Account';
+import AccountController from '../controllers/Account';
+import TransactionController from '../controllers/Transaction';
 import validate from '../middlewares/validate';
 import accountValidator from '../middlewares/accountValidator';
-import authValidator from '../middlewares/authValidator';
 
 const router = express.Router();
 
@@ -11,22 +11,20 @@ const {
   createAccount,
   getAccount,
   getAllAccounts,
-  getAccountsByStatus,
   updateAccountStatus, deleteAccount,
-} = Account;
+} = AccountController;
+const { getUserTransactions } = TransactionController;
 const {
   accountNumberValidator,
   accountFieldsValidator,
   accountStatusValidator,
   accountParamValidator,
-  statusParamValidator,
 } = accountValidator;
-const { nameValidator, emailValidator } = authValidator;
 
-router.post('/', accountNumberValidator, nameValidator, emailValidator, accountFieldsValidator, accountStatusValidator, validate, createAccount);
+router.post('/', accountNumberValidator, accountFieldsValidator, accountStatusValidator, validate, createAccount);
 router.get('/:accountNumber', accountParamValidator, validate, getAccount);
 router.get('/', getAllAccounts);
-router.get('/status/:status', statusParamValidator, validate, getAccountsByStatus);
+router.get('/:accountNumber/transactions', accountParamValidator, validate, getUserTransactions);
 router.patch('/:accountNumber', accountParamValidator, accountStatusValidator, validate, updateAccountStatus);
 router.delete('/:accountNumber', accountParamValidator, validate, deleteAccount);
 

@@ -1,63 +1,53 @@
 /* eslint-env mocha */
 import chai from 'chai';
 import chaiHttp from 'chai-http';
+import chaiDatetime from 'chai-datetime';
 
 import app from '../index';
 import transactionData from '../testData/transactions';
-import accountData from '../testData/accounts';
 
 chai.use(chaiHttp);
+chai.use(chaiDatetime);
 chai.should();
 
 const {
-  testCreditTransactionData,
-  testDebitTransactionData,
-  testDummyTransactionData,
+  testCreditData,
+  testDebitData,
 } = transactionData;
 
-const { testTransactionAccountData } = accountData;
-let testAccountNumber;
+
+const testAccountNumber = 1012934423;
 let testTransactionId;
 const noTransactionId = 1009;
+const noAccountNumber = 1050003948;
+const noTransactionsAccountNumber = 1015779306;
 
 describe('Transactions Endpoints', () => {
-  before('seed accounts dummy data', async () => {
-    const response = await chai.request(app).post('/api/v1/accounts').send(testTransactionAccountData);
-    testAccountNumber = response.body.data.accountNumber;
-  });
   describe('POST /transactions/:accountNumber/credit', () => {
     it('should credit a bank account', (done) => {
-      chai.request(app).post(`/api/v1/transactions/${testAccountNumber}/credit`).send(testCreditTransactionData).end((err, res) => {
+      chai.request(app).post(`/api/v1/transactions/${testAccountNumber}/credit`).send(testCreditData).end((err, res) => {
+        testTransactionId = res.body.data[0].transactionId;
         res.should.have.status(200);
         res.body.should.have.property('status').eql(200);
         res.body.should.have.property('data');
-        res.body.data.should.be.an('object');
-        res.body.data.should.have.property('id');
-        res.body.data.id.should.be.a('number');
-        res.body.data.should.have.property('accountNumber');
-        res.body.data.accountNumber.should.be.a('number');
-        res.body.data.should.have.property('amount');
-        res.body.data.amount.should.be.a('number');
-        res.body.data.should.have.property('cashier');
-        res.body.data.cashier.should.be.a('number');
-        res.body.data.should.have.property('type');
-        res.body.data.type.should.be.a('string');
-        res.body.data.should.have.property('accountBalance');
-        res.body.data.accountBalance.should.be.a('number');
-        done();
-      });
-    });
-    it('should return 400 error if account number is empty', (done) => {
-      const { accountNumber, ...partialTransactionDetails } = testCreditTransactionData;
-      chai.request(app).post(`/api/v1/transactions/${testAccountNumber}/credit`).send(partialTransactionDetails).end((err, res) => {
-        res.should.have.status(400);
-        res.body.should.have.property('status').eql(400);
-        res.body.should.have.property('error').eql('Account number is required!');
+        res.body.data.should.be.an('array');
+        res.body.data[0].should.have.property('transactionId');
+        res.body.data[0].transactionId.should.be.a('number');
+        res.body.data[0].should.have.property('accountnumber');
+        res.body.data[0].accountnumber.should.be.a('number');
+        res.body.data[0].should.have.property('amount');
+        res.body.data[0].amount.should.be.a('number');
+        res.body.data[0].should.have.property('cashier');
+        res.body.data[0].cashier.should.be.a('number');
+        res.body.data[0].should.have.property('transactionType');
+        res.body.data[0].transactionType.should.be.a('string');
+        res.body.data[0].should.have.property('accountBalance');
+        res.body.data[0].accountBalance.should.be.a('number');
         done();
       });
     });
     it('should return 400 error if transaction type is empty', (done) => {
-      const { type, ...partialTransactionDetails } = testCreditTransactionData;
+      const { type, ...partialTransactionDetails } = testCreditData;
       chai.request(app).post(`/api/v1/transactions/${testAccountNumber}/credit`).send(partialTransactionDetails).end((err, res) => {
         res.should.have.status(400);
         res.body.should.have.property('status').eql(400);
@@ -66,7 +56,7 @@ describe('Transactions Endpoints', () => {
       });
     });
     it('should return 400 error if cashier is empty', (done) => {
-      const { cashier, ...partialTransactionDetails } = testCreditTransactionData;
+      const { cashier, ...partialTransactionDetails } = testCreditData;
       chai.request(app).post(`/api/v1/transactions/${testAccountNumber}/credit`).send(partialTransactionDetails).end((err, res) => {
         res.should.have.status(400);
         res.body.should.have.property('status').eql(400);
@@ -75,7 +65,7 @@ describe('Transactions Endpoints', () => {
       });
     });
     it('should return 400 error if amount is empty', (done) => {
-      const { amount, ...partialTransactionDetails } = testCreditTransactionData;
+      const { amount, ...partialTransactionDetails } = testCreditData;
       chai.request(app).post(`/api/v1/transactions/${testAccountNumber}/credit`).send(partialTransactionDetails).end((err, res) => {
         res.should.have.status(400);
         res.body.should.have.property('status').eql(400);
@@ -86,38 +76,29 @@ describe('Transactions Endpoints', () => {
   });
 
   describe('POST /transactions/:accountNumber/debit', () => {
-    it('should credit a bank account', (done) => {
-      chai.request(app).post(`/api/v1/transactions/${testAccountNumber}/debit`).send(testDebitTransactionData).end((err, res) => {
+    it('should debit a bank account', (done) => {
+      chai.request(app).post(`/api/v1/transactions/${testAccountNumber}/debit`).send(testDebitData).end((err, res) => {
         res.should.have.status(200);
         res.body.should.have.property('status').eql(200);
         res.body.should.have.property('data');
-        res.body.data.should.be.an('object');
-        res.body.data.should.have.property('id');
-        res.body.data.id.should.be.a('number');
-        res.body.data.should.have.property('accountNumber');
-        res.body.data.accountNumber.should.be.a('number');
-        res.body.data.should.have.property('amount');
-        res.body.data.amount.should.be.a('number');
-        res.body.data.should.have.property('cashier');
-        res.body.data.cashier.should.be.a('number');
-        res.body.data.should.have.property('type');
-        res.body.data.type.should.be.a('string');
-        res.body.data.should.have.property('accountBalance');
-        res.body.data.accountBalance.should.be.a('number');
-        done();
-      });
-    });
-    it('should return 400 error if account number is empty', (done) => {
-      const { accountNumber, ...partialTransactionDetails } = testDebitTransactionData;
-      chai.request(app).post(`/api/v1/transactions/${testAccountNumber}/debit`).send(partialTransactionDetails).end((err, res) => {
-        res.should.have.status(400);
-        res.body.should.have.property('status').eql(400);
-        res.body.should.have.property('error').eql('Account number is required!');
+        res.body.data.should.be.an('array');
+        res.body.data[0].should.have.property('transactionId');
+        res.body.data[0].transactionId.should.be.a('number');
+        res.body.data[0].should.have.property('accountnumber');
+        res.body.data[0].accountnumber.should.be.a('number');
+        res.body.data[0].should.have.property('amount');
+        res.body.data[0].amount.should.be.a('number');
+        res.body.data[0].should.have.property('cashier');
+        res.body.data[0].cashier.should.be.a('number');
+        res.body.data[0].should.have.property('transactionType');
+        res.body.data[0].transactionType.should.be.a('string');
+        res.body.data[0].should.have.property('accountBalance');
+        res.body.data[0].accountBalance.should.be.a('number');
         done();
       });
     });
     it('should return 400 error if transaction type is empty', (done) => {
-      const { type, ...partialTransactionDetails } = testDebitTransactionData;
+      const { type, ...partialTransactionDetails } = testDebitData;
       chai.request(app).post(`/api/v1/transactions/${testAccountNumber}/debit`).send(partialTransactionDetails).end((err, res) => {
         res.should.have.status(400);
         res.body.should.have.property('status').eql(400);
@@ -126,7 +107,7 @@ describe('Transactions Endpoints', () => {
       });
     });
     it('should return 400 error if cashier is empty', (done) => {
-      const { cashier, ...partialTransactionDetails } = testDebitTransactionData;
+      const { cashier, ...partialTransactionDetails } = testDebitData;
       chai.request(app).post(`/api/v1/transactions/${testAccountNumber}/debit`).send(partialTransactionDetails).end((err, res) => {
         res.should.have.status(400);
         res.body.should.have.property('status').eql(400);
@@ -135,7 +116,7 @@ describe('Transactions Endpoints', () => {
       });
     });
     it('should return 400 error if amount is empty', (done) => {
-      const { amount, ...partialTransactionDetails } = testDebitTransactionData;
+      const { amount, ...partialTransactionDetails } = testDebitData;
       chai.request(app).post(`/api/v1/transactions/${testAccountNumber}/debit`).send(partialTransactionDetails).end((err, res) => {
         res.should.have.status(400);
         res.body.should.have.property('status').eql(400);
@@ -146,16 +127,26 @@ describe('Transactions Endpoints', () => {
   });
 
   describe('GET /transactions/:transactionId', () => {
-    before('seed transactions dummy data', async () => {
-      const response = await chai.request(app).post(`/api/v1/transactions/${testAccountNumber}/credit`).send(testDummyTransactionData);
-      testTransactionId = response.body.data.id;
-    });
     it('should get the transaction with the specified id', (done) => {
       chai.request(app).get(`/api/v1/transactions/${testTransactionId}`).end((err, res) => {
         res.should.have.status(200);
         res.body.should.have.property('status').eql(200);
         res.body.should.have.property('data');
-        res.body.data.should.be.an('object');
+        res.body.data.should.be.an('array');
+        res.body.data[0].should.have.property('transactionid');
+        res.body.data[0].transactionid.should.be.a('number');
+        res.body.data[0].should.have.property('createdon');
+        res.body.data[0].createdon.should.be.a('string');
+        res.body.data[0].should.have.property('type');
+        res.body.data[0].type.should.be.a('string');
+        res.body.data[0].should.have.property('accountnumber');
+        res.body.data[0].accountnumber.should.be.a('number');
+        res.body.data[0].should.have.property('amount');
+        res.body.data[0].amount.should.be.a('number');
+        res.body.data[0].should.have.property('oldbalance');
+        res.body.data[0].oldbalance.should.be.a('number');
+        res.body.data[0].should.have.property('newbalance');
+        res.body.data[0].newbalance.should.be.a('number');
         done();
       });
     });
@@ -164,6 +155,47 @@ describe('Transactions Endpoints', () => {
         res.should.have.status(404);
         res.body.should.have.property('status').eql(404);
         res.body.should.have.property('error').eql('Transaction with specified id does not exist!');
+        done();
+      });
+    });
+  });
+  describe('GET /accounts/:accountNumber/transactions', () => {
+    it('should get all transactions with the specified account number', (done) => {
+      chai.request(app).get(`/api/v1/accounts/${testAccountNumber}/transactions`).end((err, res) => {
+        res.should.have.status(200);
+        res.body.should.have.property('status').eql(200);
+        res.body.should.have.property('data');
+        res.body.data.should.be.an('array');
+        res.body.data[0].should.have.property('transactionid');
+        res.body.data[0].transactionid.should.be.a('number');
+        res.body.data[0].should.have.property('createdon');
+        res.body.data[0].createdon.should.be.a('string');
+        res.body.data[0].should.have.property('type');
+        res.body.data[0].type.should.be.a('string');
+        res.body.data[0].should.have.property('accountnumber');
+        res.body.data[0].accountnumber.should.be.a('number');
+        res.body.data[0].should.have.property('amount');
+        res.body.data[0].amount.should.be.a('number');
+        res.body.data[0].should.have.property('oldbalance');
+        res.body.data[0].oldbalance.should.be.a('number');
+        res.body.data[0].should.have.property('newbalance');
+        res.body.data[0].newbalance.should.be.a('number');
+        done();
+      });
+    });
+    it('should return 404 error if account with the specified account number does not exist', (done) => {
+      chai.request(app).get(`/api/v1/accounts/${noAccountNumber}/transactions`).end((err, res) => {
+        res.should.have.status(404);
+        res.body.should.have.property('status').eql(404);
+        res.body.should.have.property('error').eql('Account with specified account number does not exist!');
+        done();
+      });
+    });
+    it('should return 404 error if no transactions exist with the specified account number', (done) => {
+      chai.request(app).get(`/api/v1/accounts/${noTransactionsAccountNumber}/transactions`).end((err, res) => {
+        res.should.have.status(404);
+        res.body.should.have.property('status').eql(404);
+        res.body.should.have.property('error').eql('No transactions record found for the account!');
         done();
       });
     });

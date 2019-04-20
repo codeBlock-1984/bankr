@@ -7,7 +7,7 @@ const accountValidator = {
       .exists({ checkFalsy: true })
       .withMessage('Account number is required!')
       .isNumeric()
-      .withMessage('Account number must be a number!')
+      .withMessage('Invalid account number!')
       .trim(),
     sanitizeBody('accountNumber').toInt({ radix: 10 }),
   ],
@@ -16,13 +16,13 @@ const accountValidator = {
       .exists({ checkFalsy: true })
       .withMessage('Owner id is required!')
       .isInt(10)
-      .withMessage('Owner id must be an integer!')
+      .withMessage('Invalid owner id!')
       .trim(),
     sanitizeBody('owner').toInt({ radix: 10 }),
     body('type')
       .exists({ checkFalsy: true })
       .withMessage('Account type is required!')
-      .isIn(['savings', 'current'])
+      .isIn(['savings', 'current', 'loan'])
       .withMessage('Invalid account type!')
       .trim(),
     body('openingBalance')
@@ -45,14 +45,14 @@ const accountValidator = {
     sanitizeParam('accountNumber').toInt({ radix: 10 }),
     param('accountNumber')
       .isNumeric()
-      .withMessage('Account number must be a number!')
+      .withMessage('Invalid account number!')
       .trim(),
   ],
   statusParamValidator: [
     param('status')
       .exists({ checkNull: true, checkFalsy: true })
       .withMessage('Account status is required!')
-      .isIn(['active', 'dormant'])
+      .isIn(['active', 'dormant', 'draft'])
       .withMessage('Invalid account status!')
       .trim(),
   ],
