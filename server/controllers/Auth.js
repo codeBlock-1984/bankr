@@ -4,15 +4,18 @@ import Passcode from '../helpers/Passcode';
 
 const { createToken } = Auth;
 const { encryptPassword, verifyPassword } = Passcode;
+const userRoles = [true, false];
 
 class AuthController {
   static async signUp(req, res) {
     const client = await pool.connect();
     try {
       const {
-        firstName, lastName, email, password: stringPassword, type: userInputType, isAdmin,
+        firstName, lastName, email, password: stringPassword, type: userInputType,
       } = req.body;
       const securePassword = await encryptPassword(stringPassword);
+      const role = userInputType.toString();
+      const isAdmin = (role === 'cashier' || role === 'admin') ? userRoles[0] : userRoles[1];
 
       const addUserQuery = `INSERT INTO users (firstName, lastName, email, password, type, isAdmin)
                     VALUES($1, $2, $3, $4, $5, $6)

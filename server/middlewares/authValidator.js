@@ -1,5 +1,4 @@
 import { body, param } from 'express-validator/check';
-import { sanitizeBody } from 'express-validator/filter';
 
 const authValidator = {
   signinValidator: [
@@ -38,17 +37,10 @@ const authValidator = {
       .isString()
       .withMessage('Last name must be a string!')
       .trim(),
-    body('isAdmin')
-      .exists()
-      .withMessage('User isAdmin property is required!')
-      .isBoolean()
-      .withMessage('Only boolean values allowed for isAdmin!')
-      .trim(),
-    sanitizeBody('isAdmin').toBoolean({ strict: true }),
     body('type')
       .exists({ checkFalsy: true })
       .withMessage('User type is required!')
-      .isIn(['cashier', 'client'])
+      .isIn(['cashier', 'client', 'admin'])
       .withMessage('Invalid user type!')
       .trim(),
   ],

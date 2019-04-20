@@ -4,7 +4,6 @@ const testUser = {
   email: 'doraofili@yahoo.com',
   password: 'dorasecurepassword',
   type: 'client',
-  isAdmin: false,
 };
 const testUserData = {
   firstName: 'Maureen',
@@ -12,7 +11,6 @@ const testUserData = {
   email: 'maumau@yahoo.com',
   password: 'maureensecurepassword',
   type: 'staff',
-  isAdmin: true,
 };
 
 const client = { email: 'alicen1995@yahoo.com', password: 'securepassword1' };
