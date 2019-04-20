@@ -44,8 +44,8 @@ class AccountController {
         });
       }
     } catch (error) {
-      const { constraint } = error;
-      if (constraint === 'accounts_accountnumber_key') {
+      const { constraint, code } = error;
+      if (constraint === 'accounts_accountnumber_key' || code === '23505') {
         return res.status(409).json({
           status: 409,
           error: 'Account number is linked to an existing account!',

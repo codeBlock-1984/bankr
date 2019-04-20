@@ -1,10 +1,18 @@
 language: node_js
+node_js: 
+  - "stable"
 env:
   global:
     - NODE_ENV=test
     - SECRET_KEY=traeghiteslozae
-node_js: 
-  - "stable"
+    - DB_USERNAME=codeblock
+    - DB_PASSWORD=codekey
+    - DBNAME=bankr_testdb
+services:
+- postgresql
+before_script:
+- psql -c 'create database bankr_testdb;' -U postgres
+- psql -c "CREATE USER codeblock WITH PASSWORD 'codekey';" -U postgres
 cache:
   directories:
     - "node_modules"
