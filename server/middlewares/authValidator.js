@@ -48,7 +48,7 @@ const authValidator = {
     body('type')
       .exists({ checkFalsy: true })
       .withMessage('User type is required!')
-      .isIn(['staff', 'client'])
+      .isIn(['cashier', 'client'])
       .withMessage('Invalid user type!')
       .trim(),
   ],
