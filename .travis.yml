@@ -8,6 +8,11 @@ env:
     - DB_USERNAME=codeblock
     - DB_PASSWORD=codekey
     - DBNAME=bankr_testdb
+    - MAIL_HOST=smtp.gmail.com
+    - MAIL_PORT=465
+    - MAIL_ENCRYPTION=true
+    - MAIL_USERNAME=notifications.bankr@gmail.com
+    - MAIL_PASSWORD=secureencryption@!.
 services:
 - postgresql
 before_script:
