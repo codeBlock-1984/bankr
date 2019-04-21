@@ -27,7 +27,7 @@ class AuthController {
         const { id: userId, type: userType } = newUser;
         const token = createToken({ userId, userType });
         const {
-          password, isadmin, type, ...signupDetails
+          password, isadmin, ...signupDetails
         } = newUser;
         const newSignup = { token, ...signupDetails };
         return res.header('x-auth-token', token).status(201).json({
@@ -77,7 +77,7 @@ class AuthController {
       const { id: userId, type: userType } = singleUser;
       const token = createToken({ userId, userType });
       const {
-        password: userPassword, isadmin, type, createdon, updatedon, ...signinDetails
+        password: userPassword, isadmin, createdon, updatedon, ...signinDetails
       } = singleUser;
       const newSignin = { token, ...signinDetails };
       return res.header('x-auth-token', token).status(200).json({
