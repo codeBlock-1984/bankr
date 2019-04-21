@@ -33,6 +33,8 @@ describe('Auth Endpoints', () => {
             res.body.data[0].email.should.be.a('string');
             res.body.data[0].should.have.property('id');
             res.body.data[0].id.should.be.an('number');
+            res.body.data[0].should.have.property('type');
+            res.body.data[0].type.should.be.a('string');
             done();
           });
       } catch (error) {
@@ -117,6 +119,8 @@ describe('Auth Endpoints', () => {
             res.body.data[0].email.should.be.a('string');
             res.body.data[0].should.have.property('id');
             res.body.data[0].id.should.be.an('number');
+            res.body.data[0].should.have.property('type');
+            res.body.data[0].type.should.be.a('string');
             done();
           });
       } catch (error) {
