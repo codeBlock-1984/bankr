@@ -23,11 +23,9 @@ class TransactionController {
           error: 'Account with given account number does not exist!',
         });
       }
-      console.log(rows[0]);
       const {
         balance, email, firstname, lastname,
       } = rows[0];
-      console.log(rows[0]);
       const newBalance = (balance + transactionAmount).toFixed(2);
       const creditTransactionQuery = `UPDATE accounts SET balance = $1 WHERE accountNumber = $2
                                     RETURNING id, accountNumber, balance`;
