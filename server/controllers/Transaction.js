@@ -1,4 +1,7 @@
 import pool from '../database/db';
+import Mailer from '../helpers/Mailer';
+
+const { send } = Mailer;
 
 class TransactionController {
   static async creditTransaction(req, res) {
@@ -10,8 +13,8 @@ class TransactionController {
         type: inputTransactionType,
       } = req.body;
       const { accountNumber: accountNumberParam } = req.params;
-      const findAccountQuery = `SELECT * FROM accounts WHERE accountNumber = $1
-                              LIMIT 1`;
+      const findAccountQuery = `SELECT  email, firstName, balance, lastName from users
+                                INNER JOIN accounts ON users.id = accounts.owner WHERE accountNumber = $1`;
       const findValues = [accountNumberParam];
       const { rows } = await client.query(findAccountQuery, findValues);
       if (!rows[0]) {
@@ -20,10 +23,15 @@ class TransactionController {
           error: 'Account with given account number does not exist!',
         });
       }
-      const { balance } = rows[0];
+      console.log(rows[0]);
+      const {
+        balance, email, firstname, lastname,
+      } = rows[0];
+      console.log(rows[0]);
       const newBalance = (balance + transactionAmount).toFixed(2);
       const creditTransactionQuery = `UPDATE accounts SET balance = $1 WHERE accountNumber = $2
                                     RETURNING id, accountNumber, balance`;
+
       const creditValues = [newBalance, accountNumberParam];
       const { rows: rowsCredit } = await client.query(creditTransactionQuery, creditValues);
       if (rowsCredit[0]) {
@@ -33,7 +41,7 @@ class TransactionController {
         } = creditedAccount;
         const addTransactionQuery = `INSERT INTO transactions(accountNumber, type, account, cashier, amount, oldBalance, newBalance)
                                     VALUES($1, $2, $3, $4, $5, $6, $7)
-                                    RETURNING id, type, accountNumber, cashier, amount, newBalance`;
+                                    RETURNING id, type, accountNumber, cashier, amount, newBalance, createdOn`;
         const addTransactionValues = [
           creditedAccountNumber,
           inputTransactionType,
@@ -54,6 +62,7 @@ class TransactionController {
             cashier,
             amount,
             newbalance: accountBalance,
+            createdon,
           } = rowsAddTransaction[0];
           const transactionDetails = {
             transactionId,
@@ -63,6 +72,20 @@ class TransactionController {
             transactionType,
             accountBalance,
           };
+
+          const mailDetails = {
+            to: email,
+            accountNumber: accountnumber,
+            type: transactionType,
+            amount,
+            id: transactionId,
+            date: createdon,
+            firstName: firstname,
+            lastName: lastname,
+            balance: accountBalance,
+          };
+          await send(mailDetails);
+
           return res.status(200).json({
             status: 200,
             data: [transactionDetails],
@@ -70,7 +93,6 @@ class TransactionController {
         }
       }
     } catch (error) {
-      console.log(error);
       return res.status(500).json({
         status: 500,
         error: 'Internal server error!',
@@ -89,8 +111,9 @@ class TransactionController {
         type: inputTransactionType,
       } = req.body;
       const { accountNumber: accountNumberParam } = req.params;
-      const findAccountQuery = `SELECT * FROM accounts WHERE accountNumber = $1
-                              LIMIT 1`;
+      const findAccountQuery = `SELECT  email, firstName, balance, lastName from users
+                                INNER JOIN accounts ON users.id = accounts.owner
+                                WHERE accountNumber = $1`;
       const findValues = [accountNumberParam];
       const { rows } = await client.query(findAccountQuery, findValues);
       if (!rows[0]) {
@@ -99,7 +122,9 @@ class TransactionController {
           error: 'Account with given account number does not exist!',
         });
       }
-      const { balance } = rows[0];
+      const {
+        balance, email, firstname, lastname,
+      } = rows[0];
       const newBalance = (balance - transactionAmount).toFixed(2);
       const debitTransactionQuery = `UPDATE accounts SET balance = $1 WHERE accountNumber = $2
                                     RETURNING id, accountNumber, balance`;
@@ -112,7 +137,7 @@ class TransactionController {
         } = creditedAccount;
         const addTransactionQuery = `INSERT INTO transactions(accountNumber, type, account, cashier, amount, oldBalance, newBalance)
                                     VALUES($1, $2, $3, $4, $5, $6, $7)
-                                    RETURNING id, type, accountNumber, cashier, amount, newBalance`;
+                                    RETURNING id, type, accountNumber, cashier, amount, newBalance, createdOn`;
         const addTransactionValues = [
           debitedAccountNumber,
           inputTransactionType,
@@ -133,6 +158,7 @@ class TransactionController {
             cashier,
             amount,
             newbalance: accountBalance,
+            createdon,
           } = rowsAddTransaction[0];
           const transactionDetails = {
             transactionId,
@@ -142,6 +168,20 @@ class TransactionController {
             transactionType,
             accountBalance,
           };
+
+          const mailDetails = {
+            to: email,
+            accountNumber: accountnumber,
+            type: transactionType,
+            amount,
+            id: transactionId,
+            date: createdon,
+            firstName: firstname,
+            lastName: lastname,
+            balance: accountBalance,
+          };
+          await send(mailDetails);
+
           return res.status(200).json({
             status: 200,
             data: [transactionDetails],
@@ -149,7 +189,6 @@ class TransactionController {
         }
       }
     } catch (error) {
-      console.log(error);
       return res.status(500).json({
         status: 500,
         error: 'Internal server error!',
