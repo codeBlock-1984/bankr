@@ -13,6 +13,11 @@ body {
   margin: 0;
   padding: 0;
   color: #666666;
+  border-radius: unset;
+  -webkit-border-radius: unset;
+  -moz-border-radius: unset;
+  -ms-border-radius: unset;
+  -o-border-radius: unset;
 }
 
 /* Helper classes */
@@ -915,7 +920,6 @@ body {
 }
 
 /* credit-debit */
-
 .transaction-container {
   height: 90%;
 }
@@ -939,8 +943,15 @@ body {
   flex: 1;
 }
 .selected-account-detail-box {
+  display: none;
   flex: 4;
   padding: 5px 20px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
 }
 .selected-account-detail-box p {
   margin: 10px;
@@ -948,7 +959,8 @@ body {
 .transaction-form {
   flex: 8;
   width: 60%;
-  
+  display: flex;
+  flex-flow: column nowrap;
 }
 .transaction-form__input, .transaction-box__label {
   height: 30px;
@@ -982,6 +994,7 @@ body {
 }
 .create-user-form__fieldset {
   width: 60%;
+  border: unset;
 }
 
 /*
@@ -1000,6 +1013,7 @@ Media Queries for Responsive layout
   }
   .reg-form {
     width: 100%;
+    margin-bottom: 0;
   }
   .reg-form__label, .reg-form__input, .reg-form__button, .reg-form__text {
     width: 80%;
@@ -1240,6 +1254,9 @@ Media Queries for Responsive layout
 
 /* Transactions */
 @media screen and (max-width:480px) {
+  .page-main {
+    overflow-y: scroll;
+  }
   .trans-tb-merchant-head, .trans-tb-merchant, .trans-tb-credit-head, .trans-tb-credit, .trans-tb-debit-head, .trans-tb-debit {
     display: none;
   }
@@ -1392,6 +1409,9 @@ Media Queries for Responsive layout
 /* User account view */
 /* Media queries */
 @media screen and (max-width: 480px) {
+  .account-form-container {
+    height: 100%;
+  }
   .single-account-box {
     flex-direction: row;
     flex-wrap: wrap;
@@ -1419,6 +1439,9 @@ Media Queries for Responsive layout
   }
 }
 @media screen and (min-width: 768px) {
+  .account-form-container {
+    height: 100%;
+  }
   .single-account-box {
     width: 100%;
     padding: 10px;
@@ -1444,17 +1467,29 @@ Media Queries for Responsive layout
 /* Credit-debit */
 /* Media queries */
 @media screen and (max-width: 480px) {
+  .search {
+    justify-content: center;
+  }
   .transaction-box {
     padding: 0;
+    overflow-y: overlay;
   }
   .transaction-account-search {
     display: flex;
-    width: 90%;
-    margin: 0 auto;
-    margin-top: 10px;
+    width: 78%;
+    margin: 10px auto;
+    margin-top: 30px;
   }
-  .transaction-account-search form {
+  .transaction-account-search .search__form {
     margin: 0;
+  }
+  .transaction-account-search .search__form .search__input {
+    width: 80%;
+  }
+  .selected-account-detail-box {
+    align-self: center;
+    width: 70%;
+    background: #ebeaea;
   }
   .selected-account-detail-box p {
     font-size: 12px;
@@ -1469,9 +1504,10 @@ Media Queries for Responsive layout
     margin: 3px 0;
   }
 }
-@media screen and (max-width: 768px) {
+@media screen and (min-width: 768px) {
   .transaction-box {
     padding: 0;
+    min-height: 90%;
   }
   .transaction-account-search {
     display: flex;
@@ -1479,8 +1515,11 @@ Media Queries for Responsive layout
     margin: 0 auto;
     margin-top: 20px;
   }
-  .transaction-account-search form {
-    margin: 0;
+  .transaction-account-search .search__form {
+    width: 64%;
+  }
+  .transaction-account-search .search__form .search__input {
+    width: 94%;
   }
   .selected-account-detail-box {
     flex: unset;
@@ -1491,12 +1530,17 @@ Media Queries for Responsive layout
   }
   .transaction-form {
     padding-top: 1px;
-    width: 90%;
+    width: 60%;
     margin: 0 auto;
   }
   .transaction-form__input, .transaction-form__label {
-    height: 25px;
-    margin: 4px 0;
+    height: 35px;
+  }
+  .transaction-form__input {
+    margin: 0 0 20px 0;
+  }
+  .transaction-form__label {
+    margin: 0;
   }
 }
 
@@ -1507,12 +1551,14 @@ Media Queries for Responsive layout
   }
   .users-table {
     margin-bottom: 0px;
+    margin-top: 0;
   }
   .users-table th, .users-table td  {
     font-size: 12px;
   }
   .create-new-link {
-    font-size: 12px;
+    align-self: unset;
+    margin-bottom: 20px;
   }
 }
 @media screen and (max-width: 768px) {
@@ -1548,10 +1594,18 @@ Media Queries for Responsive layout
 @media screen and (max-width: 480px) {
   .create-user-form {
     width: 100%;
-    margin-bottom: 20px;
   }
   .create-user-form__fieldset {
     width: 90%;
+  }
+  .create-user-form__input, .create-user-form__fieldset .reg-form__button {
+    width: 100%;
+  }
+  .create-user-form__fieldset .reg-form__button {
+    margin-bottom: 0;
+  }
+  .create-user-form__fieldset .reg-form__button {
+    margin-top: 20px;
   }
 }
 
