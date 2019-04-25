@@ -18,19 +18,34 @@ const {
 const { getUserTransactions } = TransactionController;
 
 const {
-  accountNumberValidator,
   accountFieldsValidator,
-  accountStatusValidator,
+  statusValidator,
   accountParamValidator,
 } = accountValidator;
 
-const { isAuth, levelFour, levelFive } = Authenticator;
+const { isAuth, isUser, isAdmin } = Authenticator;
 
-router.post('/', isAuth, levelFour, accountNumberValidator, accountFieldsValidator, accountStatusValidator, validate, createAccount);
-router.get('/:accountNumber', isAuth, accountParamValidator, validate, getAccount);
-router.get('/', isAuth, levelFive, getAllAccounts);
-router.get('/:accountNumber/transactions', isAuth, accountParamValidator, validate, getUserTransactions);
-router.patch('/:accountNumber', isAuth, levelFive, accountParamValidator, accountStatusValidator, validate, updateAccountStatus);
-router.delete('/:accountNumber', isAuth, levelFive, accountParamValidator, validate, deleteAccount);
+router
+  .post('/', isAuth, isUser, accountFieldsValidator, validate, createAccount);
+
+router
+  .get('/:accountNumber',
+    isAuth, isUser, accountParamValidator, validate, getAccount);
+
+router
+  .get('/', isAuth, isAdmin, getAllAccounts);
+
+router
+  .get('/:accountNumber/transactions',
+    isAuth, isUser, accountParamValidator, validate, getUserTransactions);
+
+router
+  .patch('/:accountNumber',
+    isAuth, isAdmin, accountParamValidator,
+    statusValidator, validate, updateAccountStatus);
+
+router
+  .delete('/:accountNumber',
+    isAuth, isAdmin, accountParamValidator, validate, deleteAccount);
 
 export default router;

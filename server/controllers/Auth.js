@@ -1,27 +1,54 @@
 import pool from '../database/db';
 import Auth from '../helpers/Auth';
-import Passcode from '../helpers/Passcode';
+import PasswordAuth from '../helpers/PasswordAuth';
+import Responder from '../helpers/Responder';
+import authQuery from '../database/queries/auth';
 
 const { createToken } = Auth;
-const { encryptPassword, verifyPassword } = Passcode;
-const userRoles = [true, false];
+const { encryptPassword, verifyPassword } = PasswordAuth;
+
+const { successResponse, errorResponse } = Responder;
+
+const { addUser, signIn } = authQuery;
 
 class AuthController {
   static async signUp(req, res) {
     const client = await pool.connect();
+
     try {
       const {
-        firstName, lastName, email, password: stringPassword, type: userInputType,
+        firstName,
+        lastName,
+        email,
+        password: stringPassword,
       } = req.body;
-      const securePassword = await encryptPassword(stringPassword);
-      const role = userInputType.toString();
-      const isAdmin = (role === 'cashier' || role === 'admin') ? userRoles[0] : userRoles[1];
 
-      const addUserQuery = `INSERT INTO users (firstName, lastName, email, password, type, isAdmin)
-                    VALUES($1, $2, $3, $4, $5, $6)
-                    RETURNING id, firstName, lastName, email, type`;
-      const values = [firstName, lastName, email, securePassword, userInputType, isAdmin];
-      const { rows } = await client.query(addUserQuery, values);
+      const checkValue = [email];
+
+      const {
+        rows: checkExistingRows,
+      } = await client.query(signIn, checkValue);
+
+      if (checkExistingRows[0]) {
+        return res.status(409)
+          .json(errorResponse('Email linked to existing user!'));
+      }
+
+      const userInputType = 'client';
+      const securePassword = await encryptPassword(stringPassword);
+      const isAdmin = false;
+
+      const values = [
+        firstName,
+        lastName,
+        email,
+        securePassword,
+        userInputType,
+        isAdmin
+      ];
+
+      const { rows } = await client.query(addUser, values);
+
       if (rows[0]) {
         const newUser = rows[0];
         const { id: userId, type: userType } = newUser;
@@ -30,23 +57,14 @@ class AuthController {
           password, isadmin, ...signupDetails
         } = newUser;
         const newSignup = { token, ...signupDetails };
-        return res.header('x-auth-token', token).status(201).json({
-          status: 201,
-          data: [newSignup],
-        });
+
+        return res
+          .status(201)
+          .json(successResponse([newSignup]));
       }
     } catch (error) {
-      const { constraint } = error;
-      if (constraint === 'users_email_key') {
-        return res.status(409).json({
-          status: 409,
-          error: 'Email linked to existing user!',
-        });
-      }
-      return res.status(500).json({
-        status: 500,
-        error: 'Internal server error!',
-      });
+      return res.status(500)
+        .json(errorResponse('Internal server error!'));
     } finally {
       await client.release();
     }
@@ -54,41 +72,45 @@ class AuthController {
 
   static async signIn(req, res) {
     const client = await pool.connect();
+
     try {
       const { email, password } = req.body;
-      const signInQuery = `SELECT * FROM users WHERE email = $1`;
       const values = [email];
-      const { rows } = await client.query(signInQuery, values);
+      const { rows } = await client.query(signIn, values);
+
       if (!rows[0]) {
-        return res.status(400).json({
-          status: 400,
-          error: 'Email or password incorrect!',
-        });
+        return res.status(400)
+          .json(errorResponse('Email or password incorrect!'));
       }
+
       const singleUser = rows[0];
       const { password: singleUserPassword } = singleUser;
       const isVerified = await verifyPassword(password, singleUserPassword);
+
       if (!isVerified) {
-        return res.status(400).json({
-          status: 400,
-          error: 'Email or password incorrect!',
-        });
+        return res.status(400)
+          .json(errorResponse('Email or password incorrect!'));
       }
+
       const { id: userId, type: userType } = singleUser;
       const token = createToken({ userId, userType });
+
       const {
-        password: userPassword, isadmin, createdon, updatedon, ...signinDetails
+        password: userPassword,
+        isadmin,
+        createdon,
+        updatedon,
+        ...signinDetails
       } = singleUser;
+
       const newSignin = { token, ...signinDetails };
-      return res.header('x-auth-token', token).status(200).json({
-        status: 200,
-        data: [newSignin],
-      });
+
+      return res
+        .status(200)
+        .json(successResponse([newSignin]));
     } catch (error) {
-      return res.status(500).json({
-        status: 500,
-        error: 'Internal server error!',
-      });
+      return res.status(500)
+        .json('Internal server error!');
     } finally {
       await client.release();
     }

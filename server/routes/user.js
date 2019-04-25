@@ -14,12 +14,19 @@ const { getUserAccounts } = AccountController;
 
 const { userParamValidator } = userValidator;
 
-const { emailParamValidator } = authValidator;
+const { emailValidator } = authValidator;
 
-const { isAuth, levelThree } = Authenticator;
+const { isAuth, isAdmin } = Authenticator;
 
-router.get('/:userId', isAuth, levelThree, userParamValidator, validate, getUser);
-router.get('/', isAuth, levelThree, getAllUsers);
-router.get('/:email/accounts', isAuth, emailParamValidator, validate, getUserAccounts);
+router
+  .get('/:userId',
+    isAuth, isAdmin, userParamValidator, validate, getUser);
+
+router
+  .get('/', isAuth, isAdmin, getAllUsers);
+
+router
+  .get('/:email/accounts',
+    isAuth, isAdmin, emailValidator, validate, getUserAccounts);
 
 export default router;

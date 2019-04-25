@@ -1,21 +1,100 @@
 module.exports = {
-  "extends": "airbnb-base",
+  "extends": [
+    "airbnb-base"
+  ],
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "ecmaVersion": 2018,
+    "ecmaFeatures": {
+      "impliedStrict": true,
+      "classes": true
+    }
+  },
   "env": {
-    "node": true,
     "browser": true,
-    "es6": true,
-    "mocha": true
+    "node": true,
   },
   "rules": {
-    "class-methods-use-this": 0,
-    "object-curly-newline" : 1,
-    "array-callback-return": 0,
-    "consistent-return" : 0,
-    "prefer-destructuring": 1,
-    "linebreak-style":0,
-    "quotes": "off",
+    "no-debugger": 0,
+    "no-alert": 0,
+    "no-await-in-loop": 0,
+    "no-return-assign": [
+      "error",
+      "except-parens"
+    ],
+    "no-restricted-syntax": [
+      2,
+      "ForInStatement",
+      "LabeledStatement",
+      "WithStatement"
+    ],
+    "no-unused-vars": [
+      1,
+      {
+        "ignoreSiblings": true,
+        "ignoreRestSiblings": true,
+        "argsIgnorePattern": "res|next|^err"
+      }
+    ],
+    "prefer-const": [
+      "error",
+      {
+        "destructuring": "all"
+      }
+    ],
+    "arrow-body-style": [
+      2,
+      "always"
+    ],
+    "no-unused-expressions": [
+      2,
+      {
+        "allowTaggedTemplates": true
+      }
+    ],
+    "no-param-reassign": [
+      2,
+      {
+        "props": false
+      }
+    ],
     "no-console": 0,
-    "arrow-body-style": ["error", "always"],
-    "no-unused-vars": ["error", { "vars": "all", "args": "none", "ignoreRestSiblings": true }]
+    "import/prefer-default-export": 0,
+    "import": 0,
+    "func-names": 0,
+    "space-before-function-paren": 0,
+    "comma-dangle": 0,
+    "max-len": [
+      "error",
+      {
+        "code": 80
+      }
+    ],
+    "import/extensions": 0,
+    "no-underscore-dangle": 0,
+    "consistent-return": 0,
+    "radix": 0,
+    "no-shadow": [
+      2,
+      {
+        "hoist": "all",
+        "allow": [
+          "resolve",
+          "reject",
+          "done",
+          "next",
+          "err",
+          "error"
+        ]
+      }
+    ],
+    "quotes": [
+      2,
+      "single",
+      {
+        "avoidEscape": true,
+        "allowTemplateLiterals": true
+      }
+    ],
   }
 };

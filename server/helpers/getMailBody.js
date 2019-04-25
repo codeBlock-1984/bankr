@@ -9,7 +9,8 @@ const getMailBody = (transactionDetails) => {
           <html lang="en">
           <head>
             <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <meta name="viewport"
+             content="width=device-width, initial-scale=1.0">
             <meta http-equiv="X-UA-Compatible" content="ie=edge">
             <title>Bankr</title>
             <style>
@@ -41,7 +42,10 @@ const getMailBody = (transactionDetails) => {
             <div class="mail-box">
               <p>Dear ${firstName} &nbsp; ${lastName},</p>
               <h2 class="msg-title">Transaction Notification</h2>
-              <p>We wish to notify you of a ${type} transaction on your account.</p>
+              <p>
+                We wish to notify you of a ${type}
+                transaction on your account.
+              </p>
               <p>Transaction details are as follows:</p>
               <br>
               <table>

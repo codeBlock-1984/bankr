@@ -22,11 +22,24 @@ const {
 
 const { accountParamValidator } = accountValidator;
 
-const { isAuth, levelTwo, levelFive } = Authenticator;
+const {
+  isAuth, isUser, isCashier, isAdmin,
+} = Authenticator;
 
-router.post('/:accountNumber/credit', isAuth, levelTwo, accountParamValidator, transactionFieldsValidator, validate, creditTransaction);
-router.post('/:accountNumber/debit', isAuth, levelTwo, accountParamValidator, transactionFieldsValidator, validate, debitTransaction);
-router.get('/:transactionId', isAuth, transactionIdParamValidator, validate, getUserTransaction);
-router.get('/', isAuth, levelFive, getAllTransactions);
+router
+  .post('/:accountNumber/credit',
+    isAuth, isCashier, accountParamValidator,
+    transactionFieldsValidator, validate, creditTransaction);
+
+router
+  .post('/:accountNumber/debit',
+    isAuth, isCashier, accountParamValidator,
+    transactionFieldsValidator, validate, debitTransaction);
+
+router
+  .get('/:transactionId',
+    isAuth, isUser, transactionIdParamValidator, validate, getUserTransaction);
+
+router.get('/', isAuth, isAdmin, getAllTransactions);
 
 export default router;

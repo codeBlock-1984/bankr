@@ -6,28 +6,19 @@ const transactionValidator = {
     body('amount')
       .exists({ checkFalsy: true })
       .withMessage('Amount is required!')
-      .isNumeric()
+      .isInt()
+      .withMessage('Amount must be a number!')
+      .matches(/(([0-9]+[.]*)+([0-9])*)+$/)
       .withMessage('Amount must be a number!')
       .trim(),
     sanitizeBody('amount').toFloat(),
-    body('cashier')
-      .exists({ checkFalsy: true })
-      .withMessage('Cashier is required!')
-      .isInt()
-      .withMessage('Cashier must be a integer!')
-      .trim(),
-    sanitizeBody('cashier').toInt({ radix: 10 }),
-    body('type')
-      .exists({ checkFalsy: true })
-      .withMessage('Transaction type is required!')
-      .isString()
-      .withMessage('Transaction type must be a string!')
-      .trim(),
   ],
   transactionIdParamValidator: [
     sanitizeParam('transactionId').toInt({ radix: 10 }),
     param('transactionId')
       .isNumeric()
+      .withMessage('Transaction id must be a number!')
+      .matches(/^[0-9]+$/)
       .withMessage('Transaction id must be a number!')
       .trim(),
   ],
