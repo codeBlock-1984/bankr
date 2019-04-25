@@ -1,45 +1,62 @@
 import pool from '../database/db';
 import Mailer from '../helpers/Mailer';
+import Responder from '../helpers/Responder';
+import Auth from '../helpers/Auth';
+import transactionQuery from '../database/queries/transaction';
 
 const { send } = Mailer;
+const { verifyToken } = Auth;
+const { successResponse, errorResponse } = Responder;
+const {
+  findAccount,
+  transact,
+  addTransaction,
+  getAllTransactions,
+  getUserTransaction,
+  checkExisting,
+  getUserTransactions,
+} = transactionQuery;
 
 class TransactionController {
   static async creditTransaction(req, res) {
     const client = await pool.connect();
+
     try {
-      const {
-        amount: transactionAmount,
-        cashier: transactionCashier,
-        type: inputTransactionType,
-      } = req.body;
+      const { amount: transactionAmount } = req.body;
+      const inputTransactionType = 'credit';
+      const token = req.headers['x-auth-token'];
+      const { userId: transactionCashier } = await verifyToken(token);
       const { accountNumber: accountNumberParam } = req.params;
-      const findAccountQuery = `SELECT  email, firstName, balance, lastName from users
-                                INNER JOIN accounts ON users.id = accounts.owner WHERE accountNumber = $1`;
+
       const findValues = [accountNumberParam];
-      const { rows } = await client.query(findAccountQuery, findValues);
+      const { rows } = await client.query(findAccount, findValues);
+
       if (!rows[0]) {
-        return res.status(404).json({
-          status: 404,
-          error: 'Account with given account number does not exist!',
-        });
+        const error = 'Account with given account number does not exist!';
+        return res.status(404)
+          .json(errorResponse(error));
       }
+
       const {
-        balance, email, firstname, lastname,
+        balance,
+        email,
+        firstname,
+        lastname,
       } = rows[0];
+
       const newBalance = (balance + transactionAmount).toFixed(2);
-      const creditTransactionQuery = `UPDATE accounts SET balance = $1 WHERE accountNumber = $2
-                                    RETURNING id, accountNumber, balance`;
 
       const creditValues = [newBalance, accountNumberParam];
-      const { rows: rowsCredit } = await client.query(creditTransactionQuery, creditValues);
+      const { rows: rowsCredit } = await client.query(transact, creditValues);
+
       if (rowsCredit[0]) {
         const creditedAccount = rowsCredit[0];
         const {
-          id, accountnumber: creditedAccountNumber, balance: creditedAccountBalance,
+          id,
+          accountnumber: creditedAccountNumber,
+          balance: creditedAccountBalance,
         } = creditedAccount;
-        const addTransactionQuery = `INSERT INTO transactions(accountNumber, type, account, cashier, amount, oldBalance, newBalance)
-                                    VALUES($1, $2, $3, $4, $5, $6, $7)
-                                    RETURNING id, type, accountNumber, cashier, amount, newBalance, createdOn`;
+
         const addTransactionValues = [
           creditedAccountNumber,
           inputTransactionType,
@@ -49,9 +66,11 @@ class TransactionController {
           balance,
           creditedAccountBalance,
         ];
+
         const {
           rows: rowsAddTransaction,
-        } = await client.query(addTransactionQuery, addTransactionValues);
+        } = await client.query(addTransaction, addTransactionValues);
+
         if (rowsAddTransaction[0]) {
           const {
             id: transactionId,
@@ -62,6 +81,7 @@ class TransactionController {
             newbalance: accountBalance,
             createdon,
           } = rowsAddTransaction[0];
+
           const transactionDetails = {
             transactionId,
             accountnumber,
@@ -82,19 +102,16 @@ class TransactionController {
             lastName: lastname,
             balance: accountBalance,
           };
+
           await send(mailDetails);
 
-          return res.status(200).json({
-            status: 200,
-            data: [transactionDetails],
-          });
+          return res.status(200)
+            .json(successResponse([transactionDetails]));
         }
       }
     } catch (error) {
-      return res.status(500).json({
-        status: 500,
-        error: 'Internal server error!',
-      });
+      return res.status(500)
+        .json(errorResponse('Internal server error!'));
     } finally {
       await client.release();
     }
@@ -102,40 +119,50 @@ class TransactionController {
 
   static async debitTransaction(req, res) {
     const client = await pool.connect();
+
     try {
-      const {
-        amount: transactionAmount,
-        cashier: transactionCashier,
-        type: inputTransactionType,
-      } = req.body;
+      const { amount: transactionAmount } = req.body;
+      const inputTransactionType = 'debit';
+      const token = req.headers['x-auth-token'];
+      const { userId: transactionCashier } = await verifyToken(token);
       const { accountNumber: accountNumberParam } = req.params;
-      const findAccountQuery = `SELECT  email, firstName, balance, lastName from users
-                                INNER JOIN accounts ON users.id = accounts.owner
-                                WHERE accountNumber = $1`;
+
       const findValues = [accountNumberParam];
-      const { rows } = await client.query(findAccountQuery, findValues);
+      const { rows } = await client.query(findAccount, findValues);
+
       if (!rows[0]) {
-        return res.status(404).json({
-          status: 404,
-          error: 'Account with given account number does not exist!',
-        });
+        const error = 'Account with given account number does not exist!';
+        return res.status(404)
+          .json(errorResponse(error));
       }
+
       const {
-        balance, email, firstname, lastname,
+        balance,
+        email,
+        firstname,
+        lastname,
+        status,
       } = rows[0];
+
+      if (status === 'dormant') {
+        const error = 'You cannot debit a dormant account!';
+        return res.status(400).json(errorResponse(error));
+      }
+
       const newBalance = (balance - transactionAmount).toFixed(2);
-      const debitTransactionQuery = `UPDATE accounts SET balance = $1 WHERE accountNumber = $2
-                                    RETURNING id, accountNumber, balance`;
+
       const debitValues = [newBalance, accountNumberParam];
-      const { rows: rowsDebit } = await client.query(debitTransactionQuery, debitValues);
+      const { rows: rowsDebit } = await client.query(transact, debitValues);
+
       if (rowsDebit[0]) {
         const creditedAccount = rowsDebit[0];
+
         const {
-          id, accountnumber: debitedAccountNumber, balance: debitedAccountBalance,
+          id,
+          accountnumber: debitedAccountNumber,
+          balance: debitedAccountBalance,
         } = creditedAccount;
-        const addTransactionQuery = `INSERT INTO transactions(accountNumber, type, account, cashier, amount, oldBalance, newBalance)
-                                    VALUES($1, $2, $3, $4, $5, $6, $7)
-                                    RETURNING id, type, accountNumber, cashier, amount, newBalance, createdOn`;
+
         const addTransactionValues = [
           debitedAccountNumber,
           inputTransactionType,
@@ -145,9 +172,11 @@ class TransactionController {
           balance,
           debitedAccountBalance,
         ];
+
         const {
           rows: rowsAddTransaction,
-        } = await client.query(addTransactionQuery, addTransactionValues);
+        } = await client.query(addTransaction, addTransactionValues);
+
         if (rowsAddTransaction[0]) {
           const {
             id: transactionId,
@@ -158,6 +187,7 @@ class TransactionController {
             newbalance: accountBalance,
             createdon,
           } = rowsAddTransaction[0];
+
           const transactionDetails = {
             transactionId,
             accountnumber,
@@ -178,19 +208,16 @@ class TransactionController {
             lastName: lastname,
             balance: accountBalance,
           };
+
           await send(mailDetails);
 
-          return res.status(200).json({
-            status: 200,
-            data: [transactionDetails],
-          });
+          return res.status(200)
+            .json(successResponse([transactionDetails]));
         }
       }
     } catch (error) {
-      return res.status(500).json({
-        status: 500,
-        error: 'Internal server error!',
-      });
+      return res.status(500)
+        .json(errorResponse('Internal server error!'));
     } finally {
       await client.release();
     }
@@ -198,27 +225,22 @@ class TransactionController {
 
   static async getAllTransactions(req, res) {
     const client = await pool.connect();
-    try {
-      const getAllTransactionsQuery = `SELECT id AS transactionId, createdOn, type, accountNumber, amount, oldBalance, newBalance
-                                       FROM transactions ORDER BY id ASC`;
 
-      const { rows } = await client.query(getAllTransactionsQuery);
+    try {
+      const { rows } = await client.query(getAllTransactions);
+
       if (!rows[0]) {
-        return res.status(404).json({
-          status: 404,
-          error: 'No transaction records found!',
-        });
+        return res.status(404)
+          .json(errorResponse('No transaction records found!'));
       }
+
       const allTransactions = rows;
-      return res.status(200).json({
-        status: 200,
-        data: allTransactions,
-      });
+
+      return res.status(200)
+        .json(successResponse(allTransactions));
     } catch (error) {
-      return res.status(500).json({
-        status: 500,
-        error: 'Internal server error!',
-      });
+      return res.status(500)
+        .json(errorResponse('Internal server error!'));
     } finally {
       await client.release();
     }
@@ -226,29 +248,29 @@ class TransactionController {
 
   static async getUserTransaction(req, res) {
     const client = await pool.connect();
+
     try {
       const { transactionId } = req.params;
+      const token = req.headers['x-auth-token'];
+      const { userId } = await verifyToken(token);
 
-      const getUserTransactionQuery = `SELECT id AS transactionId, createdOn, type, accountNumber, amount, oldBalance, newBalance FROM transactions
-                                        WHERE id = $1`;
-      const values = [transactionId];
-      const { rows: userTransactionRows } = await client.query(getUserTransactionQuery, values);
+      const values = [transactionId, userId];
+      const {
+        rows: userTransactionRows,
+      } = await client.query(getUserTransaction, values);
+
       if (!userTransactionRows[0]) {
-        return res.status(404).json({
-          status: 404,
-          error: 'Transaction with specified id does not exist!',
-        });
+        return res.status(404)
+          .json(errorResponse('Transaction with specified id does not exist!'));
       }
+
       const userTransaction = userTransactionRows[0];
-      return res.status(200).json({
-        status: 200,
-        data: [userTransaction],
-      });
+
+      return res.status(200)
+        .json(successResponse([userTransaction]));
     } catch (error) {
-      return res.status(500).json({
-        status: 500,
-        error: 'Internal server error!',
-      });
+      return res.status(500)
+        .json(errorResponse('Internal server error!'));
     } finally {
       await client.release();
     }
@@ -256,41 +278,34 @@ class TransactionController {
 
   static async getUserTransactions(req, res) {
     const client = await pool.connect();
+
     try {
       const { accountNumber } = req.params;
+      const { userId } = await verifyToken(req.headers['x-auth-token']);
+      const checkValue = [accountNumber, userId];
 
-      const checkExistingAccountQuery = `SELECT * FROM accounts
-                                         WHERE accountNumber = $1`;
-      const checkValue = [accountNumber];
-
-      const { rows } = await client.query(checkExistingAccountQuery, checkValue);
+      const { rows } = await client.query(checkExisting, checkValue);
       if (!rows[0]) {
-        return res.status(404).json({
-          status: 404,
-          error: 'Account with specified account number does not exist!',
-        });
+        const error = 'No user account with the given account number!';
+        return res.status(404)
+          .json(errorResponse(error));
       }
 
-      const getUserTransactionsQuery = `SELECT id AS transactionId, createdOn, type, accountNumber, amount, oldBalance, newBalance FROM transactions
-                                        WHERE accountNumber = $1`;
       const values = [accountNumber];
-      const { rows: userTransactionsRows } = await client.query(getUserTransactionsQuery, values);
+      const {
+        rows: userTransactionsRows,
+      } = await client.query(getUserTransactions, values);
+
       if (!userTransactionsRows[0]) {
-        return res.status(404).json({
-          status: 404,
-          error: 'No transactions record found for the account!',
-        });
+        return res.status(404)
+          .json(errorResponse('No transactions record found for the account!'));
       }
       const userTransactions = userTransactionsRows;
-      return res.status(200).json({
-        status: 200,
-        data: userTransactions,
-      });
+      return res.status(200)
+        .json(successResponse(userTransactions));
     } catch (error) {
-      return res.status(500).json({
-        status: 500,
-        error: 'Internal server error!',
-      });
+      return res.status(500)
+        .json(errorResponse('Internal server error!'));
     } finally {
       await client.release();
     }

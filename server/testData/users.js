@@ -3,24 +3,28 @@ const testUser = {
   lastName: 'Ofili',
   email: 'doraofili@yahoo.com',
   password: 'dorasecurepassword',
-  type: 'client',
-};
-const testUserData = {
-  firstName: 'Maureen',
-  lastName: 'George',
-  email: 'maumau@yahoo.com',
-  password: 'maureensecurepassword',
-  type: 'staff',
 };
 
-const client = { email: 'alicen1995@yahoo.com', password: 'securepassword1' };
-const cashier = { email: 'cyrilu@gmail.com', password: 'strongpassword1' };
-const admin = { email: 'darknight@live.com', password: 'adminpassword2' };
+const client = {
+  email: 'emmanuelroic@gmail.com', password: 'securepassword1'
+};
+
+const clientTwo = {
+  email: 'leomustapha@yahoo.com', password: 'securepassword2'
+};
+
+const cashier = {
+  email: 'cyrilu@gmail.com', password: 'strongpassword1'
+};
+
+const admin = {
+  email: 'darknight@live.com', password: 'adminpassword2'
+};
 
 export default {
   client,
+  clientTwo,
   cashier,
   admin,
   testUser,
-  testUserData,
 };

@@ -1,49 +1,12 @@
 /* eslint-env mocha */
 import assert from 'assert';
 
-import ArraySorter from '../helpers/ArraySorter';
 import Auth from '../helpers/Auth';
-import BooleanChecker from '../helpers/BooleanChecker';
-import Passcode from '../helpers/Passcode';
-import helperData from '../testData/helpers';
+import PasswordAuth from '../helpers/PasswordAuth';
 
-const { arrayFinder, arrayFilter, arrayFilterNot } = ArraySorter;
 const { createToken, verifyToken } = Auth;
-const { isDuplicate, isExisting } = BooleanChecker;
-const { encryptPassword, verifyPassword } = Passcode;
-const { testArray, truthyArray, falsyArray } = helperData;
+const { encryptPassword, verifyPassword } = PasswordAuth;
 
-describe('ArraySorter', () => {
-  describe('arrayFinder()', () => {
-    it('should return a value if it exists in array', () => {
-      assert.equal(testArray[0], arrayFinder(testArray, 'propAOne', 'valueAOne'));
-      assert.equal(testArray[1], arrayFinder(testArray, 'propBThree', 'valueBThree'));
-    });
-    it('should return undefined if value does not exist in array', () => {
-      assert.equal(undefined, arrayFinder(testArray, 'propAOne', 'notValueAOne'));
-      assert.equal(undefined, arrayFinder(testArray, 'propBThree', 'notValueBThree'));
-    });
-  });
-
-  describe('arrayFilter()', () => {
-    it('should return an array if the filter value exists', () => {
-      const result = arrayFilter(testArray, 'propAOne', 'valueAOne');
-      assert.equal(true, Array.isArray(result));
-    });
-    it('should return empty array if value does not exist in array', () => {
-      const result = arrayFilter(testArray, 'propAOne', 'notValueAOne');
-      assert.equal(true, !result.length);
-    });
-  });
-
-  describe('arrayFilterNot()', () => {
-    it('should return an array excluding the filter value', () => {
-      const result = arrayFilterNot(testArray, 'propAOne', 'valueAOne');
-      assert.equal(true, Array.isArray(result));
-      assert.equal(undefined, arrayFinder(result, 'propAOne', 'valueAOne'));
-    });
-  });
-});
 
 describe('Auth', () => {
   let token;
@@ -74,40 +37,8 @@ describe('Auth', () => {
   });
 });
 
-describe('BooleanChecker', () => {
-  describe('isDuplicate()', () => {
-    it('should return false if value is truthy', () => {
-      assert.equal(false, isDuplicate(truthyArray[0]));
-      assert.equal(false, isDuplicate(truthyArray[1]));
-      assert.equal(false, isDuplicate(truthyArray[2]));
-      assert.equal(false, isDuplicate(truthyArray[3]));
-    });
-    it('should return true if value is falsy', () => {
-      assert.equal(true, isDuplicate(falsyArray[0]));
-      assert.equal(true, isDuplicate(falsyArray[1]));
-      assert.equal(true, isDuplicate(falsyArray[2]));
-      assert.equal(true, isDuplicate(falsyArray[3]));
-      assert.equal(true, isDuplicate(falsyArray[4]));
-    });
-  });
-  describe('isExisting()', () => {
-    it('should return true if value is truthy', () => {
-      assert.equal(true, isExisting(truthyArray[0]));
-      assert.equal(true, isExisting(truthyArray[1]));
-      assert.equal(true, isExisting(truthyArray[2]));
-      assert.equal(true, isExisting(truthyArray[3]));
-    });
-    it('should return false if value is falsy', () => {
-      assert.equal(false, isExisting(falsyArray[0]));
-      assert.equal(false, isExisting(falsyArray[1]));
-      assert.equal(false, isExisting(falsyArray[2]));
-      assert.equal(false, isExisting(falsyArray[3]));
-      assert.equal(false, isExisting(falsyArray[4]));
-    });
-  });
-});
 
-describe('Passcode', () => {
+describe('PasswordAuth', () => {
   describe('encryptPassword()', () => {
     it('should create a hash', async () => {
       try {

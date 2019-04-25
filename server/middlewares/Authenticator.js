@@ -5,7 +5,7 @@ const { verifyToken } = Auth;
 class Authenticator {
   static async isAuth(req, res, next) {
     try {
-      const requestToken = req.headers.authorization ? req.headers.authorization : req.headers['x-auth-token'];
+      const requestToken = req.headers['x-auth-token'];
       if (!requestToken) {
         return res.status(401).json({
           status: 401,
@@ -29,7 +29,7 @@ class Authenticator {
     }
   }
 
-  static async levelOne(req, res, next) {
+  static async isUser(req, res, next) {
     const { userType } = req.body.token;
     const user = userType.toString();
     const val = user === 'client';
@@ -42,7 +42,7 @@ class Authenticator {
     return next();
   }
 
-  static async levelTwo(req, res, next) {
+  static async isCashier(req, res, next) {
     const { userType } = req.body.token;
     const user = userType.toString();
     const val = user === 'cashier';
@@ -55,33 +55,7 @@ class Authenticator {
     return next();
   }
 
-  static async levelThree(req, res, next) {
-    const { userType } = req.body.token;
-    const user = userType.toString();
-    const val = user === 'admin';
-    if (!val) {
-      return res.status(401).json({
-        status: 401,
-        error: 'Request exclusive to admin',
-      });
-    }
-    return next();
-  }
-
-  static async levelFour(req, res, next) {
-    const { userType } = req.body.token;
-    const user = userType.toString();
-    const val = user === 'client' || user === 'cashier';
-    if (!val) {
-      return res.status(401).json({
-        status: 401,
-        error: 'Request exclusive to cashier or client',
-      });
-    }
-    return next();
-  }
-
-  static async levelFive(req, res, next) {
+  static async isAdmin(req, res, next) {
     const { userType } = req.body.token;
     const user = userType.toString();
     const val = user === 'cashier' || user === 'admin';

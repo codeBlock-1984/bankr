@@ -1,5 +1,4 @@
 import express from 'express';
-import bodyParser from 'body-parser';
 import favicon from 'serve-favicon';
 import swaggerUi from 'swagger-ui-express';
 import morgan from 'morgan';
@@ -18,8 +17,8 @@ const port = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(morgan('tiny'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 
 app.use('/api/v1/auth/', authRoute);
@@ -30,13 +29,13 @@ app.use('/api-docs/', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.get('/', (req, res) => {
   res.statusCode = 200;
-  res.setHeader('Content-Type', "text/html");
+  res.setHeader('Content-Type', 'text/html');
   res.send('<h1>Bankr API</h1>');
 });
 
 app.get('*', (req, res) => {
   res.statusCode = 404;
-  res.setHeader('Content-Type', "text/html");
+  res.setHeader('Content-Type', 'text/html');
   res.send(
     `<h1>404</h1>
      <hr>

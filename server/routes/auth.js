@@ -7,11 +7,17 @@ import authValidator from '../middlewares/authValidator';
 const router = express.Router();
 const { signUp, signIn } = Auth;
 const {
-  signinValidator,
-  signupValidator,
+  emailValidator,
+  passwordValidator,
+  nameValidator,
 } = authValidator;
 
-router.post('/signup', signinValidator, signupValidator, validate, signUp);
-router.post('/signin', signinValidator, validate, signIn);
+router
+  .post('/signup',
+    emailValidator, passwordValidator, nameValidator, validate, signUp);
+
+router
+  .post('/signin',
+    emailValidator, passwordValidator, validate, signIn);
 
 export default router;

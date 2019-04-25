@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt';
 
-class Passcode {
+class PasswordAuth {
   static async encryptPassword(password) {
     try {
       const salt = await bcrypt.genSalt(10);
@@ -14,4 +14,4 @@ class Passcode {
     return bcrypt.compare(password, hashedPassword);
   }
 }
-export default Passcode;
+export default PasswordAuth;

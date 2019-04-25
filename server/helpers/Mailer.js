@@ -9,9 +9,11 @@ class Mailer {
       const html = getMailBody(payload);
       const subject = 'Bankr Notification System';
       const { to } = payload;
+
       const mailOptions = {
         from, to, subject, html,
       };
+
       const transport = await nodemailer.createTransport(mailerConfig);
       const info = await transport.sendMail(mailOptions);
       return info;
