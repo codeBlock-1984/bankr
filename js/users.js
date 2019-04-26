@@ -29,3 +29,27 @@ function deactivateUser() {
   this.removeEventListener('click', deactivateUser);
   this.addEventListener('click', activateUser);
 }
+
+const delUserBtns = document.querySelectorAll('.del-user-btn');
+const viewUserBtns = document.querySelectorAll('.view-user-btn');
+
+delUserBtns.forEach((delUserBtn) => {
+  delUserBtn.addEventListener('mouseover', displayTooltip);
+  delUserBtn.addEventListener('mouseout', hideTooltip);
+});
+
+viewUserBtns.forEach((viewUserBtn) => {
+  viewUserBtn.addEventListener('mouseover', displayTooltip);
+  viewUserBtn.addEventListener('mouseout', hideTooltip);
+});
+
+function displayTooltip() {
+  if (this.classList.contains('del-user-btn')) {
+    this.innerHTML = `<span class="action-icon-hint" id="tool-tip">delete user</span>`;
+  } else if(this.classList.contains('view-user-btn')) {
+    this.innerHTML = `<span class="action-icon-hint" id="tool-tip">view user</span>`;
+  }
+}
+function hideTooltip() {
+  this.innerHTML = '';
+}
