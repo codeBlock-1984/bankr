@@ -5,7 +5,23 @@ import userQuery from '../database/queries/user';
 const { successResponse, errorResponse } = Responder;
 const { getUser, getAllUsers } = userQuery;
 
+/**
+ * @description Defines all actions that can be performed on the user resource
+ *
+ * @class UserController
+ */
 class UserController {
+  /**
+   * @description Gets a user
+   * @static
+   * @async
+   *
+   * @param {object} req - get user request object
+   * @param {object} res - get user response object
+   *
+   * @returns
+   * @memberof UserController
+   */
   static async getUser(req, res) {
     const client = await pool.connect();
 
@@ -31,6 +47,17 @@ class UserController {
     }
   }
 
+  /**
+   * @description Gets all users
+   * @static
+   * @async
+   *
+   * @param {object} req - get users request object
+   * @param {object} res - get users response object
+   *
+   * @returns
+   * @memberof UserController
+   */
   static async getAllUsers(req, res) {
     const client = await pool.connect();
 

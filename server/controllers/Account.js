@@ -17,10 +17,26 @@ const {
   deleteAccount,
 } = accountQuery;
 
+/**
+ * @description Defines actions that can be
+ * performed on the account resource
+ *
+ * @class AccountController
+ */
+
 class AccountController {
+  /**
+   * @description Creates a new bank account
+   * @static
+   * @async
+   *
+   * @param {object} req - create account request object
+   * @param {object} res - create account response object
+   * @returns
+   * @memberof AccountController
+   */
   static async createAccount(req, res) {
     const client = await pool.connect();
-
     try {
       const { type: accountType } = req.body;
 
@@ -77,6 +93,16 @@ class AccountController {
     }
   }
 
+  /**
+   * @description Gets a bank account
+   * @static
+   * @async
+   *
+   * @param {object} req - get account request object
+   * @param {object} res - get account response object
+   * @returns
+   * @memberof AccountController
+   */
   static async getAccount(req, res) {
     const client = await pool.connect();
 
@@ -121,6 +147,16 @@ class AccountController {
     }
   }
 
+  /**
+   * @description Gets all bank accounts
+   * @static
+   * @async
+   *
+   * @param {object} req - get all accounts request object
+   * @param {object} res - get all accounts response object
+   * @returns
+   * @memberof AccountController
+   */
   static async getAllAccounts(req, res) {
     const client = await pool.connect();
 
@@ -161,6 +197,16 @@ class AccountController {
     }
   }
 
+  /**
+   * @description Gets User's bank accounts
+   * @static
+   * @async
+   *
+   * @param {object} req - get user accounts request object
+   * @param {object} res - get user accounts response object
+   * @returns
+   * @memberof AccountController
+   */
   static async getUserAccounts(req, res) {
     const client = await pool.connect();
 
@@ -186,6 +232,16 @@ class AccountController {
     }
   }
 
+  /**
+   * @description Updates a bank account's status
+   * @static
+   * @async
+   *
+   * @param {object} req - update account request object
+   * @param {object} res - update account response object
+   * @returns
+   * @memberof AccountController
+   */
   static async updateAccountStatus(req, res) {
     const client = await pool.connect();
     try {
@@ -213,6 +269,17 @@ class AccountController {
     }
   }
 
+  /**
+   * @description Deletes a bank account
+   * @static
+   * @async
+   *
+   * @param {object} req - delete account request object
+   * @param {object} res - delete account response object
+   *
+   * @returns
+   * @memberof AccountController
+   */
   static async deleteAccount(req, res) {
     const client = await pool.connect();
 

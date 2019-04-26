@@ -11,7 +11,23 @@ const { successResponse, errorResponse } = Responder;
 
 const { addUser, signIn } = authQuery;
 
+/**
+ * @description Defines methods for user authentication
+ *
+ * @class AuthController
+ */
 class AuthController {
+  /**
+   * @description Creates a new user account
+   * @static
+   * @async
+   *
+   * @param {object} req - signup request object
+   * @param {object} res - signup response object
+   *
+   * @returns
+   * @memberof AuthController
+   */
   static async signUp(req, res) {
     const client = await pool.connect();
 
@@ -70,6 +86,17 @@ class AuthController {
     }
   }
 
+  /**
+   * @description Log in authenticated user
+   * @static
+   * @async
+   *
+   * @param {object} req - signin request object
+   * @param {object} res - signin response object
+   *
+   * @returns
+   * @memberof AuthController
+   */
   static async signIn(req, res) {
     const client = await pool.connect();
 
