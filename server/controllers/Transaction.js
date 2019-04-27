@@ -17,7 +17,24 @@ const {
   getUserTransactions,
 } = transactionQuery;
 
+/**
+ * @description Defines actions
+ * that can be performed on the transaction resource
+ *
+ * @class TransactionController
+ */
 class TransactionController {
+  /**
+   * @description Credits a bank account
+   * @static
+   * @async
+   *
+   * @param {object} req - credit transaction request object
+   * @param {object} res - credit transaction response object
+   *
+   * @returns
+   * @memberof TransactionController
+   */
   static async creditTransaction(req, res) {
     const client = await pool.connect();
 
@@ -117,6 +134,17 @@ class TransactionController {
     }
   }
 
+  /**
+   * @description debits a bank account
+   * @static
+   * @async
+   *
+   * @param {object} req - debit transaction request object
+   * @param {object} res - debit transaction response object
+   *
+   * @returns
+   * @memberof TransactionController
+   */
   static async debitTransaction(req, res) {
     const client = await pool.connect();
 
@@ -223,6 +251,17 @@ class TransactionController {
     }
   }
 
+  /**
+   * @description Gets all transactions
+   * @static
+   * @async
+   *
+   * @param {object} req - get transactions request object
+   * @param {object} res - get transactions response object
+   *
+   * @returns
+   * @memberof TransactionController
+   */
   static async getAllTransactions(req, res) {
     const client = await pool.connect();
 
@@ -246,6 +285,17 @@ class TransactionController {
     }
   }
 
+  /**
+   * @description Gets a specific user's transaction
+   * @static
+   * @async
+   *
+   * @param {object} req - get user transaction request object
+   * @param {object} res - get user transaction response object
+   *
+   * @returns
+   * @memberof TransactionController
+   */
   static async getUserTransaction(req, res) {
     const client = await pool.connect();
 
@@ -276,6 +326,17 @@ class TransactionController {
     }
   }
 
+  /**
+   * @description Gets a specific user's transactions
+   * @static
+   * @async
+   *
+   * @param {object} req - get user transactions request object
+   * @param {object} res - get user transactions response object
+   *
+   * @returns
+   * @memberof TransactionController
+   */
   static async getUserTransactions(req, res) {
     const client = await pool.connect();
 
