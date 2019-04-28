@@ -27,6 +27,6 @@ router
 
 router
   .get('/:email/accounts',
-    isAuth, isAdmin, emailValidator, validate, getUserAccounts);
+    isAuth, emailValidator, validate, getUserAccounts);
 
 export default router;

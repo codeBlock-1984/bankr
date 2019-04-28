@@ -14,6 +14,7 @@ const {
   getAccountsByStatus,
   getAllAccounts,
   getUserAccounts,
+  getUserAccountsClient,
   updateAccountStatus,
   deleteAccount,
 } = accountQuery;
@@ -243,11 +244,25 @@ class AccountController {
 
     try {
       const { email } = req.params;
-      const values = [email];
-      const { rows } = await client.query(getUserAccounts, values);
+      const token = req.headers['x-auth-token'];
+      const { userId, userType } = await verifyToken(token);
+      let values;
+      let getUserAccountsQuery;
+      let error;
+
+      if (userType === 'client') {
+        values = [email, userId];
+        getUserAccountsQuery = getUserAccountsClient;
+        error = 'No accounts record found!';
+      } else {
+        values = [email];
+        getUserAccountsQuery = getUserAccounts;
+        error = 'No accounts record found with the specified email!';
+      }
+
+      const { rows } = await client.query(getUserAccountsQuery, values);
 
       if (!rows[0]) {
-        const error = 'No accounts record found with the specified email!';
         return res.status(404)
           .json(errorResponse(error));
       }

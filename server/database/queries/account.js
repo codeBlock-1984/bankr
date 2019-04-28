@@ -29,7 +29,14 @@ const getUserAccounts = `SELECT accounts.createdOn, accountNumber,
                          accounts.type, accounts.status, balance
                          FROM users INNER JOIN accounts
                          ON users.id = accounts.owner
-                         WHERE users.email = $1 ORDER BY accounts.id ASC;`;
+                         WHERE users.email = $1 ORDER BY accounts.id ASC`;
+
+const getUserAccountsClient = `SELECT accounts.createdOn, accountNumber,
+                              accounts.type, accounts.status, balance
+                              FROM users INNER JOIN accounts
+                              ON users.id = accounts.owner
+                              WHERE users.email = $1 AND accounts.owner = $2
+                              ORDER BY accounts.id ASC`;
 
 const updateAccountStatus = `UPDATE accounts SET status = $1
                              WHERE accountNumber = $2
@@ -46,6 +53,7 @@ export default {
   getAccountsByStatus,
   getAllAccounts,
   getUserAccounts,
+  getUserAccountsClient,
   updateAccountStatus,
   deleteAccount,
 };
