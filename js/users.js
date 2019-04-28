@@ -46,7 +46,7 @@ viewUserBtns.forEach((viewUserBtn) => {
 function displayTooltip() {
   if (this.classList.contains('del-user-btn')) {
     this.innerHTML = `<span class="action-icon-hint" id="tool-tip">delete user</span>`;
-  } else if(this.classList.contains('view-user-btn')) {
+  } else if (this.classList.contains('view-user-btn')) {
     this.innerHTML = `<span class="action-icon-hint" id="tool-tip">view user</span>`;
   }
 }

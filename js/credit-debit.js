@@ -3,7 +3,7 @@ const transactionSendBtn = document.getElementById('transaction-send-btn');
 const transactionCancelBtn = document.getElementById('transaction-cancel-btn');
 const selectType = document.getElementById('transaction-type');
 
-const transactionMessageDialog = document.getElementById('transaction-message-dialog');
+// const transactionMessageDialog = document.getElementById('transaction-message-dialog');
 
 transactionSendBtn.addEventListener('click', displayTransactionConfirmModal);
 transactionCancelBtn.addEventListener('click', cancelTransaction);
