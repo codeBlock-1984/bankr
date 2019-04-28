@@ -39,17 +39,14 @@ brandModalCloseBtns.forEach((brandModalCloseBtn) => {
 cancelDeleteBtns.forEach((cancelDeleteBtn) => {
   cancelDeleteBtn.addEventListener('click', closeModal);
 });
-window.addEventListener('click', function(event) {
-    if (event.target == activeModal) {
-      activeModal.style.display = "none";
-      activeModal = null;
-    }
+window.addEventListener('click', (event) => {
+  if (event.target === activeModal) {
+    activeModal.style.display = 'none';
+    activeModal = null;
+  }
 });
 function closeModal() {
   const modal = activeModal;
   modal.style.display = 'none';
   activeModal = null;
 }
-
-
-

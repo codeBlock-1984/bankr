@@ -191,6 +191,41 @@ body {
 
 /* Forms */
 
+/* Credit: https://www.w3schools.com/howto/howto_css_loader.asp */
+.loader-modal {
+  display: none;
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 250px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+.loader {
+  border: 8px #f2f2f2 solid;
+  border-radius: 50%;
+  border-top: 8px solid #d54f5a;
+  width: 70px;
+  height: 70px;
+  margin: auto;
+  -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin 2s linear infinite;
+}
+/* Safari */
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
 .form-wrapper {
   display: flex;
   flex-wrap: nowrap;
@@ -220,9 +255,11 @@ body {
   color: #d54f5a;
 }
 .alert-message {
-  margin-top: 10px;
+  margin-top: 10px auto;
+  padding-top: 20px;
   font-size: 13px;
   color: #8f2020;
+  text-align: center;
 }
 .reg-form {
   display: flex;

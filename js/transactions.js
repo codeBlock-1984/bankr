@@ -1,9 +1,9 @@
 const brandModal = document.getElementById('trans-view-box');
 const brandModalMain = document.querySelector('.brand-modal-main');
 const brandModalTitle = document.querySelector('.brand-modal-title');
-const mobileScreen = window.matchMedia("(max-width: 480px)");
-const viewIconHead = document.querySelector('.trans-tb-balance-head');
-const viewIconCells = document.querySelectorAll('.trans-tb-balance');
+const mobileScreen = window.matchMedia('(max-width: 480px)');
+// const viewIconHead = document.querySelector('.trans-tb-balance-head');
+// const viewIconCells = document.querySelectorAll('.trans-tb-balance');
 const viewIconBtns = document.querySelectorAll('.view-trans-btn');
 
 
@@ -18,7 +18,6 @@ function displayViewIcons(screen) {
       icon.addEventListener('click', displayModal);
     });
   }
-
 }
 
 function displayModal() {
@@ -36,9 +35,9 @@ function displayModal() {
                   <p>Type:&nbsp;&nbsp;${type}</p><br>
                   <p>Amount:&nbsp;&nbsp;${amount}</p><br>
                   <p>Balance:&nbsp;&nbsp;${balance}</p><br>`;
-  
+
   brandModalTitle.innerHTML = description;
   brandModalMain.innerHTML = trans;
   activeModal = brandModal;
-  brandModal.style.display = "block";
+  brandModal.style.display = 'block';
 }

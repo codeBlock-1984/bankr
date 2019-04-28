@@ -2,7 +2,6 @@
 const brandModal = document.getElementById('del-confirm-dialog');
 const delAccountBtns = document.querySelectorAll('.del-account-btn');
 const deleteAccountBtn = document.getElementsByClassName('delete-account-btn')[0];
-const toolTip = document.getElementById('tool-tip');
 
 const deactivateAccountButtons = document.querySelectorAll('.deactivate-account-btn');
 const activateAccountButtons = document.querySelectorAll('.activate-account-btn');
@@ -34,7 +33,7 @@ viewAccountBtns.forEach((viewAccountBtn) => {
 // Define callback functions
 function displayModal() {
   activeModal = brandModal;
-  brandModal.style.display = "block";
+  brandModal.style.display = 'block';
 }
 function deleteAccount() {
   const accountsTable = this.parentNode.parentNode.parentNode;
@@ -46,13 +45,12 @@ function displayTooltip() {
     this.innerHTML = `<span class="action-icon-hint" id="tool-tip">deactivate account</span>`;
   } else if (this.classList.contains('del-account-btn')) {
     this.innerHTML = `<span class="action-icon-hint" id="tool-tip">delete account</span>`;
-  } else if(this.classList.contains('activate-account-btn')) {
+  } else if (this.classList.contains('activate-account-btn')) {
     this.innerHTML = `<span class="action-icon-hint" id="tool-tip">activate account</span>`;
-  } else if(this.classList.contains('view-account-btn')) {
+  } else if (this.classList.contains('view-account-btn')) {
     this.innerHTML = `<span class="action-icon-hint" id="tool-tip">view account</span>`;
   }
 }
 function hideTooltip() {
   this.innerHTML = '';
 }
-
