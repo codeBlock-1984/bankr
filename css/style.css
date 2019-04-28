@@ -206,14 +206,19 @@ body {
   background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
 }
 .loader {
-  border: 8px #f2f2f2 solid;
+  border: 5px #86343b solid;
   border-radius: 50%;
-  border-top: 8px solid #d54f5a;
-  width: 70px;
-  height: 70px;
+  width: 50px;
+  height: 50px;
   margin: auto;
+  background: #ffffff;
   -webkit-animation: spin 2s linear infinite; /* Safari */
   animation: spin 2s linear infinite;
+}
+.loader img {
+  width: 32px;
+  height: auto;
+  margin: auto;
 }
 /* Safari */
 @-webkit-keyframes spin {
@@ -357,7 +362,7 @@ body {
   background: #08415c;
 }
 .main-nav__header {
-  flex: 0.5;
+  flex: 0.4;
   align-items: center;
   width: 100%;
   background: #082e3f;
@@ -431,6 +436,7 @@ body {
   display: flex;
   flex-flow: column nowrap;
   min-height: 100%;
+  overflow: hidden;
 }
 .main-header {
   display: flex;
@@ -613,6 +619,7 @@ body {
   margin-bottom: 30px;
   padding-top: 20px;
   padding-left: 30px;
+  padding-bottom: 20px;
   background: #ffffff;
 }
 .trans-detail {
@@ -626,12 +633,13 @@ body {
 .trans-title {
   width: 100%;
   font-weight: 900;
+  font-size: 13px;
 }
 .trans-vendor {
   margin-top: 10px;
 }
 .trans-amount {
-  font-size: 20px;
+  font-size: 13px;
 }
 .account-wrapper {
   justify-content: space-between;
@@ -736,6 +744,12 @@ body {
 }
 .view-transactions-link {
   margin-top: 40px;
+}
+.debit-account-btn, .credit-account-btn {
+  background: #d54f5a;
+}
+.debit-account-btn:hover, .credit-account-btn:hover {
+  background: #64272c;
 }
 /* New account form */
 
@@ -847,7 +861,7 @@ body {
 }
 /* all-accounts */
 .account-form-wrapper {
-  padding: 40px 40px;
+  padding: 60px 40px;
   background: #ffffff;
 }
 .all-accounts-table tr th:first-child {
@@ -1001,6 +1015,17 @@ body {
   padding: 50px;
   background: #ffffff;
 }
+.transact-modal-inner {
+  height: 300px;
+}
+.transact-modal-inner .brand-modal-main {
+  padding-top: 20px;
+}
+.transact-modal-inner label,
+.transact-modal-inner select,
+.transact-modal-inner input {
+  height: 25px;
+}
 .transact-link {
   margin-bottom: 20px;
 }
@@ -1095,7 +1120,7 @@ body {
   display: inline-flex;
   flex-direction: column;
   min-height: 80%;
-  padding: 50px 0 50px 100px;
+  padding: 80px 0 80px 100px;
 }
 .transaction-account-search {
   flex: 1;
@@ -1394,7 +1419,7 @@ Media Queries for Responsive layout
     padding-right: 15px;
   }
 }
-@media screen and (min-width: 768px) {
+@media screen and (max-width: 768px) {
   .main-nav__header {
     flex: 0.3;
   }
@@ -1402,7 +1427,7 @@ Media Queries for Responsive layout
     padding: 15px 30px;
   }
   .account-wrapper {
-    flex-direction: row;
+    flex-direction: column;
   }
   .account-box {
     padding: 30px 20px;
@@ -1464,15 +1489,29 @@ Media Queries for Responsive layout
   .big-wrapper {
     height: unset;
     flex-wrap: nowrap;
+    flex-direction: column;
+    padding: 0px;
   }
   .big-box {
+    width: 100%;
     height: unset;
     margin-bottom: 0;
     padding: 30px 50px;
   }
 }
-@media screen and (min-width: 1400px) {
-
+@media screen and (min-width: 900px) {
+  .big-wrapper {
+    height: unset;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    padding: 0px;
+  }
+  .big-box {
+    width: 48%;
+    height: unset;
+    margin-bottom: 0;
+    padding: 30px 50px;
+  }
 }
 @media screen and (min-width: 2000px) {
 
@@ -1952,10 +1991,24 @@ Media Queries for Responsive layout
   }
 }
 @media screen and (max-width: 768px) {
+  .user-profile-wrapper {
+    flex-direction: column;
+  }
   
 }
-@media screen and (max-width: 1400px) {
-  
+@media screen and (min-width: 768px) {
+  .user-profile-wrapper {
+    align-self: center;
+    flex-direction: column;
+    padding: 0;
+    width: 50%;
+  }
+  .single-user-table-wrapper {
+    width: 60%;
+  }
+  .single-account-box {
+    flex: 1;
+  }
 }
 
 /* Create user */

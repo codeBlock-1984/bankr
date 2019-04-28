@@ -1,4 +1,26 @@
 // --- Users -----
+const brandModal = document.getElementById('del-confirm-dialog');
+const delUserButtons = document.querySelectorAll('.del-user-btn');
+const deleteAccountBtn = document.getElementsByClassName('delete-account-btn')[0];
+
+// Add eventlisteners
+delUserButtons.forEach((delUserBtn) => {
+  delUserBtn.addEventListener('click', displayModal);
+});
+
+deleteAccountBtn.addEventListener('click', deleteAccount);
+
+function displayModal() {
+  activeModal = brandModal;
+  brandModal.style.display = 'block';
+}
+function deleteAccount() {
+  const accountsTable = this.parentNode.parentNode.parentNode;
+  const selectedRow = this.parentNode.parentNode;
+  accountsTable.removeChild(selectedRow);
+}
+
+
 const activateUserBtns = document.querySelectorAll('.activate-user-btn');
 const deactivateUserBtns = document.querySelectorAll('.deactivate-user-btn');
 

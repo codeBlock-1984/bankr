@@ -77,7 +77,7 @@ function login(loginData) {
             default:
               break;
           }
-        }, 3000);
+        }, 300);
       }
     })
     .catch((err) => {

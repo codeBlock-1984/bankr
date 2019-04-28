@@ -50,3 +50,14 @@ function closeModal() {
   modal.style.display = 'none';
   activeModal = null;
 }
+
+// const logoutLink = document.querySelector('.logout');
+
+// logoutLink.addEventListener('click', (e) => {
+//   e.preventDefault();
+
+//   localStorage.removeItem('x-authtoken');
+//   localStorage.removeItem('authUser');
+
+//   window.location = 'sign-in.html';
+// });

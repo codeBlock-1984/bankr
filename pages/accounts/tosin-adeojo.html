@@ -17,6 +17,8 @@
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.0/css/all.css" integrity="sha384-Mmxa0mLqhmOeaE8vgOSbKacftZcsNYDjQzuCOm6D02luYSzBG8vpaOykv9lFQ51Y" crossorigin="anonymous">
   <!-- Custom styles -->
   <link rel="stylesheet" href="../../css/style.css">
+
+  <script src="../../js/authCheck.js"></script>
   </head>
   <body>
     <div class="page-wrapper page-wrapper--bg--plain l-flex l-flex-row">
@@ -25,13 +27,13 @@
           <h1 class="main-nav__heading h-40"><a class="home-link" href="index.html">Bankr</a></h1>
         </header>
         <ul class="main-nav__list top-list">
-          <li class="main-nav__li-item active">
+          <li class="main-nav__li-item">
             <a href="../../staff-dashboard.html" class="main-nav__link">
               <i class="fas fa-home main-nav__icon"></i>
               <span class="main-nav__link-desc">Dashboard</span>
             </a>
           </li>  
-          <li class="main-nav__li-item">
+          <li class="main-nav__li-item active">
             <a href="../../accounts-staff.html" class="main-nav__link">
               <i class="fas fa-wallet main-nav__icon"></i>
               <span class="main-nav__link-desc">Accounts</span>
@@ -82,7 +84,7 @@
                 </a>
               </li>  
               <li class="main-nav__li-item">
-                <a href="../../sign-in.html" class="main-nav__link">
+                <a href="../../sign-in.html" class="main-nav__link logout">
                   <i class="fas fa-sign-out-alt main-nav__icon"></i>
                   <span class="main-nav__link-desc user-panel__desc">Logout</span>
                 </a>
@@ -116,13 +118,39 @@
               </a>
             </li>  
             <li class="mobile-nav__li-item">
-              <a href="../../sign-in.html" class="mobile-nav__link">
+              <a href="../../sign-in.html" class="mobile-nav__link logout">
                 <i class="fas fa-sign-out-alt mobile-nav__icon"></i>
                 <span class="mobile-nav__link-desc">Logout</span>
               </a>
             </li>     
           </ul>
         </div>
+        <!-- Transact modal -->
+        <div id="transact-modal" class="brand-modal">
+            <div class="brand-modal-inner transact-modal-inner">
+              <div class="brand-modal-header">
+                <h2 class="brand-modal-title">Credit/Debit</h2>
+                <span class="brand-modal-close">&times;</span>
+              </div>
+              <div class="brand-modal-main">
+                  <div class="reg-form l-flex l-flex-col m-white-bg transaction-form">
+                      <label class="reg-form__label transaction-form__label" for="transaction-type">Select transaction type</label>
+                      <select id="transaction-type" class="reg-form__input transaction-form__input" name="transaction-type" id="title">
+                        <option value="select">Select</option>
+                        <option value="credit">CREDIT</option>
+                        <option value="debit">DEBIT</option>
+                      </select>
+                      <label class="reg-form__label transaction-form__label" for="transaction-amount">Amount</label>
+                      <input class="reg-form__input transaction-form__input" type="text" name="transaction-amount" id="transaction-amount">                    
+                    </div>
+              </div>
+              <div class="brand-modal-footer">
+                <a class="action-btn modal-cancel-btn" href="">cancel</a>
+                <a class="action-btn delete-account-btn"  href=""> send</a>
+              </div>
+            </div>
+        </div>
+        <!-- End transact modal -->
         <main class="page-main l-flex l-flex-col">
           <section class="box-wrapper account-form-container l-flex l-flex-col">
             <h2 class="section-heading">Customer Account</h2>
@@ -178,6 +206,7 @@
       </section>
     </div>
     
+    <script src="../../js/transact.js"></script>
     <script src="../../js/script.js"></script>
   </body>
 </html>

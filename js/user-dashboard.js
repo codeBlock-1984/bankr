@@ -1,17 +1,23 @@
 const profileTitle = document.querySelector('.profile__title');
+const loader = document.getElementById('animated-loader');
 const transBox = document.querySelector('.trans-box');
 const accountWrapper = document.querySelector('.account-wrapper');
 let accountNumberParam;
 
+loader.style.display = 'block';
+
+profileTitle.innerHTML = '';
+accountWrapper.innerHTML = '';
+transBox.innerHTML = '';
+
 const authUser = JSON.parse(localStorage.getItem('authUser'));
-const { firstname, lastname, email } = authUser;
-profileTitle.innerHTML = `${firstname} &nbsp; ${lastname}`;
+const { firstName, lastName, email } = authUser;
+profileTitle.innerHTML = `${firstName} &nbsp; ${lastName}`;
 
 const token = localStorage.getItem('x-auth-token');
-const getAccountsUrl = `https://bankr-server.herokuapp.com/api/v1/accounts/${email}/accounts`;
+const getAccountsUrl = `https://bankr-server.herokuapp.com/api/v1/users/${email}/accounts`;
 
 console.log(token);
-
 const options = {
   method: 'GET',
   headers: new Headers({
@@ -23,15 +29,16 @@ const options = {
 fetch(getAccountsUrl, options)
   .then(res => res.json())
   .then((res) => {
-    if (res.status === 200) {
+    if (!res.error) {
       const { data } = res;
 
       if (data[0]) {
+        // debugger;
         const trimmedAccounts = data.splice(0, 2);
         console.log(trimmedAccounts[0], 'trimmed');
         const userAccountList = trimmedAccounts[0];
         localStorage.setItem('user-account-list', JSON.stringify(userAccountList));
-        accountNumberParam = trimmedAccounts.accountnumber;
+        accountNumberParam = trimmedAccounts[0].accountnumber;
         let singleAccount;
         accountWrapper.innerHTML = '';
         trimmedAccounts.forEach((account) => {
@@ -53,17 +60,17 @@ fetch(getAccountsUrl, options)
           accountWrapper.innerHTML += singleAccount;
         });
 
-        console.log(accountNumber);
+        console.log(accountNumberParam);
         const getTransactionsUrl = `https://bankr-server.herokuapp.com/api/v1/accounts/${accountNumberParam}/transactions`;
 
         fetch(getTransactionsUrl, options)
           .then(response => response.json())
           .then((response) => {
-            if (response.status === 200) {
+            if (!response.error) {
               const { data: transactionsData } = response;
 
               if (transactionsData[0]) {
-                const trimmedTransactions = data.splice(0, 4);
+                const trimmedTransactions = transactionsData.splice(0, 4);
                 let singleTransaction;
                 console.log(data[0]);
                 transBox.innerHTML = '';
@@ -93,6 +100,7 @@ fetch(getAccountsUrl, options)
                 transBox.appendChild(noTransaction);
               }
             }
+            loader.style.display = 'none';
           })
           .catch((err) => {
             console.log(err);
