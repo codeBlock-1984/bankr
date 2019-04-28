@@ -34,15 +34,15 @@ describe('Users Endpoints', () => {
           res.should.have.status(200);
           res.body.should.have.property('data');
           res.body.data.should.be.an('array');
-          res.body.data[0].should.have.property('firstname').eql('Alice');
-          res.body.data[0].firstname.should.be.a('string');
-          res.body.data[0].should.have.property('lastname').eql('Nwankwo');
-          res.body.data[0].lastname.should.be.a('string');
+          res.body.data[0].should.have.property('firstName').eql('Alice');
+          res.body.data[0].firstName.should.be.a('string');
+          res.body.data[0].should.have.property('lastName').eql('Nwankwo');
+          res.body.data[0].lastName.should.be.a('string');
           res.body.data[0].should.have.property('email')
             .eql('emmanuelroic@gmail.com');
           res.body.data[0].email.should.be.a('string');
-          res.body.data[0].should.have.property('isadmin').eql(false);
-          res.body.data[0].isadmin.should.be.a('boolean');
+          res.body.data[0].should.have.property('isAdmin').eql(false);
+          res.body.data[0].isAdmin.should.be.a('boolean');
           res.body.data[0].should.have.property('type').eql('client');
           res.body.data[0].type.should.be.a('string');
           res.body.data[0].should.have.property('id').eql(1);

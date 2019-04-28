@@ -1,6 +1,6 @@
 const testUser = {
-  firstName: 'Dora',
-  lastName: 'Ofili',
+  firstName: 'dora',
+  lastName: 'ofili',
   email: 'doraofili@yahoo.com',
   password: 'dorasecurepassword',
 };

@@ -55,9 +55,9 @@ describe('Transactions Endpoints', () => {
           res.body.data.should.be.an('array');
           res.body.data[0].should.have.property('transactionId');
           res.body.data[0].transactionId.should.be.a('number');
-          res.body.data[0].should.have.property('accountnumber')
+          res.body.data[0].should.have.property('accountNumber')
             .eql(testAccountNumber);
-          res.body.data[0].accountnumber.should.be.a('number');
+          res.body.data[0].accountNumber.should.be.a('number');
           res.body.data[0].should.have.property('amount').eql(testAmount);
           res.body.data[0].amount.should.be.a('number');
           res.body.data[0].should.have.property('cashier').eql(3);
@@ -78,7 +78,7 @@ describe('Transactions Endpoints', () => {
         .end((err, res) => {
           res.should.have.status(400);
           res.body.should.have.property('error');
-          res.body.error[0].should.eql('Amount is required!');
+          res.body.error.amount.should.eql('Amount is required.');
           done();
         });
     });
@@ -94,9 +94,9 @@ describe('Transactions Endpoints', () => {
           res.body.data.should.be.an('array');
           res.body.data[0].should.have.property('transactionId');
           res.body.data[0].transactionId.should.be.a('number');
-          res.body.data[0].should.have.property('accountnumber')
+          res.body.data[0].should.have.property('accountNumber')
             .eql(testAccountNumber);
-          res.body.data[0].accountnumber.should.be.a('number');
+          res.body.data[0].accountNumber.should.be.a('number');
           res.body.data[0].should.have.property('amount').eql(testAmount);
           res.body.data[0].amount.should.be.a('number');
           res.body.data[0].should.have.property('cashier').eql(3);
@@ -115,7 +115,7 @@ describe('Transactions Endpoints', () => {
         .end((err, res) => {
           res.should.have.status(400);
           res.body.should.have.property('error');
-          res.body.error[0].should.eql('Amount is required!');
+          res.body.error.amount.should.eql('Amount is required.');
           done();
         });
     });
@@ -126,25 +126,26 @@ describe('Transactions Endpoints', () => {
       chai.request(app).get(`/api/v1/transactions/${testTransactionId}`)
         .set('x-auth-token', clientToken)
         .end((err, res) => {
+          console.log(res.body.data[0]);
           res.should.have.status(200);
           res.body.should.have.property('data');
           res.body.data.should.be.an('array');
-          res.body.data[0].should.have.property('transactionid')
+          res.body.data[0].should.have.property('transactionId')
             .eql(testTransactionId);
-          res.body.data[0].transactionid.should.be.a('number');
-          res.body.data[0].should.have.property('createdon');
-          res.body.data[0].createdon.should.be.a('string');
+          res.body.data[0].transactionId.should.be.a('number');
+          res.body.data[0].should.have.property('createdOn');
+          res.body.data[0].createdOn.should.be.a('string');
           res.body.data[0].should.have.property('type').eql('credit');
           res.body.data[0].type.should.be.a('string');
-          res.body.data[0].should.have.property('accountnumber')
+          res.body.data[0].should.have.property('accountNumber')
             .eql(testAccountNumber);
-          res.body.data[0].accountnumber.should.be.a('number');
+          res.body.data[0].accountNumber.should.be.a('number');
           res.body.data[0].should.have.property('amount').eql(testAmount);
           res.body.data[0].amount.should.be.a('number');
-          res.body.data[0].should.have.property('oldbalance');
-          res.body.data[0].oldbalance.should.be.a('number');
-          res.body.data[0].should.have.property('newbalance');
-          res.body.data[0].newbalance.should.be.a('number');
+          res.body.data[0].should.have.property('oldBalance');
+          res.body.data[0].oldBalance.should.be.a('number');
+          res.body.data[0].should.have.property('newBalance');
+          res.body.data[0].newBalance.should.be.a('number');
           done();
         });
     });

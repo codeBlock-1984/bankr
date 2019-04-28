@@ -11,7 +11,14 @@ const getAccount = `SELECT accounts.createdOn, accounts.accountNumber, email,
                     accounts.type, status, balance
                     FROM users INNER JOIN accounts
                     ON users.id = accounts.owner
-                    WHERE accounts.accountnumber = $1`;
+                    WHERE accounts.accountnumber = $1 AND accounts.owner = $2`;
+
+const getAccountAdmin = `SELECT accounts.createdOn, accounts.accountNumber,
+                         email,
+                        accounts.type, status, balance
+                        FROM users INNER JOIN accounts
+                        ON users.id = accounts.owner
+                        WHERE accounts.accountnumber = $1`;
 
 const getAccountsByStatus = `SELECT * FROM accounts WHERE status = $1
                              ORDER BY id ASC`;
@@ -35,6 +42,7 @@ export default {
   createAccount,
   getUser,
   getAccount,
+  getAccountAdmin,
   getAccountsByStatus,
   getAllAccounts,
   getUserAccounts,

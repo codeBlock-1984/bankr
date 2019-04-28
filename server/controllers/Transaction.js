@@ -13,7 +13,9 @@ const {
   addTransaction,
   getAllTransactions,
   getUserTransaction,
+  getTransactionAdmin,
   checkExisting,
+  checkExistingAdmin,
   getUserTransactions,
 } = transactionQuery;
 
@@ -92,7 +94,7 @@ class TransactionController {
           const {
             id: transactionId,
             type: transactionType,
-            accountnumber,
+            accountnumber: accountNumber,
             cashier,
             amount,
             newbalance: accountBalance,
@@ -101,7 +103,7 @@ class TransactionController {
 
           const transactionDetails = {
             transactionId,
-            accountnumber,
+            accountNumber,
             amount,
             cashier,
             transactionType,
@@ -110,20 +112,21 @@ class TransactionController {
 
           const mailDetails = {
             to: email,
-            accountNumber: accountnumber,
+            accountNumber,
             type: transactionType,
             amount,
             id: transactionId,
             date: createdon,
-            firstName: firstname,
-            lastName: lastname,
+            firstname,
+            lastname,
             balance: accountBalance,
           };
 
           await send(mailDetails);
 
+          const msg = 'Credit transaction was successful.';
           return res.status(200)
-            .json(successResponse([transactionDetails]));
+            .json(successResponse(msg, [transactionDetails]));
         }
       }
     } catch (error) {
@@ -176,6 +179,10 @@ class TransactionController {
         const error = 'You cannot debit a dormant account!';
         return res.status(400).json(errorResponse(error));
       }
+      if (balance < transactionAmount) {
+        const error = 'Insufficient funds!';
+        return res.status(400).json(errorResponse(error));
+      }
 
       const newBalance = (balance - transactionAmount).toFixed(2);
 
@@ -209,7 +216,7 @@ class TransactionController {
           const {
             id: transactionId,
             type: transactionType,
-            accountnumber,
+            accountnumber: accountNumber,
             cashier,
             amount,
             newbalance: accountBalance,
@@ -218,7 +225,7 @@ class TransactionController {
 
           const transactionDetails = {
             transactionId,
-            accountnumber,
+            accountNumber,
             amount,
             cashier,
             transactionType,
@@ -227,20 +234,21 @@ class TransactionController {
 
           const mailDetails = {
             to: email,
-            accountNumber: accountnumber,
+            accountNumber,
             type: transactionType,
             amount,
             id: transactionId,
             date: createdon,
-            firstName: firstname,
-            lastName: lastname,
+            firstname,
+            lastname,
             balance: accountBalance,
           };
 
           await send(mailDetails);
 
+          const msg = 'Debit transaction was successful.';
           return res.status(200)
-            .json(successResponse([transactionDetails]));
+            .json(successResponse(msg, [transactionDetails]));
         }
       }
     } catch (error) {
@@ -275,8 +283,9 @@ class TransactionController {
 
       const allTransactions = rows;
 
+      const msg = 'Successfully retrieved all transaction records.';
       return res.status(200)
-        .json(successResponse(allTransactions));
+        .json(successResponse(msg, allTransactions));
     } catch (error) {
       return res.status(500)
         .json(errorResponse('Internal server error!'));
@@ -300,24 +309,52 @@ class TransactionController {
     const client = await pool.connect();
 
     try {
-      const { transactionId } = req.params;
+      const { transactionId: idParam } = req.params;
+
       const token = req.headers['x-auth-token'];
-      const { userId } = await verifyToken(token);
+      const { userId, userType } = await verifyToken(token);
+      let getTransactionRows;
 
-      const values = [transactionId, userId];
-      const {
-        rows: userTransactionRows,
-      } = await client.query(getUserTransaction, values);
+      if (userType === 'client') {
+        const values = [idParam, userId];
+        const { rows } = await client.query(getUserTransaction, values);
+        getTransactionRows = rows;
+      } else {
+        const values = [idParam];
+        const { rows } = await client.query(getTransactionAdmin, values);
+        getTransactionRows = rows;
+      }
 
-      if (!userTransactionRows[0]) {
+      if (!getTransactionRows[0]) {
         return res.status(404)
           .json(errorResponse('Transaction with specified id does not exist!'));
       }
 
-      const userTransaction = userTransactionRows[0];
+      const {
+        transactionid: transactionId,
+        type,
+        accountnumber: accountNumber,
+        amount,
+        oldbalance: oldBalance,
+        newbalance: newBalance,
+        createdon: createdOn,
+      } = getTransactionRows[0];
+      console.log(getTransactionRows[0]);
+
+      const userTransaction = {
+        transactionId,
+        type,
+        accountNumber,
+        amount,
+        oldBalance,
+        newBalance,
+        createdOn,
+      };
+      console.log(userTransaction);
+      const msg = 'Successfully retrieved one transaction record.';
 
       return res.status(200)
-        .json(successResponse([userTransaction]));
+        .json(successResponse(msg, [userTransaction]));
     } catch (error) {
       return res.status(500)
         .json(errorResponse('Internal server error!'));
@@ -342,11 +379,22 @@ class TransactionController {
 
     try {
       const { accountNumber } = req.params;
-      const { userId } = await verifyToken(req.headers['x-auth-token']);
-      const checkValue = [accountNumber, userId];
+      const token = req.headers['x-auth-token'];
+      const { userId, userType } = await verifyToken(token);
 
-      const { rows } = await client.query(checkExisting, checkValue);
-      if (!rows[0]) {
+      let checkExistingRows;
+
+      if (userType === 'client') {
+        const checkValues = [accountNumber, userId];
+        const { rows } = await client.query(checkExisting, checkValues);
+        checkExistingRows = rows;
+      } else {
+        const checkValues = [accountNumber];
+        const { rows } = await client.query(checkExistingAdmin, checkValues);
+        checkExistingRows = rows;
+      }
+
+      if (!checkExistingRows[0]) {
         const error = 'No user account with the given account number!';
         return res.status(404)
           .json(errorResponse(error));
@@ -362,8 +410,10 @@ class TransactionController {
           .json(errorResponse('No transactions record found for the account!'));
       }
       const userTransactions = userTransactionsRows;
+
+      const msg = 'Successfully retrieved user transaction records.';
       return res.status(200)
-        .json(successResponse(userTransactions));
+        .json(successResponse(msg, userTransactions));
     } catch (error) {
       return res.status(500)
         .json(errorResponse('Internal server error!'));

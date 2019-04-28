@@ -23,10 +23,10 @@ describe('Auth Endpoints', () => {
             res.body.data.should.be.an('array');
             res.body.data[0].should.have.property('token');
             res.body.data[0].token.should.be.a('string');
-            res.body.data[0].should.have.property('firstname').eql('Dora');
-            res.body.data[0].firstname.should.be.a('string');
-            res.body.data[0].should.have.property('lastname').eql('Ofili');
-            res.body.data[0].lastname.should.be.a('string');
+            res.body.data[0].should.have.property('firstName').equal('Dora');
+            res.body.data[0].firstName.should.be.a('string');
+            res.body.data[0].should.have.property('lastName').equal('Ofili');
+            res.body.data[0].lastName.should.be.a('string');
             res.body.data[0].should.have.property('email')
               .eql('doraofili@yahoo.com');
             res.body.data[0].email.should.be.a('string');
@@ -48,7 +48,7 @@ describe('Auth Endpoints', () => {
         .end((err, res) => {
           res.should.have.status(400);
           res.body.should.have.property('error');
-          res.body.error[0].should.eql('Firstname is required!');
+          res.body.error.firstName.should.eql('First name is required.');
           done();
         });
     });
@@ -60,7 +60,7 @@ describe('Auth Endpoints', () => {
         .end((err, res) => {
           res.should.have.status(400);
           res.body.should.have.property('error');
-          res.body.error[0].should.eql('Lastname is required!');
+          res.body.error.lastName.should.eql('Last name is required.');
           done();
         });
     });
@@ -71,7 +71,7 @@ describe('Auth Endpoints', () => {
         .end((err, res) => {
           res.should.have.status(400);
           res.body.should.have.property('error');
-          res.body.error[0].should.eql('Email is required!');
+          res.body.error.email.should.eql('Email is required.');
           done();
         });
     });
@@ -82,7 +82,7 @@ describe('Auth Endpoints', () => {
         .end((err, res) => {
           res.should.have.status(400);
           res.body.should.have.property('error');
-          res.body.error[0].should.eql('Password is required!');
+          res.body.error.password.should.eql('Password is required.');
           done();
         });
     });
@@ -101,10 +101,10 @@ describe('Auth Endpoints', () => {
             res.body.data.should.be.an('array');
             res.body.data[0].should.have.property('token');
             res.body.data[0].token.should.be.a('string');
-            res.body.data[0].should.have.property('firstname').eql('Dora');
-            res.body.data[0].firstname.should.be.a('string');
-            res.body.data[0].should.have.property('lastname').eql('Ofili');
-            res.body.data[0].lastname.should.be.a('string');
+            res.body.data[0].should.have.property('firstName').eql('Dora');
+            res.body.data[0].firstName.should.be.a('string');
+            res.body.data[0].should.have.property('lastName').eql('Ofili');
+            res.body.data[0].lastName.should.be.a('string');
             res.body.data[0].should.have.property('email')
               .eql('doraofili@yahoo.com');
             res.body.data[0].email.should.be.a('string');
@@ -126,7 +126,7 @@ describe('Auth Endpoints', () => {
         .end((err, res) => {
           res.should.have.status(400);
           res.body.should.have.property('error');
-          res.body.error[0].should.eql('Email is required!');
+          res.body.error.email.should.eql('Email is required.');
           done();
         });
     });
@@ -138,7 +138,7 @@ describe('Auth Endpoints', () => {
         .end((err, res) => {
           res.should.have.status(400);
           res.body.should.have.property('error');
-          res.body.error[0].should.eql('Password is required!');
+          res.body.error.password.should.eql('Password is required.');
           done();
         });
     });

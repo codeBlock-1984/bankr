@@ -35,10 +35,30 @@ class UserController {
           .json(errorResponse('User with specified id not found!'));
       }
 
-      const singleUser = rows[0];
+      const {
+        id,
+        firstname: firstName,
+        lastname: lastName,
+        email,
+        type,
+        isadmin: isAdmin,
+        createdon: createdOn,
+      } = rows[0];
+
+      const singleUser = {
+        id,
+        firstName,
+        lastName,
+        email,
+        type,
+        isAdmin,
+        createdOn,
+      };
+
+      const msg = 'Successfully retrieved one user account.';
 
       return res.status(200)
-        .json(successResponse([singleUser]));
+        .json(successResponse(msg, [singleUser]));
     } catch (error) {
       return res.status(500)
         .json(errorResponse('Internal server error!'));
@@ -71,8 +91,9 @@ class UserController {
 
       const allUsers = rows;
 
+      const msg = 'Successfully retrieved all user records.';
       return res.status(200)
-        .json(successResponse(allUsers));
+        .json(successResponse(msg, allUsers));
     } catch (error) {
       return res.status(500)
         .json(errorResponse('Internal server error!'));

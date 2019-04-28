@@ -1,15 +1,19 @@
 import { validationResult } from 'express-validator/check';
+import { isNullOrUndefined } from 'util';
 
 const validate = (req, res, next) => {
-  const errorFormatter = ({ msg }) => {
-    return msg;
+  const errorData = {};
+  const errorFormatter = ({ msg, param }) => {
+    if (isNullOrUndefined(errorData[param])) {
+    }
+    return errorData;
   };
   const validationError = validationResult(req).formatWith(errorFormatter);
   if (!validationError.isEmpty()) {
-    const errorMsg = validationError.array();
+    const errorMsg = validationError.array()[0];
 
     return res.status(400).json({
-      status: 400,
+      message: 'Invalid request',
       error: errorMsg,
     });
   }

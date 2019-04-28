@@ -13,7 +13,7 @@
     "migrate:undo": "babel-node ./server/database/migrations/migrateUndo.js",
     "seed": "babel-node ./server/database/seeders/seed.js",
     "dev-start": "nodemon --exec babel-node ./server/index.js",
-    "single-test": "export NODE_ENV=test && ./node_modules/.bin/mocha --require @babel/register ./server/tests/transaction.js --timeout 30000 --exit",
+    "single-test": "export NODE_ENV=test && ./node_modules/.bin/mocha --require @babel/register ./server/tests/user.js --timeout 30000 --exit",
     "dev-test": "export NODE_ENV=test && ./node_modules/.bin/mocha --require @babel/register ./server/tests/*.js --timeout 30000 --exit",
     "coveralls": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
     "coverage": "nyc report --reporter=text-lcov | coveralls"
