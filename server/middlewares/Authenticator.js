@@ -9,14 +9,14 @@ class Authenticator {
       if (!requestToken) {
         return res.status(401).json({
           status: 401,
-          error: 'You need to log in to continue.',
+          error: 'Access denied. Unauthorized request.',
         });
       }
       const verifiedToken = await verifyToken(requestToken);
       if (!verifiedToken) {
         return res.status(401).json({
           status: 401,
-          error: 'You need to log in to continue.',
+          error: 'Access denied. Unauthorized request.',
         });
       }
       req.body.token = verifiedToken;
@@ -24,7 +24,7 @@ class Authenticator {
     } catch (error) {
       return res.status(401).json({
         status: 401,
-        error: 'Unauthorized request!',
+        error: 'Access denied. Unauthorized request.',
       });
     }
   }
@@ -34,9 +34,9 @@ class Authenticator {
     const user = userType.toString();
     const val = user === 'client';
     if (!val) {
-      return res.status(401).json({
-        status: 401,
-        error: 'Request exclusive to client',
+      return res.status(403).json({
+        status: 403,
+        error: 'Forbidden. Issuer not permitted.',
       });
     }
     return next();
@@ -47,9 +47,9 @@ class Authenticator {
     const user = userType.toString();
     const val = user === 'cashier';
     if (!val) {
-      return res.status(401).json({
-        status: 401,
-        error: 'Request exclusive to cashier',
+      return res.status(403).json({
+        status: 403,
+        error: 'Forbidden. Issuer not permitted.',
       });
     }
     return next();
@@ -60,9 +60,9 @@ class Authenticator {
     const user = userType.toString();
     const val = user === 'cashier' || user === 'admin';
     if (!val) {
-      return res.status(401).json({
-        status: 401,
-        error: 'Request exclusive to cashier or admin',
+      return res.status(403).json({
+        status: 403,
+        error: 'Forbidden. Issuer not permitted.',
       });
     }
     return next();

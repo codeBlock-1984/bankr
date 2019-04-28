@@ -33,13 +33,13 @@ class AuthController {
 
     try {
       const {
-        firstName,
-        lastName,
-        email,
+        firstName: firstNameInput,
+        lastName: lastNameInput,
+        email: emailInput,
         password: stringPassword,
       } = req.body;
 
-      const checkValue = [email];
+      const checkValue = [emailInput];
 
       const {
         rows: checkExistingRows,
@@ -55,9 +55,9 @@ class AuthController {
       const isAdmin = false;
 
       const values = [
-        firstName,
-        lastName,
-        email,
+        firstNameInput,
+        lastNameInput,
+        emailInput,
         securePassword,
         userInputType,
         isAdmin
@@ -66,17 +66,33 @@ class AuthController {
       const { rows } = await client.query(addUser, values);
 
       if (rows[0]) {
-        const newUser = rows[0];
-        const { id: userId, type: userType } = newUser;
-        const token = createToken({ userId, userType });
         const {
-          password, isadmin, ...signupDetails
-        } = newUser;
+          id,
+          firstname: firstName,
+          lastname: lastName,
+          email,
+          type,
+        } = rows[0];
+
+        const {
+          id: userId,
+          type: userType,
+        } = rows[0];
+        const token = createToken({ userId, userType });
+
+        const signupDetails = {
+          id,
+          firstName,
+          lastName,
+          email,
+          type,
+        };
         const newSignup = { token, ...signupDetails };
 
+        const msg = 'User account successfully created.';
         return res
           .status(201)
-          .json(successResponse([newSignup]));
+          .json(successResponse(msg, [newSignup]));
       }
     } catch (error) {
       return res.status(500)
@@ -101,8 +117,8 @@ class AuthController {
     const client = await pool.connect();
 
     try {
-      const { email, password } = req.body;
-      const values = [email];
+      const { email: emailInput, password: passwordInput } = req.body;
+      const values = [emailInput];
       const { rows } = await client.query(signIn, values);
 
       if (!rows[0]) {
@@ -110,31 +126,42 @@ class AuthController {
           .json(errorResponse('Email or password incorrect!'));
       }
 
-      const singleUser = rows[0];
-      const { password: singleUserPassword } = singleUser;
-      const isVerified = await verifyPassword(password, singleUserPassword);
+      const {
+        id,
+        firstname: firstName,
+        lastname: lastName,
+        email,
+        password: userPassword,
+        type,
+      } = rows[0];
+
+      const isVerified = await verifyPassword(passwordInput, userPassword);
 
       if (!isVerified) {
         return res.status(400)
           .json(errorResponse('Email or password incorrect!'));
       }
 
-      const { id: userId, type: userType } = singleUser;
+      const {
+        id: userId,
+        type: userType,
+      } = rows[0];
       const token = createToken({ userId, userType });
 
-      const {
-        password: userPassword,
-        isadmin,
-        createdon,
-        updatedon,
-        ...signinDetails
-      } = singleUser;
+      const signinDetails = {
+        id,
+        firstName,
+        lastName,
+        email,
+        type,
+      };
 
       const newSignin = { token, ...signinDetails };
 
+      const msg = 'User successfully logged in.';
       return res
         .status(200)
-        .json(successResponse([newSignin]));
+        .json(successResponse(msg, [newSignin]));
     } catch (error) {
       return res.status(500)
         .json('Internal server error!');

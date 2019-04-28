@@ -47,12 +47,14 @@ describe('Accounts Endpoints', () => {
       chai.request(app).post('/api/v1/accounts').send(postAccount)
         .set('x-auth-token', clientToken)
         .end((err, res) => {
-          testAccountNumber = res.body.data[0].accountnumber;
+          testAccountNumber = res.body.data[0].accountNumber;
+          console.log(testAccountNumber);
+          console.log(res.body.data[0]);
           res.should.have.status(201);
           res.body.should.have.property('data');
           res.body.data.should.be.an('array');
-          res.body.data[0].should.have.property('accountnumber');
-          res.body.data[0].accountnumber.should.be.a('number');
+          res.body.data[0].should.have.property('accountNumber');
+          res.body.data[0].accountNumber.should.be.a('number');
           res.body.data[0].should.have.property('type').eql('savings');
           res.body.data[0].type.should.be.a('string');
           res.body.data[0].should.have.property('openingBalance').eql(0);
@@ -62,13 +64,13 @@ describe('Accounts Endpoints', () => {
     });
 
     it('should return 400 error if type is empty', (done) => {
-      const { type, ...partialAccountDetails } = postAccount;
+      const partialAccountDetails = { type: '' };
       chai.request(app).post('/api/v1/accounts').send(partialAccountDetails)
         .set('x-auth-token', clientToken)
         .end((err, res) => {
           res.should.have.status(400);
           res.body.should.have.property('error');
-          res.body.error[0].should.eql('Account type is required!');
+          res.body.error.type.should.eql('Account type is required!');
           done();
         });
     });
@@ -82,11 +84,11 @@ describe('Accounts Endpoints', () => {
           res.should.have.status(200);
           res.body.should.have.property('data');
           res.body.data[0].should.be.an('object');
-          res.body.data[0].should.have.property('createdon');
-          res.body.data[0].createdon.should.be.a('string');
-          res.body.data[0].should.have.property('accountnumber')
+          res.body.data[0].should.have.property('createdOn');
+          res.body.data[0].createdOn.should.be.a('string');
+          res.body.data[0].should.have.property('accountNumber')
             .eql(testAccountNumber);
-          res.body.data[0].accountnumber.should.be.a('number');
+          res.body.data[0].accountNumber.should.be.a('number');
           res.body.data[0].should.have.property('type').eql('savings');
           res.body.data[0].type.should.be.a('string');
           res.body.data[0].should.have.property('status').eql('active');
@@ -101,11 +103,10 @@ describe('Accounts Endpoints', () => {
       chai.request(app).get(`/api/v1/accounts/${noAccountNumber}`)
         .set('x-auth-token', clientToken)
         .end((err, res) => {
-          console.log(res.body.error);
           res.should.have.status(404);
           res.body.should.have
             .property('error')
-            .eql('Account with specified account number does not exist!');
+            .eql('Account with specified account number not found!');
           done();
         });
     });
@@ -225,9 +226,9 @@ describe('Accounts Endpoints', () => {
           res.should.have.status(200);
           res.body.should.have.property('data');
           res.body.data.should.be.an('array');
-          res.body.data[0].should.have.property('accountnumber');
-          res.body.data[0].accountnumber.should.be.a('number');
-          res.body.data[0].should.have.property('status');
+          res.body.data[0].should.have.property('accountNumber');
+          res.body.data[0].accountNumber.should.be.a('number');
+          res.body.data[0].should.have.property('status').eql('active');
           res.body.data[0].status.should.be.a('string');
           done();
         });
@@ -250,7 +251,7 @@ describe('Accounts Endpoints', () => {
         .end((err, res) => {
           res.should.have.status(400);
           res.body.should.have.property('error');
-          res.body.error[0].should.eql('Account status is required!');
+          res.body.error.status.should.eql('Account status is required!');
           done();
         });
     });

@@ -23,21 +23,21 @@ const {
   accountParamValidator,
 } = accountValidator;
 
-const { isAuth, isUser, isAdmin } = Authenticator;
+const { isAuth, isAdmin } = Authenticator;
 
 router
-  .post('/', isAuth, isUser, accountFieldsValidator, validate, createAccount);
+  .post('/', isAuth, accountFieldsValidator, validate, createAccount);
 
 router
   .get('/:accountNumber',
-    isAuth, isUser, accountParamValidator, validate, getAccount);
+    isAuth, accountParamValidator, validate, getAccount);
 
 router
   .get('/', isAuth, isAdmin, getAllAccounts);
 
 router
   .get('/:accountNumber/transactions',
-    isAuth, isUser, accountParamValidator, validate, getUserTransactions);
+    isAuth, accountParamValidator, validate, getUserTransactions);
 
 router
   .patch('/:accountNumber',

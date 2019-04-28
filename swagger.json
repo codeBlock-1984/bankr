@@ -11,7 +11,7 @@
    "securityDefinitions": {
       "Bearer": {
          "type": "apiKey",
-         "name": "Authorization",
+         "name": "x-auth-token",
          "in": "header"
       }
    },
@@ -63,10 +63,16 @@
                   "description": "Signup successful"
                },
                "400": {
-                  "description": "Empty or invalid field"
+                  "description": "Incomplete or invalid request"
+               },
+               "409": {
+                  "description": "The email is linked to an existing account"
+               },
+               "500": {
+                  "description": "Internal server error"
                },
                "default": {
-                  "description": "Unexpected error"
+                  "description": "Internal server error"
                },
                "schema": {
                   "$ref": "#/components/schemas/userResponse"
@@ -77,7 +83,7 @@
       "/auth/signin": {
          "post": {
             "description": "Log user in",
-            "summary": "Login authenticated user",
+            "summary": "Log in authenticated user",
             "tags": [
                "Auth"
             ],
@@ -101,10 +107,13 @@
                   "description": "Login successful"
                },
                "400": {
-                  "description": "Empty or invalid field"
+                  "description": "Incomplete or invalid request"
+               },
+               "500": {
+                  "description": "Internal server error"
                },
                "default": {
-                  "description": "Unexpected error"
+                  "description": "Internal server error"
                }
             }
          }
@@ -128,11 +137,20 @@
                "200": {
                   "description": "Success"
                },
+               "401": {
+                  "description": "Unauthorized request"
+               },
+               "403": {
+                  "description": "Forbidden"
+               },
                "404": {
                   "description": "No user records found"
                },
+               "500": {
+                  "description": "Internal server error"
+               },
                "default": {
-                  "description": "Unexpected error"
+                  "description": "Internal server error"
                }
             }
          }
@@ -167,11 +185,20 @@
                "200": {
                   "description": "Success"
                },
+               "401": {
+                  "description": "Unauthorized request"
+               },
+               "403": {
+                  "description": "Forbidden"
+               },
                "404": {
                   "description": "User with given id not Found"
                },
+               "500": {
+                  "description": "Internal server error"
+               },
                "default": {
-                  "description": "Unexpected error"
+                  "description": "Internal server error"
                }
             }
          }
@@ -194,7 +221,7 @@
             "parameters": [
                {
                   "in": "body",
-                  "name": "body",
+                  "name": "create account data",
                   "required": true,
                   "description": "Account creation details",
                   "schema": {
@@ -206,11 +233,17 @@
                "201": {
                   "description": "Account creation was successful"
                },
+               "401": {
+                  "description": "Unauthorized request"
+               },
                "400": {
-                  "description": "Empty or invalid field"
+                  "description": "Incomplete or invalid request"
+               },
+               "500": {
+                  "description": "Internal server error"
                },
                "default": {
-                  "description": "Unexpected error"
+                  "description": "Internal server error"
                }
             }
          },
@@ -232,11 +265,20 @@
                "200": {
                   "description": "Success"
                },
+               "401": {
+                  "description": "Unauthorized request"
+               },
+               "403": {
+                  "description": "Forbidden"
+               },
                "404": {
                   "description": "No account records found"
                },
+               "500": {
+                  "description": "Internal server error"
+               },
                "default": {
-                  "description": "Unexpected error"
+                  "description": "Internal server error"
                }
             }
          }
@@ -271,11 +313,20 @@
                "201": {
                   "description": "Success"
                },
+               "401": {
+                  "description": "Unauthorized request"
+               },
+               "403": {
+                  "description": "Forbidden"
+               },
                "400": {
                   "description": "Empty or invalid field"
                },
+               "500": {
+                  "description": "Internal server error"
+               },
                "default": {
-                  "description": "Unexpected error"
+                  "description": "Internal server error"
                }
             }
          }
@@ -313,8 +364,17 @@
                "400": {
                   "description": "Empty or invalid field"
                },
+               "401": {
+                  "description": "Unauthorized request"
+               },
+               "403": {
+                  "description": "Forbidden"
+               },
+               "500": {
+                  "description": "Internal server error"
+               },
                "default": {
-                  "description": "Unexpected error"
+                  "description": "Internal server error"
                }
             }
          }
@@ -349,11 +409,20 @@
                "200": {
                   "description": "Success"
                },
+               "401": {
+                  "description": "Unauthorized request"
+               },
+               "403": {
+                  "description": "Forbidden"
+               },
                "404": {
                   "description": "Account with given email not Found"
                },
+               "500": {
+                  "description": "Internal server error"
+               },
                "default": {
-                  "description": "Unexpected error"
+                  "description": "Internal server error"
                }
             }
          }
@@ -388,11 +457,17 @@
                "200": {
                   "description": "Success"
                },
+               "401": {
+                  "description": "Unauthorized request"
+               },
                "404": {
                   "description": "Bank account not Found"
                },
+               "500": {
+                  "description": "Internal server error"
+               },
                "default": {
-                  "description": "Unexpected error"
+                  "description": "Internal server error"
                }
             }
          },
@@ -434,11 +509,20 @@
                "200": {
                   "description": "Success"
                },
+               "401": {
+                  "description": "Unauthorized request"
+               },
+               "403": {
+                  "description": "Forbidden"
+               },
                "404": {
                   "description": "Bank account not Found"
                },
+               "500": {
+                  "description": "Internal server error"
+               },
                "default": {
-                  "description": "Unexpected error"
+                  "description": "Internal server error"
                }
             }
          },
@@ -471,11 +555,20 @@
                "200": {
                   "description": "Success"
                },
+               "401": {
+                  "description": "Unauthorized request"
+               },
+               "403": {
+                  "description": "Forbidden"
+               },
                "404": {
                   "description": "Bank account not Found"
                },
+               "500": {
+                  "description": "Internal server error"
+               },
                "default": {
-                  "description": "Unexpected error"
+                  "description": "Internal server error"
                }
             }
          }
@@ -510,11 +603,17 @@
                "200": {
                   "description": "Success"
                },
+               "401": {
+                  "description": "Unauthorized request"
+               },
                "404": {
                   "description": "No transactions found for given account"
                },
+               "500": {
+                  "description": "Internal server error"
+               },
                "default": {
-                  "description": "Unexpected error"
+                  "description": "Internal server error"
                }
             }
          }
@@ -549,11 +648,17 @@
                "200": {
                   "description": "Success"
                },
+               "401": {
+                  "description": "Unauthorized request"
+               },
                "404": {
                   "description": "Transaction record not Found"
                },
+               "500": {
+                  "description": "Internal server error"
+               },
                "default": {
-                  "description": "Unexpected error"
+                  "description": "Internal server error"
                }
             }
          }
@@ -577,11 +682,20 @@
                "200": {
                   "description": "Success"
                },
+               "401": {
+                  "description": "Unauthorized request"
+               },
+               "403": {
+                  "description": "Forbidden"
+               },
                "404": {
                   "description": "No transaction records Found"
                },
+               "500": {
+                  "description": "Internal server error"
+               },
                "default": {
-                  "description": "Unexpected error"
+                  "description": "Internal server error"
                }
             }
          }
@@ -625,11 +739,20 @@
                "200": {
                   "description": "Success"
                },
+               "401": {
+                  "description": "Unauthorized request"
+               },
+               "403": {
+                  "description": "Forbidden"
+               },
                "404": {
                   "description": "Bank account not Found"
                },
+               "500": {
+                  "description": "Internal server error"
+               },
                "default": {
-                  "description": "Unexpected error"
+                  "description": "Internal server error"
                }
             }
          }
@@ -673,11 +796,20 @@
                "200": {
                   "description": "Success"
                },
+               "401": {
+                  "description": "Unauthorized request"
+               },
+               "403": {
+                  "description": "Forbidden"
+               },
                "404": {
                   "description": "Bank account not Found"
                },
+               "500": {
+                  "description": "Internal server error"
+               },
                "default": {
-                  "description": "Unexpected error"
+                  "description": "Internal server error"
                }
             }
          }
@@ -711,21 +843,16 @@
                "password": {
                   "description": "user password",
                   "type": "string"
-               },
-               "type": {
-                  "description": "user type",
-                  "type": "string"
                }
             },
             "example": {
                "firstName": "Mubarak",
                "lastName": "Aderopo",
                "email": "ademubarak@gmail.com",
-               "password": "truenigerian",
-               "type": "client"
+               "password": "truenigerian"
             },
             "required": [
-               "firstName, lastName, email, password, type"
+               "firstName, lastName, email, password"
             ]
          },
          "signinDetails": {
@@ -765,10 +892,6 @@
             "title": "Account Details",
             "type": "object",
             "properties": {
-               "accountNumber": {
-                  "description": "new account number",
-                  "type": "integer"
-               },
                "owner": {
                   "description": "account owner's id",
                   "type": "integer"
@@ -776,25 +899,14 @@
                "type": {
                   "description": "account type",
                   "type": "string"
-               },
-               "openingBalance": {
-                  "description": "new account opening balance",
-                  "type": "float"
-               },
-               "status": {
-                  "description": "new account status",
-                  "type": "string"
                }
             },
             "example": {
-               "accountNumber": 1023004807,
                "owner": 2,
-               "type": "savings",
-               "openingBalance": 4500,
-               "status": "dormant"
+               "type": "savings"
             },
             "required": [
-               "accountNumber, owner, type, openingBalance, status"
+               "type"
             ]
          },
          "accountUpdate": {
@@ -832,23 +944,13 @@
                "amount": {
                   "description": "credit amount",
                   "type": "float"
-               },
-               "cashier": {
-                  "description": "cashier's user id",
-                  "type": "integer"
-               },
-               "type": {
-                  "description": "transaction type",
-                  "type": "string"
                }
             },
             "example": {
-               "amount": 20000,
-               "cashier": 4,
-               "type": "credit"
+               "amount": 20000
             },
             "required": [
-               "amount, cashier, type"
+               "amount"
             ]
          },
          "statusActive": {
@@ -870,23 +972,13 @@
                "amount": {
                   "description": "debit amount",
                   "type": "float"
-               },
-               "cashier": {
-                  "description": "cashier's user id",
-                  "type": "integer"
-               },
-               "type": {
-                  "description": "transaction type",
-                  "type": "string"
                }
             },
             "example": {
-               "amount": 300,
-               "cashier": 3,
-               "type": "debit"
+               "amount": 300
             },
             "required": [
-               "amount, cashier, type"
+               "amount"
             ]
          },
          "userResponse": {

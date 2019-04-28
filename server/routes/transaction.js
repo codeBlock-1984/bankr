@@ -23,7 +23,7 @@ const {
 const { accountParamValidator } = accountValidator;
 
 const {
-  isAuth, isUser, isCashier, isAdmin,
+  isAuth, isCashier, isAdmin,
 } = Authenticator;
 
 router
@@ -38,7 +38,7 @@ router
 
 router
   .get('/:transactionId',
-    isAuth, isUser, transactionIdParamValidator, validate, getUserTransaction);
+    isAuth, transactionIdParamValidator, validate, getUserTransaction);
 
 router.get('/', isAuth, isAdmin, getAllTransactions);
 

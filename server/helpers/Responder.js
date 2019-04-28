@@ -1,6 +1,7 @@
 class Responder {
-  static successResponse(responseData) {
+  static successResponse(msg, responseData) {
     return {
+      message: msg,
       data: responseData,
     };
   }

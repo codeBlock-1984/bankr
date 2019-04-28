@@ -10,6 +10,7 @@ const {
   createAccount,
   getUser,
   getAccount,
+  getAccountAdmin,
   getAccountsByStatus,
   getAllAccounts,
   getUserAccounts,
@@ -38,18 +39,28 @@ class AccountController {
   static async createAccount(req, res) {
     const client = await pool.connect();
     try {
-      const { type: accountType } = req.body;
+      const { type: accountType, owner } = req.body;
 
       const token = req.headers['x-auth-token'];
-      const { userId } = await verifyToken(token);
-      const accountOwner = userId;
+      const { userId, userType } = await verifyToken(token);
+      let accountOwner;
+      if (owner) {
+        accountOwner = owner;
+      } else if (userType === 'client') {
+        accountOwner = userId;
+      } else {
+        const error = 'Owner is required.';
+        return res.status(400).json(errorResponse(error));
+      }
+      console.log(accountOwner);
+
       const accountOpeningBalance = parseFloat('0.00');
 
-      const accountNumber = accountNumGen();
+      const newAccountNumber = accountNumGen();
       const status = 'active';
 
       const values = [
-        accountNumber,
+        newAccountNumber,
         accountOwner,
         accountType,
         status,
@@ -62,7 +73,7 @@ class AccountController {
         const newAccount = rows[0];
 
         const {
-          accountnumber,
+          accountnumber: accountNumber,
           type,
           balance: openingBalance,
         } = newAccount;
@@ -71,19 +82,20 @@ class AccountController {
 
         const { rows: userRows } = await client.query(getUser, getUserValue);
 
-        const { firstname, lastname, email } = userRows[0];
+        const { firstname: firstName, lastname: lastName, email } = userRows[0];
 
         const newAccountDetails = {
-          firstname,
-          lastname,
+          firstName,
+          lastName,
           email,
-          accountnumber,
+          accountNumber,
           type,
           openingBalance,
         };
 
+        const msg = 'Account successfully created.';
         return res.status(201)
-          .json(successResponse([newAccountDetails]));
+          .json(successResponse(msg, [newAccountDetails]));
       }
     } catch (error) {
       return res.status(500)
@@ -107,21 +119,36 @@ class AccountController {
     const client = await pool.connect();
 
     try {
-      const { accountNumber } = req.params;
-      const values = [accountNumber];
-      const { rows } = await client.query(getAccount, values);
+      const { accountNumber: accountNumberParam } = req.params;
 
-      if (!rows[0]) {
-        const error = 'Account with specified account number does not exist!';
+      const token = req.headers['x-auth-token'];
+      const { userId, userType } = await verifyToken(token);
+      let getAccountRows;
+
+      if (userType === 'client') {
+        console.log(userId);
+        console.log(accountNumberParam);
+        const values = [accountNumberParam, userId];
+        const { rows } = await client.query(getAccount, values);
+        console.log(rows);
+        getAccountRows = rows;
+      } else {
+        const values = [accountNumberParam];
+        const { rows } = await client.query(getAccountAdmin, values);
+        getAccountRows = rows;
+      }
+
+      if (!getAccountRows[0]) {
+        const error = 'Account with specified account number not found!';
         return res.status(404)
           .json(errorResponse(error));
       }
 
-      const singleAccount = rows[0];
+      const singleAccount = getAccountRows[0];
 
       const {
-        createdon,
-        accountnumber,
+        createdon: createdOn,
+        accountnumber: accountNumber,
         email: ownerEmail,
         type,
         status,
@@ -129,17 +156,19 @@ class AccountController {
       } = singleAccount;
 
       const retrievedAccount = {
-        createdon,
-        accountnumber,
+        createdOn,
+        accountNumber,
         ownerEmail,
         type,
         status,
         balance,
       };
 
+      const msg = 'Successfully retrieved one account.';
       return res.status(200)
-        .json(successResponse([retrievedAccount]));
+        .json(successResponse(msg, [retrievedAccount]));
     } catch (error) {
+      console.log(error);
       return res.status(500)
         .json(errorResponse('Internal server error!'));
     } finally {
@@ -175,8 +204,9 @@ class AccountController {
         }
 
         const userAccountsByStatus = getAccountsRows;
+        const message = `Successfully retrieved all ${statusQuery} accounts.`;
         return res.status(200)
-          .json(successResponse(userAccountsByStatus));
+          .json(successResponse(message, userAccountsByStatus));
       }
 
       const { rows } = await client.query(getAllAccounts);
@@ -188,8 +218,9 @@ class AccountController {
 
       const allBankAccounts = rows;
 
+      const msg = 'Successfully retrieved all accounts.';
       return res.status(200)
-        .json(successResponse(allBankAccounts));
+        .json(successResponse(msg, allBankAccounts));
     } catch (error) {
       return res.status(500).json('Internal server error!');
     } finally {
@@ -223,8 +254,9 @@ class AccountController {
 
       const userAccounts = rows;
 
+      const msg = 'Successfully retrieved user accounts.';
       return res.status(200)
-        .json(successResponse(userAccounts));
+        .json(successResponse(msg, userAccounts));
     } catch (error) {
       return res.status(500).json(errorResponse('Internal server error!'));
     } finally {
@@ -245,10 +277,10 @@ class AccountController {
   static async updateAccountStatus(req, res) {
     const client = await pool.connect();
     try {
-      const { accountNumber } = req.params;
-      const { status } = req.body;
+      const { accountNumber: accountNumberParam } = req.params;
+      const { status: statusParam } = req.body;
 
-      const values = [status, accountNumber];
+      const values = [statusParam, accountNumberParam];
       const { rows } = await client.query(updateAccountStatus, values);
 
       if (!rows[0]) {
@@ -257,10 +289,27 @@ class AccountController {
           .json(errorResponse(error));
       }
 
-      const updatedAccount = rows[0];
+      const {
+        createdon: createdOn,
+        accountnumber: accountNumber,
+        email: ownerEmail,
+        type,
+        status,
+        balance,
+      } = rows[0];
 
+      const updatedAccount = {
+        createdOn,
+        accountNumber,
+        ownerEmail,
+        type,
+        status,
+        balance,
+      };
+
+      const msg = 'Successfully updated account status.';
       return res.status(200)
-        .json(successResponse([updatedAccount]));
+        .json(successResponse(msg, [updatedAccount]));
     } catch (error) {
       return res.status(500)
         .json(errorResponse('Internal server error!'));
@@ -295,8 +344,9 @@ class AccountController {
           .json(errorResponse(error));
       }
 
+      const { id } = rows[0];
       return res.status(200)
-        .json(messageResponse('Account successfully deleted!'));
+        .json(messageResponse(`Account with id ${id} successfully deleted!`));
     } catch (error) {
       return res.status(500)
         .json(errorResponse('Internal server error!'));
