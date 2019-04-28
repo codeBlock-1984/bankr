@@ -31,7 +31,7 @@ const signUpUser = (userData) => {
       const { data } = result;
       console.log(data);
       const { token, ...user } = data[0];
-      messageBox.innerHTML = data.message;
+      messageBox.innerHTML = result.message;
 
       localStorage.setItem('x-auth-token', token);
       localStorage.setItem('authUser', JSON.stringify(user));
