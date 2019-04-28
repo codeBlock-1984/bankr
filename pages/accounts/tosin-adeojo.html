@@ -25,22 +25,22 @@
           <h1 class="main-nav__heading h-40"><a class="home-link" href="index.html">Bankr</a></h1>
         </header>
         <ul class="main-nav__list top-list">
-          <li class="main-nav__li-item">
-            <a href="../../admin-dashboard.html" class="main-nav__link">
+          <li class="main-nav__li-item active">
+            <a href="../../staff-dashboard.html" class="main-nav__link">
               <i class="fas fa-home main-nav__icon"></i>
               <span class="main-nav__link-desc">Dashboard</span>
             </a>
           </li>  
           <li class="main-nav__li-item">
-            <a href="../../accounts-admin.html" class="main-nav__link">
+            <a href="../../accounts-staff.html" class="main-nav__link">
               <i class="fas fa-wallet main-nav__icon"></i>
               <span class="main-nav__link-desc">Accounts</span>
             </a>
           </li>  
-          <li class="main-nav__li-item  active">
-            <a href="../../users.html" class="main-nav__link">
-              <i class="fas fa-users main-nav__icon"></i>
-              <span class="main-nav__link-desc">Users</span>
+          <li class="main-nav__li-item">
+            <a href="../../credit-debit.html" class="main-nav__link">
+              <i class="fas fa-coins main-nav__icon"></i>
+              <span class="main-nav__link-desc">Credit/Debit</span>
             </a>
           </li>  
         </ul>
@@ -66,11 +66,11 @@
             </a>
           </div>
           <div class="mobile-heading">
-            <h1 class="mobile-heading__text">Accounts</h1>
+            <h1 class="mobile-heading__text">Dashboard</h1>
           </div>
           <div class="profile">
-            <p class="profile__title">Anthony Cyril Umar</p>
-            <img id="user-panel-link" src="http://i.pravatar.cc/50?img=56" alt="user image" class="avatar">
+            <p class="profile__title">Cynthia Aderonke Ahmed</p>
+            <img id="user-panel-link" src="http://i.pravatar.cc/50?img=1" alt="user image" class="avatar">
           </div>
         </header>
         <div id="user-panel" class="user-panel-box">
@@ -92,21 +92,21 @@
         <div id="mobile-menu" class="mobile-nav">
           <ul class="mobile-nav__list">
             <li class="mobile-nav__li-item">
-              <a href="../../admin-dashboard.html" class="mobile-nav__link">
+              <a href="../../staff-dashboard.html" class="mobile-nav__link">
                 <i class="fas fa-home mobile-nav__icon"></i>
                 <span class="mobile-nav__link-desc">Dashboard</span>
               </a>
             </li>  
             <li class="mobile-nav__li-item">
-              <a href="../../accounts-admin.html" class="mobile-nav__link">
+              <a href="../../accounts-staff.html" class="mobile-nav__link">
                 <i class="fas fa-wallet mobile-nav__icon"></i>
                 <span class="mobile-nav__link-desc">Accounts</span>
               </a>
             </li>  
             <li class="mobile-nav__li-item">
-              <a href="../../users.html" class="mobile-nav__link">
-                <i class="fas fa-exchange-alt mobile-nav__icon"></i>
-                <span class="mobile-nav__link-desc">Users</span>
+              <a href="../../credit-debit.html" class="mobile-nav__link">
+                <i class="fas fa-coins mobile-nav__icon"></i>
+                <span class="mobile-nav__link-desc">Credit/Debit</span>
               </a>
             </li>
             <li class="mobile-nav__li-item settings">
@@ -120,62 +120,57 @@
                 <i class="fas fa-sign-out-alt mobile-nav__icon"></i>
                 <span class="mobile-nav__link-desc">Logout</span>
               </a>
-            </li>   
+            </li>     
           </ul>
         </div>
         <main class="page-main l-flex l-flex-col">
-            <section class="box-wrapper account-form-container l-flex l-flex-col">
-                <h2 class="section-heading">Customer Account</h2>
-                <div class="single-account-box l-flex l-flex-col">
-                  <div class="single-account-table-wrapper">
-                    <table class="detail-table single-account-table">
-                      <tr class="detail-table__row single-account-row">  
-                        <th class="detail-table__head single-detail">Account name :</th>
-                        <td class="detail-table__cell single-detail__value">Elizabeth Okoro</td>
-                      </tr>
-                      <tr class="detail-table__row single-account-row">
-                        <th class="detail-table__head single-detail">Account type :</th>
-                        <td class="detail-table__cell single-detail__value">Savings</td>
-                      </tr>
-                      <tr class="detail-table__row single-account-row">
-                        <th class="detail-table__head single-detail">Account number :</th>
-                        <td class="detail-table__cell single-detail__value">0012394757</td>
-                      </tr>
-                      <tr class="detail-table__row single-account-row">
-                        <th class="detail-table__head single-detail">Card type :</th>
-                        <td class="detail-table__cell single-detail__value">Visa-Debit card</td>
-                      </tr>
-                      <tr class="detail-table__row single-account-row">
-                        <th class="detail-table__head single-detail">Current balance :</th>
-                        <td class="detail-table__cell single-detail__value">8500.00 &nbsp;NGN</td>
-                      </tr>
-                      <tr class="detail-table__row single-account-row">
-                        <th class="detail-table__head single-detail">Available balance :</th>
-                        <td class="detail-table__cell single-detail__value">8500.00 &nbsp;NGN</td>
-                      </tr>
-                      <tr class="detail-table__row single-account-row">
-                        <th class="detail-table__head single-detail">Created :</th>
-                        <td class="detail-table__cell single-detail__value">12-03-2019</td>
-                      </tr>
-                      <tr class="detail-table__row single-account-row">
-                        <th class="detail-table__head single-detail">Activated :</th>
-                        <td class="detail-table__cell single-detail__value">13-03-2019</td>
-                      </tr>
-                      <tr class="detail-table__row single-account-row">
-                        <th class="detail-table__head single-detail">Status :</th>
-                        <td class="detail-table__cell single-detail__value">Active</td>
-                      </tr>
-                    </table>
-                  </div>
-                  <div class="account-image-box">
-                    <img class="account-image" src="http://i.pravatar.cc/150?img=16" alt="Elizabeth Okoro">
-                    <div class="account-signature-box">
-                      <a href="https://fontmeme.com/signature-fonts/"><img class="account-signature" src="https://fontmeme.com/permalink/190322/2cc138d160c63c622e3def7fc6cdd417.png" alt="signature-fonts" border="0"></a>
-                      <h2 class="account-signature-title">Customer signature</h2>
+          <section class="box-wrapper account-form-container l-flex l-flex-col">
+            <h2 class="section-heading">Customer Account</h2>
+            <div class="single-account-box l-flex l-flex-col">
+                <a class="action-btn create-new-link transact-link" href="">credit/debit account</a>
+              <div class="single-account-wrapper">
+                <div class="single-account-table-wrapper">
+                  <div class="detail-table single-account-table">
+                    <div class="detail-table__row single-account-row">  
+                      <div class="detail-table__head single-detail">Account name :</div>
+                      <div class="detail-table__cell single-detail__value">Tosin Adeojo</div>
+                    </div>
+                    <div class="detail-table__row single-account-row">
+                      <div class="detail-table__head single-detail">Account type :</div>
+                      <div class="detail-table__cell single-detail__value">Savings</div>
+                    </div>
+                    <div class="detail-table__row single-account-row">
+                      <div class="detail-table__head single-detail">Account number :</div>
+                      <div class="detail-table__cell single-detail__value">0012394757</div>
+                    </div>
+                    <div class="detail-table__row single-account-row">
+                      <div class="detail-table__head single-detail">Current balance :</div>
+                      <div class="detail-table__cell single-detail__value">8500.00 &nbsp;NGN</div>
+                    </div>
+                    <div class="detail-table__row single-account-row">
+                      <div class="detail-table__head single-detail">Created :</div>
+                      <div class="detail-table__cell single-detail__value">12-03-2019</div>
+                    </div>
+                    <div class="detail-table__row single-account-row">
+                      <div class="detail-table__head single-detail">Activated :</div>
+                      <div class="detail-table__cell single-detail__value">13-03-2019</div>
+                    </div>
+                    <div class="detail-table__row single-account-row">
+                      <div class="detail-table__head single-detail">Status :</div>
+                      <div class="detail-table__cell single-detail__value">Active</div>
                     </div>
                   </div>
                 </div>
-              </section>
+                <div class="account-image-box">
+                  <img class="account-image" src="http://i.pravatar.cc/150?img=36" alt="Elizabeth Okoro">
+                  <div class="account-signature-box">
+                    <img class="account-signature" src="https://fontmeme.com/permalink/190427/ab710f1b909ff59fc73f7de7fd9ee573.png" alt="customer signature">
+                    <h2 class="account-signature-title">Customer signature</h2>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
         </main>
         <footer class="page-footer page-footer--big main-footer">
           <p class="page-footer__text nav-footer__text">Copyright &copy; Bankr 2019</p>
