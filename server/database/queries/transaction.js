@@ -10,6 +10,7 @@ const addTransaction = `INSERT INTO transactions
                         VALUES($1, $2, $3, $4, $5, $6, $7)
                         RETURNING id, type, accountNumber AS accountNumber,
                         cashier, amount, newBalance AS newBalance,
+                        createdOn AS createdOn`;
 
 const getAllTransactions = `SELECT id AS transactionId, createdOn as createdOn,
                             type, accountNumber AS accountNumber, amount,

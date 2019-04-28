@@ -5,6 +5,7 @@ const validate = (req, res, next) => {
   const errorData = {};
   const errorFormatter = ({ msg, param }) => {
     if (isNullOrUndefined(errorData[param])) {
+      errorData[param] = msg;
     }
     return errorData;
   };
