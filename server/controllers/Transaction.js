@@ -339,7 +339,6 @@ class TransactionController {
         newbalance: newBalance,
         createdon: createdOn,
       } = getTransactionRows[0];
-      console.log(getTransactionRows[0]);
 
       const userTransaction = {
         transactionId,
@@ -350,7 +349,7 @@ class TransactionController {
         newBalance,
         createdOn,
       };
-      console.log(userTransaction);
+
       const msg = 'Successfully retrieved one transaction record.';
 
       return res.status(200)

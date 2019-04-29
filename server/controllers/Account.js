@@ -53,7 +53,6 @@ class AccountController {
         const error = 'Owner is required.';
         return res.status(400).json(errorResponse(error));
       }
-      console.log(accountOwner);
 
       const accountOpeningBalance = parseFloat('0.00');
 
@@ -127,11 +126,8 @@ class AccountController {
       let getAccountRows;
 
       if (userType === 'client') {
-        console.log(userId);
-        console.log(accountNumberParam);
         const values = [accountNumberParam, userId];
         const { rows } = await client.query(getAccount, values);
-        console.log(rows);
         getAccountRows = rows;
       } else {
         const values = [accountNumberParam];
@@ -169,7 +165,6 @@ class AccountController {
       return res.status(200)
         .json(successResponse(msg, [retrievedAccount]));
     } catch (error) {
-      console.log(error);
       return res.status(500)
         .json(errorResponse('Internal server error!'));
     } finally {
