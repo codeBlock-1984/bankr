@@ -16,13 +16,13 @@ const transactionValidator = {
     sanitizeBody('amount').toFloat(),
   ],
   transactionIdParamValidator: [
-    sanitizeParam('transactionId').toInt({ radix: 10 }),
     param('transactionId')
       .isInt()
       .withMessage('Transaction id must be a number.')
       .matches(/[0-9]+$/)
       .withMessage('Transaction id must be a number.')
       .trim(),
+    sanitizeParam('transactionId').toInt({ radix: 10 }),
   ],
 };
 

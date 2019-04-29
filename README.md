@@ -38,6 +38,15 @@ Follow the steps below to get the development environment running locally
 ```
     touch .env && cp .env.example .env
 ```
+- Create postgres databases for test and development and add their connection urls to their respective keys in your .env file
+- Run the following to migrate database tables and seed with mock data
+```
+    npm run migrate && npm run seed
+```
+- To drop databases tables at any time run
+```
+    npm run migrate:undo
+```
 - To start the development server run
 ```
     npm run dev-start
@@ -59,7 +68,9 @@ The following core packages where used in building this application
 * [Express-validator](https://express-validator.github.io/docs/) - Middleware used for request validation and sanitization
 * [Bcrypt](https://www.npmjs.com/package/bcrypt) - Password hashing function
 * [Jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken) - Used for generating and verify tokens for authentication and authorization
-* [Body-parser](https://www.npmjs.com/package/body-parser) - Middleware for parsing request body
+* [Swagger](https://swagger.io/) - Used for API documentation
+* [Pg](https://node-postgres.com/) - Node Postgres Client
+* [Nodemailer](https://nodemailer.com/about/) - Module used for sending email notifications
 * [Mocha](https://mochajs.org/) - Test framework
 * [Chai](https://www.chaijs.com/) - Assertion library used for tests
 * [Eslint](https://eslint.org/) - Javascript linting utility
@@ -83,25 +94,31 @@ The main features of this application with respect to the various users are list
 - Create a bank account  
 - View account profile  
 - View transaction history
+- View specific transaction
+- 
 
 #### A Staff can do the following:
 
 - Credit a client's bank account  
-- Debit a client's bank account  
+- Debit a client's bank account
+- Activate/deactivate a client's bank account  
 - View list of all client bank accounts  
-- View a specific client's bank account  
-- Delete a specific bank account  
+- View a specific client's bank accounts
+- View a specific bank account  
+- Delete a specific bank account
+- View all transactions  
 
 #### An Admin can do the following:
 - Create an admin or staff user account  
 - Activate/deactivate user account  
 - View list of all client bank accounts  
-- View a specific client's bank account record 
+- View a specific client's bank accounts
+- View a specific bank account 
 - Delete a specific bank account
+- View specific transaction
 
 ## Extra features
-- A client can view his transactions for each account
-- A client can view his own accounts
+- A client will receive an email notification whenever a transaction is performed on his account
 
 ## Related links
 

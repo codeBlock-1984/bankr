@@ -48,8 +48,7 @@ describe('Accounts Endpoints', () => {
         .set('x-auth-token', clientToken)
         .end((err, res) => {
           testAccountNumber = res.body.data[0].accountNumber;
-          console.log(testAccountNumber);
-          console.log(res.body.data[0]);
+
           res.should.have.status(201);
           res.body.should.have.property('data');
           res.body.data.should.be.an('array');

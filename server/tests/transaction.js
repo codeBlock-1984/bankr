@@ -126,7 +126,6 @@ describe('Transactions Endpoints', () => {
       chai.request(app).get(`/api/v1/transactions/${testTransactionId}`)
         .set('x-auth-token', clientToken)
         .end((err, res) => {
-          console.log(res.body.data[0]);
           res.should.have.status(200);
           res.body.should.have.property('data');
           res.body.data.should.be.an('array');
