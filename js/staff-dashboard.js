@@ -106,6 +106,8 @@ fetch(getCashierUrl, options)
               } else {
                 actionBox.innerHTML = noAction;
               }
+            } else {
+              actionBox.innerHTML = noAction;
             }
             loader.style.display = 'none';
           })

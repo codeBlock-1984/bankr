@@ -703,7 +703,7 @@ body {
 .no-top {
   display: flex;
   flex-basis: 100%;
-  margin: auto;
+  margin-bottom: 30px;
   height: 200px;
 }
 .no-bot {
