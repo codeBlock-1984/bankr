@@ -1142,8 +1142,17 @@ body {
 .transaction-box {
   display: inline-flex;
   flex-direction: column;
-  min-height: 80%;
   padding: 80px 0 80px 100px;
+}
+.trans-alert {
+  display: none;
+  width: 57%;
+  color: #64272c;
+}
+.trans-alert p {
+  color: #64272c;
+  text-align: center;
+  font-size: 13px;
 }
 .transaction-account-search {
   flex: 1;
@@ -1156,21 +1165,23 @@ body {
   width: 95%;
 }
 .transaction-account-search input {
-  flex: 1;
+  width: calc(100% - 39px);
 }
 .selected-account-detail-box {
   display: none;
-  flex: 4;
-  padding: 5px 20px;
-  margin-bottom: 10px;
+  width: 57%;
+  padding: 20px 20px;
+  margin-bottom: 20px;
   border-radius: 5px;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   -ms-border-radius: 5px;
   -o-border-radius: 5px;
+  background: #f2f2f2;
 }
 .selected-account-detail-box p {
-  margin: 10px;
+  margin: 5px;
+  font-size: 13px;
 }
 .transaction-form {
   flex: 8;
@@ -1894,8 +1905,10 @@ Media Queries for Responsive layout
 }
 @media screen and (min-width: 768px) {
   .transaction-box {
-    padding: 0;
-    min-height: 90%;
+    padding: 30px;
+  }
+  .trans-alert {
+    margin: 0 auto;
   }
   .transaction-account-search {
     display: flex;
@@ -1911,7 +1924,7 @@ Media Queries for Responsive layout
   }
   .selected-account-detail-box {
     flex: unset;
-    padding-bottom: 0;
+    margin: 20px auto;
   }
   .selected-account-detail-box p {
     font-size: 13px;
