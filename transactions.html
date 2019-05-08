@@ -138,6 +138,11 @@
             </div>
         </div>
         <!-- End Transaction view modal -->
+        <div id="animated-loader" class="loader-modal">
+          <div class="loader">
+            <img src="imgs/logo.png" alt="logo">
+          </div>
+        </div>
         <main class="page-main l-flex l-flex-col">
           <section class="box-wrapper account-form-container l-flex l-flex-col">
             <h2 class="section-heading">My Transactions</h2>
@@ -146,99 +151,10 @@
                 <div class="detail-table__row">
                   <div class="detail-table__head trans-tb-date-head">Date</div>
                   <div class="detail-table__head trans-tb-desc-head">Description</div>
-                  <div class="detail-table__head trans-tb-merchant-head">Merchant</div>
                   <div class="detail-table__head trans-tb-type-head">Type</div>
                   <div class="detail-table__head trans-tb-amount-head">Amount</div>
                   <div class="detail-table__head trans-tb-balance-head">Balance</div>
                   <div class="detail-table__head trans-tb-icon-head"></div>
-                </div>
-                <div class="detail-table__row">
-                  <div class="detail-table__cell trans-tb-date">22-03-2019</div>
-                  <div class="detail-table__cell trans-tb-desc">February Electricity Bill</div>
-                  <div class="detail-table__cell trans-tb-merchant">Ikeja Electric Plc.</div>
-                  <div class="detail-table__cell trans-tb-type">credit</div>
-                  <div class="detail-table__cell trans-tb-amount">8500.00</div>
-                  <div class="detail-table__cell trans-tb-balance">408,874.00</div>
-                  <div class="detail-table__cell trans-tb-icon">
-                    <i class="fas fa-eye action-icon view-trans-btn"></i>
-                  </div>
-                </div>
-                <div class="detail-table__row">
-                  <div class="detail-table__cell trans-tb-date">19-03-2019</div>
-                  <div class="detail-table__cell trans-tb-desc">Purchase</div>
-                  <div class="detail-table__cell trans-tb-merchant">Fast Forward Stores, Ikeja</div>
-                  <div class="detail-table__cell trans-tb-type">debit</div>
-                  <div class="detail-table__cell trans-tb-amount">23,490.00</div>
-                  <div class="detail-table__cell trans-tb-balance">408,874.00</div>
-                  <div class="detail-table__cell trans-tb-icon">
-                    <i class="fas fa-eye action-icon view-trans-btn"></i>
-                  </div>
-                </div>
-                <div class="detail-table__row">
-                  <div class="detail-table__cell trans-tb-date">18-03-2019</div>
-                  <div class="detail-table__cell trans-tb-desc">Bank Withdrawal</div>
-                  <div class="detail-table__cell trans-tb-merchant">Premium Bank Plc.</div>
-                  <div class="detail-table__cell trans-tb-type">debit</div>
-                  <div class="detail-table__cell trans-tb-amount">45,000.00</div>
-                  <div class="detail-table__cell trans-tb-balance">408,874.00</div>
-                  <div class="detail-table__cell trans-tb-icon">
-                    <i class="fas fa-eye action-icon view-trans-btn"></i>
-                  </div>
-                </div>
-                <div class="detail-table__row">
-                  <div class="detail-table__cell trans-tb-date">10-03-2019</div>
-                  <div class="detail-table__cell trans-tb-desc">Online Payment</div>
-                  <div class="detail-table__cell trans-tb-merchant">Amazon Stores</div>
-                  <div class="detail-table__cell trans-tb-type">debit</div>
-                  <div class="detail-table__cell trans-tb-amount">18,640.00</div>
-                  <div class="detail-table__cell trans-tb-balance">408,874.00</div>
-                  <div class="detail-table__cell trans-tb-icon">
-                    <i class="fas fa-eye action-icon view-trans-btn"></i>
-                  </div>
-                </div>
-                <div class="detail-table__row">
-                  <div class="detail-table__cell trans-tb-date">10-03-2019</div>
-                  <div class="detail-table__cell trans-tb-desc">Cash deposit</div>
-                  <div class="detail-table__cell trans-tb-merchant">Harry Igbokwe</div>
-                  <div class="detail-table__cell trans-tb-type">credit</div>
-                  <div class="detail-table__cell trans-tb-amount">12,000.00</div>
-                  <div class="detail-table__cell trans-tb-balance">408,874.00</div>
-                  <div class="detail-table__cell trans-tb-icon">
-                    <i class="fas fa-eye action-icon view-trans-btn"></i>
-                  </div>
-                </div>
-                <div class="detail-table__row">
-                  <div class="detail-table__cell trans-tb-date">09-03-2019</div>
-                  <div class="detail-table__cell trans-tb-desc">POS payment</div>
-                  <div class="detail-table__cell trans-tb-merchant">Oando Service Station</div>
-                  <div class="detail-table__cell trans-tb-type">debit</div>
-                  <div class="detail-table__cell trans-tb-amount">5,600.00</div>
-                  <div class="detail-table__cell trans-tb-balance">408,874.00</div>
-                  <div class="detail-table__cell trans-tb-icon">
-                    <i class="fas fa-eye action-icon view-trans-btn"></i>
-                  </div>
-                </div>
-                <div class="detail-table__row">
-                  <div class="detail-table__cell trans-tb-date">06-03-2019</div>
-                  <div class="detail-table__cell trans-tb-desc">Online Transfer</div>
-                  <div class="detail-table__cell trans-tb-merchant">Aminat Mohammed</div>
-                  <div class="detail-table__cell trans-tb-type">debit</div>
-                  <div class="detail-table__cell trans-tb-amount">1,000.00</div>
-                  <div class="detail-table__cell trans-tb-balance">408,874.00</div>
-                  <div class="detail-table__cell trans-tb-icon">
-                    <i class="fas fa-eye action-icon view-trans-btn"></i>
-                  </div>
-                </div>
-                <div class="detail-table__row">
-                  <div class="detail-table__cell trans-tb-date">01-03-2019</div>
-                  <div class="detail-table__cell trans-tb-desc">February Salary</div>
-                  <div class="detail-table__cell trans-tb-merchant">Andivony, Barbara & Co.</div>
-                  <div class="detail-table__cell trans-tb-type">debit</div>
-                  <div class="detail-table__cell trans-tb-amount">316,000.00</div>
-                  <div class="detail-table__cell trans-tb-balance">408,874.00</div>
-                  <div class="detail-table__cell trans-tb-icon">
-                    <i class="fas fa-eye action-icon view-trans-btn"></i>
-                  </div>
                 </div>
               </div>
             </div>

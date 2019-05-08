@@ -848,6 +848,9 @@ body {
 .trans-tb-icon-head, .trans-tb-icon, .view-trans-btn {
   display: none;
 }
+.no-trans-table-record {
+  padding: 40px;
+}
 
 /* admin dashboard */
 
