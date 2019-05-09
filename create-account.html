@@ -125,10 +125,15 @@
             </li>     
           </ul>
         </div>
+        <div id="animated-loader" class="loader-modal">
+          <div class="loader">
+            <img src="imgs/logo.png" alt="logo">
+          </div>
+        </div>
         <main class="page-main l-flex l-flex-col">
           <section class="box-wrapper account-form-container l-flex l-flex-col">
             <h2 class="section-heading">Create New Account</h2>
-            <div class="account-form-wrapper l-flex l-flex-row">
+            <div class="account-form-wrapper l-flex l-flex-col">
               <form class="reg-form l-flex l-flex-row m-white-bg account-form" action="" method="">
                 <fieldset class="reg-form__fieldset account-form__fieldset">
                     <label class="reg-form__label create-acc-form__label" for="type">Account type</label>
@@ -142,8 +147,10 @@
                     <input class="reg-form__input create-acc-form__input" type="text" name="branch" id="branch"><br>
                     <input class="reg-form__button" type="button" value="Create account" id="create-account-button"><br>
                 </fieldset>
-                
               </form>
+              <div class="new-account-box account-form">
+
+              </div>
             </div>
           </section>
         </main>
@@ -152,7 +159,8 @@
         </footer>
       </section>
     </div>
-    
+
+    <script src="js/create-account.js"></script>
     <script src="js/script.js"></script>
   </body>
 </html>
