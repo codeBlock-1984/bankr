@@ -801,12 +801,26 @@ body {
   align-items: unset;
   justify-content: center;
   width: 99%;
-  margin-bottom: 50px;
+  margin-bottom: 0px;
   padding-top: 50px;
 }
 .account-form__fieldset {
   flex-basis: 50%;
   width: 70%;
+}
+.new-account-box {
+  display: flex;
+  align-items: center;
+  padding-top: 0;
+}
+.new-account-box__inner {
+  width: 70%;
+  padding-top: 30px;
+}
+.success-msg {
+  font-size: 14px;
+  text-transform: capitalize;
+  color: #1c7c19;
 }
 
 /* transactions */
