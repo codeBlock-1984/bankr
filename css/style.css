@@ -920,14 +920,16 @@ body {
 }
 .action-icon {
   float: left;
+  position: relative;
   margin-right: 15px;
   font-size: 13px;
   color: #08415c60;
   cursor: pointer;
 }
 .action-icon-hint {
-  visibility: visible;
+  visibility: none;
   position: absolute;
+  width: max-content;
   color: #ffffff;
   background: #08415c;
   padding: 5px;
