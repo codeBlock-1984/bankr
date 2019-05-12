@@ -1,6 +1,7 @@
 const profileTitle = document.querySelector('.profile__title');
 const loader = document.getElementById('animated-loader');
 const detailTable = document.querySelector('.detail-table');
+let allAccounts;
 
 loader.style.display = 'block';
 
@@ -39,7 +40,7 @@ fetch(getAccountsUrl, options)
 
       if (data[0]) {
         // debugger;
-        const allAccounts = data;
+        allAccounts = data;
         let singleAccount;
         let serialNumber = 1;
         // detailTable.innerHTML = '';
@@ -66,9 +67,7 @@ fetch(getAccountsUrl, options)
                             <div class="detail-table__cell"> ${balance}</div>
                             <div class="detail-table__cell">${status}</div>
                             <div class="detail-table__cell action-cell">
-                              <a class="view-link" href="pages/accounts/tosin-adeojo.html">
-                                <i class="fas fa-eye action-icon view-account-btn"></i>
-                              </a>
+                              <i class="fas fa-eye action-icon view-account-btn"></i>
                               <i class="fas fa-trash-alt action-icon del-account-btn"></i>
                               <i class="fas ${statusIconClass} action-icon"></i>
                             </div>
@@ -104,6 +103,7 @@ fetch(getAccountsUrl, options)
         });
 
         viewAccountBtns.forEach((viewAccountBtn) => {
+          viewAccountBtn.addEventListener('click', displayAccountModal);
           viewAccountBtn.addEventListener('mouseover', displayTooltip);
           viewAccountBtn.addEventListener('mouseout', hideTooltip);
         });
@@ -134,6 +134,10 @@ fetch(getAccountsUrl, options)
 // End server functions
 //
 const brandModal = document.getElementById('del-confirm-dialog');
+const accountViewModal = document.getElementById('account-view-modal');
+const accountViewModalTitle = document.getElementById('account-view-modal__title');
+const accountViewModalMain = document.getElementById('account-view-modal__main');
+
 // Define callback functions
 const deleteAccountBtn = document.getElementsByClassName('delete-account-btn')[0];
 deleteAccountBtn.addEventListener('click', deleteAccount);
@@ -150,6 +154,65 @@ function displayModal() {
   activeModal = brandModal;
   brandModal.style.display = 'block';
 }
+
+function displayAccountModal() {
+  // debugger;
+  const row = this.parentElement.parentElement;
+  const cells = row.children;
+  const accountIndex = parseInt(cells[0].innerHTML) - 1;
+  const account = allAccounts[accountIndex];
+
+  const {
+    firstname,
+    lastname,
+    ownerEmail,
+    accountnumber,
+    status,
+    balance,
+    type,
+    createdon,
+  } = account;
+
+  const date = new Date(createdon).toString().slice(0, 15);
+
+  const singleAccount = `<div class="single-account-table-wrapper">
+                          <div class="account-image-box">
+                            <img class="account-image" src="http://i.pravatar.cc/150?img=16" alt="Elizabeth Okoro">
+                            <div class="account-signature-box">
+                              <img class="account-signature" src="https://fontmeme.com/permalink/190322/2cc138d160c63c622e3def7fc6cdd417.png" alt="Customer signature">
+                              <h2 class="account-signature-title">Customer signature</h2>
+                            </div>
+                          </div>
+                          <div class="detail-table single-account-table">
+                            <div class="detail-table__row single-account-row">
+                              <div class="detail-table__head single-detail">Account type :</div>
+                              <div class="detail-table__cell single-detail__value">${type}</div>
+                            </div>
+                            <div class="detail-table__row single-account-row">
+                              <div class="detail-table__head single-detail">Account number :</div>
+                              <div class="detail-table__cell single-detail__value">${accountnumber}</div>
+                            </div>
+                            <div class="detail-table__row single-account-row">
+                              <div class="detail-table__head single-detail">Current balance :</div>
+                              <div class="detail-table__cell single-detail__value">${balance} NGN</div>
+                            </div>
+                            <div class="detail-table__row single-account-row">
+                              <div class="detail-table__head single-detail">Created :</div>
+                              <div class="detail-table__cell single-detail__value">${date}</div>
+                            </div>
+                            <div class="detail-table__row single-account-row">
+                              <div class="detail-table__head single-detail">Status :</div>
+                              <div class="detail-table__cell single-detail__value">${status}</div>
+                            </div>
+                          </div>
+                        </div>`;
+
+  activeModal = accountViewModal;
+  accountViewModalTitle.innerHTML = `Elizabeth Okoro`;
+  accountViewModalMain.innerHTML = singleAccount;
+  accountViewModal.style.display = 'block';
+}
+
 function deleteAccount() {
   debugger;
   loader.style.display = 'block';
