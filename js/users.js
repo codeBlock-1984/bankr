@@ -190,6 +190,7 @@ function activateUser() {
   this.removeEventListener('click', activateUser);
   this.addEventListener('click', deactivateUser);
 }
+
 function deactivateUser() {
   const isActiveCell = this.parentNode.parentNode.childNodes[7];
   isActiveCell.innerHTML = 'No';

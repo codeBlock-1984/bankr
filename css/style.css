@@ -1078,14 +1078,17 @@ body {
 }
 .single-account-table-wrapper {
   display: flex;
-
+  margin-top: 20px;
+  border: solid 1px #ebebeb;
 }
 .single-account-table {
   width: 400px;
+  padding-top: 40px;
+  background: #f7f5f59d;
+  margin-left: 0;
 }
 .single-account-row {
   background: none;
-  border-bottom: solid #ffffff 1px;;
 }
 .single-account-row:nth-child(even) {
   background: none;
@@ -1138,10 +1141,10 @@ body {
   border: solid #ebeaea 1px;
 }
 .single-account-table-wrapper {
-  flex-basis: 60%;
+  flex-basis: 100%;
 }
 .single-detail {
-  width: 60%;
+  width: 140px;
 }
 .single-detail, .single-detail__value {
   font-size: 1.1em;
@@ -1525,6 +1528,14 @@ Media Queries for Responsive layout
 
 }
 
+/* Brand modal */
+/* Media queries */
+@media screen and (max-width:480px) {
+  .brand-modal {
+    padding-top: 65px;
+  }
+}
+
 /* Accounts */
 /* Media queries */
 @media screen and (max-width:480px) {
@@ -1823,16 +1834,29 @@ Media Queries for Responsive layout
     padding: 20px 10px;
   }
   .single-account-table-wrapper {
-    padding: 20px 0;
+    flex-direction: column;
+    padding: 0;
+  }
+  .single-account-table {
+    padding: 5px 0;
   }
   .single-account-table .detail-table__head {
     flex: unset;
+    width: 120px;
+  }
+  .single-account-table .single-detail, .single-account-table .single-detail__value {
+    margin: 0 5px;
+    padding: 5px;
   }
   .account-image-box {
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 100%;
+    height: 200px;
+  }
+  .account-image {
+    width: 100px;
   }
   .account-signature-box {
     display: flex;
@@ -1840,7 +1864,7 @@ Media Queries for Responsive layout
     align-items: center;
   }
 }
-@media screen and (max-width: 768px) {
+@media screen and (min-width: 768px) {
   .single-account-box {
     padding: 0;
     margin-bottom: 20px;
