@@ -954,7 +954,7 @@ body {
   display: none; /* Hidden by default */
   position: fixed; /* Stay in place */
   z-index: 1; /* Sit on top */
-  padding-top: 200px; /* Location of the box */
+  padding-top: 120px; /* Location of the box */
   left: 0;
   top: 0;
   width: 100%; /* Full width */
@@ -1046,7 +1046,12 @@ body {
 .view-modal-header {
   margin-bottom: 20px;
 }
-
+/* User view modal */
+.user-modal {
+  height: unset;
+  font-size: 12px;
+  padding-bottom: 20px;
+}
 
 
 /* User Account view */
@@ -1248,18 +1253,28 @@ body {
   align-items: center;
 }
 .single-user-table-wrapper {
-  width: 60%;
+  width: 70%;
+  margin: auto;
+  margin-top: 20px;
+  border: solid 1px #ebebeb;
 }
 .single-user-table {
   justify-content: center;
+  width: 80%;
+  margin: 10px auto;
+}
+.single-user-table .detail-table__head {
+  width: 60px;
 }
 .single-user-table .detail-table__head,
 .single-user-table .detail-table__cell {
-  flex-basis: 50%;
+  margin: 5px;
+  padding: 0;
+  font-size: 14px;
 }
 .user-image-box {
-  flex-basis: 10%;
   border: none;
+  height: unset;
 }
 .user-image {
   border-radius: 50%;
@@ -2057,9 +2072,6 @@ Media Queries for Responsive layout
     flex-direction: column;
     padding: 0;
     width: 50%;
-  }
-  .single-user-table-wrapper {
-    width: 60%;
   }
   .single-account-box {
     flex: 1;
