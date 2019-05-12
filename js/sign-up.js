@@ -36,7 +36,7 @@ const signUpUser = (userData) => {
       localStorage.setItem('x-auth-token', token);
       localStorage.setItem('authUser', JSON.stringify(user));
       setTimeout(() => {
-        (window.location.href = 'sign-in.html');
+        (window.location.href = 'user-dashboard.html');
       }, 3000);
     })
     .catch((err) => {
