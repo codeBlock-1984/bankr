@@ -1,6 +1,7 @@
 const profileTitle = document.querySelector('.profile__title');
 const loader = document.getElementById('animated-loader');
 const usersTable = document.querySelector('.users-table');
+let allUsers;
 
 loader.style.display = 'block';
 
@@ -44,7 +45,7 @@ fetch(getUsersUrl, options)
 
       if (data[0]) {
         // debugger;
-        const allUsers = data;
+        allUsers = data;
         let singleUser;
         let serialNumber = 1;
         // detailTable.innerHTML = '';
@@ -63,9 +64,7 @@ fetch(getUsersUrl, options)
                             <div class="detail-table__cell">${email}</div>
                             <div class="detail-table__cell">${type}</div>        
                             <div class="detail-table__cell action-cell">
-                              <a class="view-link" href="pages/users/auwal-mohammed.html">
-                                <i class="fas fa-eye action-icon view-user-btn"></i>
-                              </a>  
+                              <i class="fas fa-eye action-icon view-user-btn"></i>
                               <i class="fas fa-trash-alt action-icon del-user-btn"></i>
                             </div>
                           </div>`;
@@ -84,6 +83,7 @@ fetch(getUsersUrl, options)
         });
 
         viewUserBtns.forEach((viewUserBtn) => {
+          viewUserBtn.addEventListener('click', displayUserModal);
           viewUserBtn.addEventListener('mouseover', displayTooltip);
           viewUserBtn.addEventListener('mouseout', hideTooltip);
         });
@@ -107,6 +107,9 @@ fetch(getUsersUrl, options)
 
 // --- Users -----
 const brandModal = document.getElementById('del-confirm-dialog');
+const userViewModal = document.getElementById('user-view-modal');
+const userViewModalTitle = document.getElementById('user-view-modal__title');
+const userViewModalMain = document.getElementById('user-view-modal__main');
 const deleteAccountBtn = document.getElementsByClassName('delete-account-btn')[0];
 
 deleteAccountBtn.addEventListener('click', deleteAccount);
@@ -115,6 +118,51 @@ function displayModal() {
   activeModal = brandModal;
   brandModal.style.display = 'block';
 }
+
+function displayUserModal() {
+  // debugger;
+  const row = this.parentElement.parentElement;
+  const cells = row.children;
+  const userIndex = parseInt(cells[0].innerHTML) - 1;
+  const user = allUsers[userIndex];
+
+  const {
+    firstname,
+    lastname,
+    email,
+    type,
+    createdon,
+  } = user;
+
+  const date = new Date(createdon).toString().slice(0, 15);
+
+  const singleUser = `
+                <div class="single-user-table-wrapper">
+                  <div class="account-image-box user-image-box">
+                    <img class="account-image user-image" src="http://i.pravatar.cc/150?img=64" alt="Auwal Mohammed">
+                  </div>
+                  <div class="single-user-table">
+                    <div class="detail-table__row single-account-row">
+                      <div class="detail-table__head single-detail">Email :</div>
+                      <div class="detail-table__cell single-detail__value">${email}</div>
+                    </div>
+                    <div class="detail-table__row single-account-row">
+                      <div class="detail-table__head single-detail">Role :</div>
+                      <div class="detail-table__cell single-detail__value">${type}</div>
+                    </div>
+                    <div class="detail-table__row single-account-row">
+                      <div class="detail-table__head single-detail">Created :</div>
+                      <div class="detail-table__cell single-detail__value">${date}</div>
+                    </div>
+                  </div>
+                </div>`;
+
+  activeModal = userViewModal;
+  userViewModalTitle.innerHTML = `${firstname} ${lastname}`;
+  userViewModalMain.innerHTML = singleUser;
+  userViewModal.style.display = 'block';
+}
+
 function deleteAccount() {
   const accountsTable = this.parentNode.parentNode.parentNode;
   const selectedRow = this.parentNode.parentNode;
