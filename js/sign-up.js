@@ -84,6 +84,7 @@ signUp.addEventListener('click', (e) => {
   }
 
   loader.style.display = 'block';
+  messageBox.innerHTML = '';
   const userData = {
     firstName: firstName.value,
     lastName: lastName.value,
