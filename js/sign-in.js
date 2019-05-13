@@ -4,6 +4,7 @@ const loader = document.getElementById('animated-loader');
 
 signinButton.addEventListener('click', (e) => {
   e.preventDefault();
+  // debugger;
   messageBox.innerHTML = '';
   const email = document.getElementById('email');
   // const email = inputEmail.value.toLowerCase().trim();
@@ -54,6 +55,7 @@ signinButton.addEventListener('click', (e) => {
     email: email.value,
     password: password.value,
   };
+  messageBox.innerHTML = '';
   // messageBox.innerHTML = `Logging user in as ${email}...`;
   login(loginDetails);
 });
@@ -73,8 +75,9 @@ function login(loginData) {
       loader.style.display = 'none';
 
       if (res.error) {
+        // debugger;
         messageBox.classList.add('m-error');
-        messageBox.innerHTML = res.error;
+        messageBox.innerHTML = 'Email or password incorrect!';
       } else {
         const { data } = res;
         const { token, ...user } = data[0];
