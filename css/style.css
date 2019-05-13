@@ -138,6 +138,17 @@ body {
   width: 200px;
   height: 100px;
 }
+.m-success {
+  color: #1c7c19;
+}
+.m-error {
+  color: #8f2020;
+}
+.m-required {
+  outline-color: #8f2020;
+  outline-width: 2px;
+  outline-style: auto;
+}
 
 /* Generic page wrapper */
 .page-wrapper {
@@ -263,7 +274,6 @@ body {
   margin-top: 10px auto;
   padding-top: 20px;
   font-size: 13px;
-  color: #8f2020;
   text-align: center;
 }
 .reg-form {

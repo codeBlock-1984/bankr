@@ -5,31 +5,54 @@ const loader = document.getElementById('animated-loader');
 signinButton.addEventListener('click', (e) => {
   e.preventDefault();
   messageBox.innerHTML = '';
-  const inputEmail = document.getElementById('email').value;
-  const email = inputEmail.toLowerCase().trim();
-  const inputPassword = document.getElementById('password').value;
-  const password = inputPassword.toLowerCase().trim();
+  const email = document.getElementById('email');
+  // const email = inputEmail.value.toLowerCase().trim();
+  const password = document.getElementById('password');
   const validEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-  if (email === '') {
-    messageBox.innerHTML = 'Email is required!';
-    email.focus();
-    return false;
-  }
-  if (!validEmail.test(String(email).toLowerCase())) {
-    messageBox.innerHTML = 'Invalid email address!';
-    email.focus();
-    return false;
-  }
+  messageBox.classList.remove('m-success');
+  messageBox.classList.remove('m-error');
+  const inputFields = [email, password];
+  let checkValueFlag = false;
 
-  if (password === '') {
-    messageBox.innerHTML = 'Password is required!';
-    password.focus();
+  inputFields.forEach((val) => {
+    val.classList.remove('m-required');
+    if (val.value === '') {
+      checkValueFlag = true;
+      val.classList.add('m-required');
+    }
+  });
+
+  if (checkValueFlag) {
+    messageBox.classList.add('m-error');
+    messageBox.innerHTML = 'Fill in the required fields!';
+    return undefined;
+  }
+  // if (email === '') {
+  //   messageBox.innerHTML = 'Email is required!';
+  //   email.focus();
+  //   return false;
+  // }
+  if (!validEmail.test(String(email.value).toLowerCase())) {
+    messageBox.classList.add('m-error');
+    messageBox.innerHTML = 'Invalid email address!';
+    email.classList.add('m-required');
     return false;
   }
+  // if (!validEmail.test(String(email).toLowerCase())) {
+  //   messageBox.innerHTML = 'Invalid email address!';
+  //   email.focus();
+  //   return false;
+  // }
+
+  // if (password === '') {
+  //   messageBox.innerHTML = 'Password is required!';
+  //   password.focus();
+  //   return false;
+  // }
   const loginDetails = {
-    email,
-    password,
+    email: email.value,
+    password: password.value,
   };
   // messageBox.innerHTML = `Logging user in as ${email}...`;
   login(loginDetails);
@@ -50,11 +73,13 @@ function login(loginData) {
       loader.style.display = 'none';
 
       if (res.error) {
+        messageBox.classList.add('m-error');
         messageBox.innerHTML = res.error;
       } else {
         const { data } = res;
         const { token, ...user } = data[0];
 
+        messageBox.classList.add('m-success');
         messageBox.innerHTML = 'logging user in...';
 
         localStorage.setItem('x-auth-token', token);
