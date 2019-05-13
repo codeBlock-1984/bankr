@@ -24,6 +24,7 @@ const signUpUser = (userData) => {
       loader.style.display = 'none';
 
       if (result.error) {
+        messageBox.classList.add('m-error');
         messageBox.innerHTML = result.error;
         return false;
       }
@@ -31,6 +32,8 @@ const signUpUser = (userData) => {
       const { data } = result;
       console.log(data);
       const { token, ...user } = data[0];
+
+      messageBox.classList.add('m-success');
       messageBox.innerHTML = result.message;
 
       localStorage.setItem('x-auth-token', token);
@@ -40,47 +43,43 @@ const signUpUser = (userData) => {
       }, 3000);
     })
     .catch((err) => {
+      messageBox.classList.add('m-error');
       messageBox.innerHTML = err;
     });
 };
 
 signUp.addEventListener('click', (e) => {
   e.preventDefault();
+  messageBox.classList.remove('m-success');
+  messageBox.classList.remove('m-error');
+  const inputFields = [firstName, lastName, email, password];
+  let checkValueFlag = false;
 
-  if (firstName.value === '') {
-    messageBox.innerHTML = 'First name is required!';
-    firstName.focus();
-    return false;
-  }
+  inputFields.forEach((val) => {
+    val.classList.remove('m-required');
+    if (val.value === '') {
+      checkValueFlag = true;
+      val.classList.add('m-required');
+    }
+  });
 
-  if (lastName.value === '') {
-    messageBox.innerHTML = 'Last name is required!';
-    lastName.focus();
-    return false;
-  }
-
-  if (email.value === '') {
-    messageBox.innerHTML = 'Email is required!';
-    email.focus();
-    return false;
+  if (checkValueFlag) {
+    messageBox.classList.add('m-error');
+    messageBox.innerHTML = 'Fill in the required fields!';
+    return undefined;
   }
 
   if (!validEmail.test(String(email.value).toLowerCase())) {
+    messageBox.classList.add('m-error');
     messageBox.innerHTML = 'Invalid email address!';
-    email.focus();
-    return false;
-  }
-
-
-  if (password.value === '') {
-    messageBox.innerHTML = 'Password is required!';
-    password.focus();
+    email.classList.add('m-required');
     return false;
   }
 
   if (password.value.length < 6) {
-    messageBox.innerHTML = 'The password must be at least 6 characters long';
-    password.focus();
+    messageBox.classList.add('m-error');
+    messageBox.innerHTML = 'Password must be at least 6 characters long';
+    password.classList.add('m-required');
     return false;
   }
 
