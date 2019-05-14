@@ -51,13 +51,21 @@ function closeModal() {
   activeModal = null;
 }
 
-// const logoutLink = document.querySelector('.logout');
+const logoutLinks = document.querySelectorAll('.logout');
+const animatedLoader = document.getElementById('animated-loader');
 
-// logoutLink.addEventListener('click', (e) => {
-//   e.preventDefault();
+logoutLinks.forEach((logoutLink) => {
+  logoutLink.addEventListener('click', (e) => {
+    // debugger;
+    e.preventDefault();
 
-//   localStorage.removeItem('x-authtoken');
-//   localStorage.removeItem('authUser');
+    animatedLoader.style.display = 'block';
 
-//   window.location = 'sign-in.html';
-// });
+    localStorage.removeItem('x-auth-token');
+    localStorage.removeItem('authUser');
+
+    setTimeout(() => {
+      window.location = 'sign-in.html';
+    }, 300);
+  });
+});
