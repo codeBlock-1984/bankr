@@ -109,6 +109,8 @@ function login(loginData) {
       }
     })
     .catch((err) => {
-      messageBox.innerHTML = err;
+      loader.style.display = 'none';
+      messageBox.classList.add('m-error');
+      messageBox.innerHTML = 'Unable to complete request';
     });
 }
