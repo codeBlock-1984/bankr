@@ -51,6 +51,8 @@ function closeModal() {
   activeModal = null;
 }
 
+// User Logout
+
 const logoutLinks = document.querySelectorAll('.logout');
 const animatedLoader = document.getElementById('animated-loader');
 
@@ -69,3 +71,56 @@ logoutLinks.forEach((logoutLink) => {
     }, 300);
   });
 });
+
+// User settings modal
+
+const settingsLinks = document.querySelectorAll('.settings');
+let imageUploadLink;
+let changePasswordLink;
+let imageUploadTab;
+let changePasswordTab;
+
+settingsLinks.forEach((settingsLink) => {
+  settingsLink.addEventListener('click', (e) => {
+    e.preventDefault();
+    const userSettingsModal = document.getElementById('user-settings-modal');
+    activeModal = userSettingsModal;
+    userSettingsModal.style.display = 'block';
+
+    imageUploadLink = document.getElementById('image-upload-link');
+    changePasswordLink = document.getElementById('change-password-link');
+    imageUploadTab = document.querySelector('.image-upload');
+    changePasswordTab = document.querySelector('.change-password');
+
+    imageUploadLink.addEventListener('click', displayImageTab);
+    changePasswordLink.addEventListener('click', displayPasswordTab);
+  });
+});
+
+function displayImageTab() {
+  changePasswordLink.classList.remove('active-tab');
+  changePasswordTab.style.display = 'none';
+  imageUploadLink.classList.add('active-tab');
+  imageUploadTab.style.display = 'flex';
+
+  const uploadBtn = document.getElementById('upload-button');
+  uploadBtn.addEventListener('click', uploadImage);
+}
+
+function displayPasswordTab() {
+  imageUploadLink.classList.remove('active-tab');
+  imageUploadTab.style.display = 'none';
+  changePasswordLink.classList.add('active-tab');
+  changePasswordTab.style.display = 'flex';
+
+  const changePasswordBtn = document.getElementById('change-password-button');
+  changePasswordBtn.addEventListener('click', changePassword);
+}
+
+function uploadImage() {
+  return undefined;
+}
+
+function changePassword() {
+  return undefined;
+}

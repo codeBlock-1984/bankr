@@ -78,7 +78,7 @@
         <div id="user-panel" class="user-panel-box">
           <ul class="main-nav__list bot-list">
             <li class="main-nav__li-item">
-              <a href="" class="main-nav__link">
+              <a href="" class="main-nav__link settings">
                 <i class="fas fa-cog main-nav__icon"></i>
                 <span class="main-nav__link-desc user-panel__desc">Settings</span>
               </a>
@@ -125,6 +125,48 @@
             </li>     
           </ul>
         </div>
+        <!-- User settings modal -->
+        <div id="user-settings-modal" class="brand-modal">
+            <div class="brand-modal-inner settings-modal account-modal">
+              <div class="brand-modal-header settings-modal-header">
+                <h2 id="user-settings-modal__title" class="brand-modal-title">Profile Settings</h2>
+                <span class="brand-modal-close">&times;</span>
+              </div>
+              <div id="user-settings-modal__main" class="brand-modal-main settings-modal-main">
+                <div class="settings-tab">
+                  <button id="image-upload-link" class="tab-links active-tab">
+                    Upload avatar
+                  </button>
+                  <button id="change-password-link" class="tab-links">
+                    Change password
+                  </button>
+                </div>
+                <div class="settings-box image-upload">
+                  <p>
+                    <i>
+                      <b>*</b>
+                      Enter the url of the image you wish to upload. 
+                      It can be a link to an image on an online image hosting service
+                      such as pravatar.cc or cloudinary
+                    </i>
+                  </p>
+                  <label class="reg-form__label" for="image-url">Photo Url</label>
+                  <input class="reg-form__input" type="text" name="imageUrl" id="image-url">
+                  <input class="reg-form__button" type="button" value="Upload" id="upload-button">
+                </div>
+                <div class="settings-box change-password">
+                  <label class="reg-form__label" for="old-password">Enter old password</label>
+                  <input class="reg-form__input" type="text" name="oldPassword" id="old-password">
+                  <label class="reg-form__label" for="new-password">Enter new password</label>
+                  <input class="reg-form__input" type="text" name="newPassword" id="new-password">
+                  <label class="reg-form__label" for="confirm-password">Confirm new password</label>
+                  <input class="reg-form__input" type="text" name="confirmPassword" id="confirm-password">
+                  <input class="reg-form__button" type="button" value="Change password" id="change-password-button">
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- End user settings modal -->
         <div id="animated-loader" class="loader-modal">
             <div class="loader">
               <img src="imgs/logo.png" alt="logo">
