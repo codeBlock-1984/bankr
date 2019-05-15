@@ -43,8 +43,9 @@ const signUpUser = (userData) => {
       }, 3000);
     })
     .catch((err) => {
+      loader.style.display = 'none';
       messageBox.classList.add('m-error');
-      messageBox.innerHTML = err;
+      messageBox.innerHTML = 'Unable to complete request';
     });
 };
 
