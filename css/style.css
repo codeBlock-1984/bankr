@@ -1062,8 +1062,71 @@ body {
   font-size: 12px;
   padding-bottom: 20px;
 }
-
-
+/* User settings modal */
+#user-settings-modal {
+  display: none;
+}
+.settings-modal {
+  height: unset;
+  font-size: 12px;
+  padding-bottom: 20px;
+}
+.settings-modal-header {
+  padding: 10px 0;
+  background: #ffffff;
+}
+.settings-modal-header h2,
+.settings-modal-header span {
+  color: inherit;
+}
+.settings-modal-header span {
+  margin-right: 20px;
+}
+.settings-modal-main {
+  display: flex;
+  flex-direction: column;
+  margin: 0 20px;
+  padding: 0;
+  border: solid 1px #ebebeb;
+}
+.settings-tab {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+.tab-links {
+  flex: 1;
+  padding: 10px 0;
+  outline: none;
+  border: none;
+  background: #f2f2f2;
+  cursor: pointer;
+}
+.active-tab {
+  background: #ffffff;
+}
+.settings-box {
+  display: none;
+  flex-direction: column;
+  width: 85%;
+  height: 224px;
+  margin: 20px auto;
+}
+.settings-box label,
+.settings-box input {
+  width: 100%;
+}
+.image-upload p {
+  margin: 10px 0;
+  text-rendering: optimizeLegibility;
+  line-height: 20px;
+}
+.image-upload i {
+  color: #86343b;
+}
+.image-upload {
+  display: flex;
+}
 /* User Account view */
 
 .single-account-box {
