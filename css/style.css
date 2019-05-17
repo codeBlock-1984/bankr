@@ -415,8 +415,24 @@ body {
   cursor: pointer;
 }
 .top-list li:hover {
-  border-color: #d54f5a;
-  background: #082e3f;
+  font-size: 14px;
+  transition: all 330ms ease-in-out;
+  -webkit-transition: all 330ms ease-in-out;
+  -moz-transition: all 330ms ease-in-out;
+  -ms-transition: all 330ms ease-in-out;
+  -o-transition: all 330ms ease-in-out;
+}
+.top-list li:hover .main-nav__icon {
+  transform: rotate(90deg);
+  -webkit-transform: rotate(90deg);
+  -moz-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  -o-transform: rotate(90deg);
+  transition: transform 330ms ease-in-out;
+  -webkit-transition: transform 330ms ease-in-out;
+  -moz-transition: transform 330ms ease-in-out;
+  -ms-transition: transform 330ms ease-in-out;
+  -o-transition: transform 330ms ease-in-out;
 }
 .active {
   border-color: #d54f5a !important;
