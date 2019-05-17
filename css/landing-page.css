@@ -56,6 +56,11 @@
 
 /* Media queries */
 @media screen and (max-width: 480px) {
+  .page-wrapper--bg {
+    display: flex;
+    background: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.9)), url('../imgs/landing_bg.jpg') no-repeat fixed center;
+    background-size: cover;
+  }
   .landing-page-nav, .landing-page-nav__link {
     margin: 0;
   }
