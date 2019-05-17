@@ -75,10 +75,20 @@ fetch(getAccountsUrl, options)
                             <span class="account-detail account-card"><img src="imgs/verve-logo.png" class="card-logo" alt="verve logo"> &nbsp;&nbsp;&nbsp;&nbsp;** 4355 8603</span>
                             <p class="account-detail account-balance account-red">${balance} &nbsp;ngn</p>
                             <p class="account-detail account-balance-desc">(Current balance)</p>
-                            <a class="action-btn view-transactions-link" href="pages/transactions/1/transactions.html">view transactions</a>
+                            <a class="action-btn view-transactions-link" href="">view transactions</a>
                           </div>`;
 
           accountWrapper.innerHTML += singleAccount;
+
+          const viewTransactionsLinks = document.querySelectorAll('.view-transactions-link');
+          viewTransactionsLinks.forEach((viewTransactionsLink) => {
+            viewTransactionsLink.addEventListener('click', function(e) {
+              e.preventDefault();
+              const transactionsAccountNumber = this.parentNode.children[7].innerHTML.slice(17, 33);
+              localStorage.setItem('trans-number', transactionsAccountNumber);
+              window.location.href = 'account-transactions.html';
+            });
+          });
         });
       } else {
         accountWrapper.style.flexDirection = 'row';
