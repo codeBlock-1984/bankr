@@ -737,6 +737,7 @@ body {
   padding: 10px 40px 0px 40px;
 }
 .account-detail__title {
+  margin-bottom: 3px;
   font-size: 10px;
   text-transform: uppercase;
   color: #d54f5a;
@@ -906,7 +907,7 @@ body {
   margin-left: 10px;
 }
 .user-detail {
-  margin: 20px;
+  margin-left: 10px;
   font-size: 14px;
 }
 /* all-accounts */
@@ -1242,7 +1243,7 @@ body {
 .transaction-box {
   display: inline-flex;
   flex-direction: column;
-  padding: 80px 0 80px 100px;
+  align-items: center;
 }
 .trans-alert {
   display: none;
@@ -1420,9 +1421,9 @@ Media Queries for Responsive layout
     font-size: 13px;
   }
 }
-@media screen and (min-width: 700px) {
+@media screen and (min-width: 480px) and (max-width: 768px) {
   .form-wrapper {
-    width: 30%;
+    width: 45%;
   }
   .forgot-password {
     align-self: flex-start;
@@ -1442,18 +1443,12 @@ Media Queries for Responsive layout
     font-size: 13px;
   }
 }
-@media screen and (min-width: 1400px) {
+@media screen and (min-width: 768px) {
   .form-wrapper {
     width: 30%;
   }
-
 }
-@media screen and (min-width: 2000px) {
-  .form-wrapper {
-    width: 30%;
-  }
 
-}
 
 /* Main Navigation */
 /* Media queries */
@@ -1477,6 +1472,12 @@ Media Queries for Responsive layout
   .box {
     flex-wrap: nowrap;
     flex-direction: column;
+  }
+  .no-top {
+    padding: 50px 0;
+  }
+  .no-record p {
+    font-size: 15px;
   }
   .box::-webkit-scrollbar {
     display: none;
@@ -1572,9 +1573,16 @@ Media Queries for Responsive layout
   }
   .account-wrapper {
     flex-direction: column;
+    padding: 20px;
+  }
+  .big-wrapper {
+    padding: 0px;
+    margin-bottom: 0;
   }
   .account-box {
-    padding: 30px 20px;
+    padding: 30px 40px;
+    height: unset;
+    width: 100%;
   }
   .card-logo {
     height: 40px;
@@ -1629,12 +1637,21 @@ Media Queries for Responsive layout
   .big-box {
     height: unset;
     margin: 10px 0;
-    padding-top: 30px;
-    padding-bottom: 30px;
+    padding: 10px 20px;
+  }
+  .big-box:first-of-type {
+    padding-bottom: 10px;
   }
   .create-new-link {
     margin: 20px 20px;
     width: 85%;
+  }
+  .account-detail {
+    font-size: 13px;
+  }
+  .account-detail__title {
+    font-size: 9px;
+    margin-bottom: 3px;
   }
 }
 @media screen and (min-width: 768px) {
@@ -1689,6 +1706,11 @@ Media Queries for Responsive layout
   }
   .reg-form__fieldset .reg-form__button {
     width: 100%;
+  }
+}
+@media screen and (min-width: 480px) and (max-width: 768px) {
+  .account-form__fieldset {
+    flex-basis: 100%;
   }
 }
 @media screen and (min-width: 768px) {
@@ -1801,7 +1823,7 @@ Media Queries for Responsive layout
     font-size: 12px;
   }
   .user-box {
-    padding: 50px 20px;
+    padding: 10px 20px;
     margin: 0;
   }
 }
@@ -1858,14 +1880,22 @@ Media Queries for Responsive layout
   .all-accounts-table .detail-table__head:nth-child(1),
   .all-accounts-table .detail-table__cell:nth-child(1) {
     flex: 0.2;
+    padding-left: 10px;
+  }
+  .all-accounts-table .detail-table__head:nth-child(2),
+  .all-accounts-table .detail-table__cell:nth-child(2) {
+    flex: 0.8;
+    padding-left: 15px;
   }
   .all-accounts-table .detail-table__head:nth-child(6),
   .all-accounts-table .detail-table__cell:nth-child(6) {
-    flex: 0.6;
+    flex: 0.4;
+    padding-left: 10px;
   }
   .all-accounts-table .detail-table__head:nth-child(7),
   .all-accounts-table .detail-table__cell:nth-child(7) {
-    flex: 1;
+    flex: 0.7;
+    padding-left: 15px;
   }
   .all-accounts-table .detail-table__head,
   .all-accounts-table .detail-table__cell {
@@ -1874,18 +1904,82 @@ Media Queries for Responsive layout
   .account-form-wrapper {
     margin-bottom: 20px;
   }
+  .action-icon {
+    margin-right: 10px;
+  }
   .brand-modal-inner {
     width: 90%;
+  }
+  .brand-modal-main p {
+    font-size: 15px;
+    text-align: center;
+  }
+}
+@media screen and (min-width: 480px) and (max-width: 768px) {
+  .brand-modal-inner {
+    width: 40%;
+  }
+  .all-accounts-table {
+    width: 100%;
+  }
+  .all-accounts-table .detail-table__head:nth-child(3),
+  .all-accounts-table .detail-table__head:nth-child(5),
+  .all-accounts-table .detail-table__cell:nth-child(3),
+  .all-accounts-table .detail-table__cell:nth-child(5) {
+    display: none;
+  }
+  .all-accounts-table .detail-table__head:nth-child(1),
+  .all-accounts-table .detail-table__cell:nth-child(1) {
+    flex: 0.1;
+    padding-left: 10px;
+  }
+  .all-accounts-table .detail-table__head:nth-child(2),
+  .all-accounts-table .detail-table__cell:nth-child(2) {
+    flex: 0.6;
+    padding-left: 15px;
+  }
+  .all-accounts-table .detail-table__head:nth-child(4),
+  .all-accounts-table .detail-table__cell:nth-child(4) {
+    flex: 0.7;
+    padding-left: 10px;
+  }
+  .all-accounts-table .detail-table__head:nth-child(6),
+  .all-accounts-table .detail-table__cell:nth-child(6) {
+    flex: 0.4;
+    padding-left: 10px;
+  }
+  .all-accounts-table .detail-table__head:nth-child(7),
+  .all-accounts-table .detail-table__cell:nth-child(7) {
+    flex: 0.7;
+    padding-left: 15px;
   }
 }
 @media screen and (min-width: 768px) {
   .brand-modal-inner {
-    width: 40%;
-  }
-}
-@media screen and (min-width: 1400px) {
-  .brand-modal-inner {
     width: 30%;
+  }
+  .all-accounts-table .detail-table__head:nth-child(1) {
+    flex: 0.2;
+  }
+  .all-accounts-table .detail-table__head:nth-child(1),
+  .all-accounts-table .detail-table__cell:nth-child(1) {
+    flex: 0.3;
+    padding-left: 20px;
+  }
+  .all-accounts-table .detail-table__head:nth-child(1) {
+    flex: 0.2;
+  }
+  .all-accounts-table .detail-table__head:nth-child(7),
+  .all-accounts-table .detail-table__cell:nth-child(7) {
+    flex: 0.7;
+    padding-left: 15px;
+  }
+  .all-accounts-table .detail-table__head:nth-child(7) {
+    flex: 0.4;
+  }
+  .all-accounts-table .detail-table__head,
+  .all-accounts-table .detail-table__cell {
+    padding-left: 20px;
   }
 }
 @media screen and (min-width: 2000px) {
@@ -2000,6 +2094,9 @@ Media Queries for Responsive layout
   .search {
     justify-content: center;
   }
+  .search__input {
+    font-size: 10px;
+  }
   .transaction-box {
     padding: 0;
     overflow-y: overlay;
@@ -2029,15 +2126,13 @@ Media Queries for Responsive layout
     width: 90%;
     margin: 0 auto;
   }
-  .transaction-form__input, .transaction-form__label {
-    height: 20px;
-    margin: 3px 0;
+}
+@media screen and (min-width: 480px) and (max-width: 768px) {
+  .search__input {
+    font-size: 12px;
   }
 }
 @media screen and (min-width: 768px) {
-  .transaction-box {
-    padding: 30px;
-  }
   .trans-alert {
     margin: 0 auto;
   }
@@ -2078,6 +2173,34 @@ Media Queries for Responsive layout
 
 /* Users */
 @media screen and (max-width: 480px) {
+  .users-table .detail-table__head:nth-child(2),
+  .users-table .detail-table__head:nth-child(4),
+  .users-table .detail-table__cell:nth-child(2),
+  .users-table .detail-table__cell:nth-child(4) {
+    display: none;
+  }
+  .users-table__head:nth-child(1) {
+    flex: 0.1;
+    padding-left: 10px;
+  }
+  .users-table__cell:nth-child(1) {
+    flex: 0.2;
+    padding-left: 10px;
+  }
+  .users-table__head:nth-child(3) {
+    flex: 1;
+    padding-left: 20px;
+  }
+  .users-table__cell:nth-child(3) {
+    flex: 1;
+    padding-left: 10px;
+  }
+  .users-table__head:nth-child(5) {
+    flex: 0.3;
+  }
+  .users-table__cell:nth-child(5) {
+    flex: 0.3;
+  }
   .users-table-wrapper {
     background: inherit;
   }
@@ -2095,32 +2218,88 @@ Media Queries for Responsive layout
 
   }
 }
-@media screen and (max-width: 768px) {
+@media screen and (min-width: 480px) and (max-width: 768px) {
   .users-table {
     width: 100%;
   }
-  .users-table tr th:first-child {
-    width: 12%;
+  .users-table .detail-table__head:nth-child(2),
+  .users-table .detail-table__cell:nth-child(2) {
+    display: none;
   }
-  .users-table tr th:nth-child(2) {
-    width: 30%;
+  .users-table__head:nth-child(1) {
+    flex: 0.1;
+    padding-left: 20px;
   }
-  .users-table tr th:last-child {
-    width: 20%;
+  .users-table__cell:nth-child(1) {
+    flex: 0.2;
+    padding-left: 20px;
+  }
+  .users-table__head:nth-child(3) {
+    flex: 0.7;
+    padding-left: 40px;
+  }
+  .users-table__cell:nth-child(3) {
+    flex: 0.7;
+    padding-left: 10px;
+  }
+  .users-table__head:nth-child(4) {
+    flex: 0.2;
+    padding-left: 40px;
+  }
+  .users-table__cell:nth-child(4) {
+    flex: 0.2;
+    padding-left: 10px;
+  }
+  .users-table__head:nth-child(5) {
+    flex: 0.3;
+  }
+  .users-table__cell:nth-child(5) {
+    flex: 0.3;
   }
 }
-@media screen and (max-width: 1400px) {
+@media screen and (min-width: 768px) {
   .users-table {
     width: 100%;
   }
-  .users-table tr th:first-child {
-    width: 12%;
+  .users-table__head:nth-child(1) {
+    flex: 0.1;
+    padding-left: 10px;
   }
-  .users-table tr th:nth-child(2) {
-    width: 30%;
+  .users-table__cell:nth-child(1) {
+    flex: 0.2;
+    padding-left: 10px;
   }
-  .users-table tr th:last-child {
-    width: 15%;
+  .users-table__head:nth-child(2) {
+    flex: 0.7;
+    padding-left: 40px;
+  }
+  .users-table__cell:nth-child(2) {
+    flex: 0.7;
+    padding-left: 10px;
+  }
+  .users-table__head:nth-child(3) {
+    flex: 0.7;
+    padding-left: 40px;
+  }
+  .users-table__cell:nth-child(3) {
+    flex: 0.7;
+    padding-left: 10px;
+  }
+  .users-table__head:nth-child(4) {
+    flex: 0.4;
+    padding-left: 40px;
+  }
+  .users-table__cell:nth-child(4) {
+    flex: 0.4;
+    padding-left: 30px;
+  }
+  .users-table__head:nth-child(5) {
+    flex: 0.4;
+    padding-left: 40px;
+  }
+  .users-table__cell:nth-child(5) {
+    flex: 0.4;
+    padding-left: 30px;
   }
 }
 
@@ -2186,6 +2365,31 @@ Media Queries for Responsive layout
   .create-user-form__input, .create-user-form__fieldset .reg-form__button {
     width: 100%;
   }
+  .create-user-form__fieldset .reg-form__button {
+    margin-bottom: 0;
+  }
+  .create-user-form__fieldset .reg-form__button {
+    margin-top: 20px;
+  }
+}
+@media screen and (min-width: 480px) and (max-width: 768px) {
+  .create-user-form {
+    width: 100%;
+  }
+  .create-user-form__fieldset {
+    width: 90%;
+  }
+  .create-user-form__input, .create-user-form__fieldset .reg-form__button {
+    width: 100%;
+  }
+  .create-user-form__fieldset .reg-form__button {
+    margin-bottom: 0;
+  }
+  .create-user-form__fieldset .reg-form__button {
+    margin-top: 20px;
+  }
+}
+@media screen and (min-width: 768px) {
   .create-user-form__fieldset .reg-form__button {
     margin-bottom: 0;
   }

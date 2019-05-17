@@ -59,11 +59,11 @@ fetch(getUsersUrl, options)
           } = account;
 
           singleUser = `<div class="detail-table__row">
-                            <div class="detail-table__cell">${serialNumber}</div>
-                            <div class="detail-table__cell">${firstname} ${lastname}</div>
-                            <div class="detail-table__cell">${email}</div>
-                            <div class="detail-table__cell">${type}</div>        
-                            <div class="detail-table__cell action-cell">
+                            <div class="detail-table__cell users-table__cell">${serialNumber}</div>
+                            <div class="detail-table__cell users-table__cell">${firstname} ${lastname}</div>
+                            <div class="detail-table__cell users-table__cell">${email}</div>
+                            <div class="detail-table__cell users-table__cell">${type}</div>        
+                            <div class="detail-table__cell action-cell users-table__cell">
                               <i class="fas fa-eye action-icon view-user-btn"></i>
                               <i class="fas fa-trash-alt action-icon del-user-btn"></i>
                             </div>
