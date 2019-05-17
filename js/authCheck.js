@@ -1,7 +1,7 @@
 // debugger;
 const userToken = localStorage.getItem('x-auth-token');
 
-const clientPages = ['user-dashboard.html', 'accounts.html', 'transactions.html', 'create-account.html'];
+const clientPages = ['user-dashboard.html', 'accounts.html', 'account-transactions.html', 'transactions.html', 'create-account.html'];
 const cashierPages = ['staff-dashboard.html', 'accounts-staff.html', 'credit-debit.html'];
 const adminPages = ['admin-dashboard.html', 'accounts-admin.html', 'users.html', 'create-user.html'];
 
