@@ -8,6 +8,7 @@ const debugg = debug('Migrate undo');
   const client = await pool.connect();
   try {
     debugg('rolling back migrations...');
+    await client.query('DROP TABLE IF EXISTS actions CASCADE');
     await client.query('DROP TABLE IF EXISTS transactions CASCADE');
     await client.query('DROP TABLE IF EXISTS accounts CASCADE');
     await client.query('DROP TABLE IF EXISTS users CASCADE');
