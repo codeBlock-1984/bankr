@@ -8,15 +8,19 @@ import AccountController from '../controllers/Account';
 import Authenticator from '../middlewares/Authenticator';
 
 const router = express.Router();
-const { getUser, getAllUsers } = UserController;
+const { createUser, getUser, getAllUsers } = UserController;
 
 const { getUserAccounts } = AccountController;
 
 const { userParamValidator } = userValidator;
 
-const { emailValidator } = authValidator;
+const { nameValidator, emailValidator } = authValidator;
 
-const { isAuth, isAdmin } = Authenticator;
+const { isAuth, isAdmin, isSuper } = Authenticator;
+
+router
+  .post('/',
+    isAuth, isSuper, emailValidator, nameValidator, validate, createUser);
 
 router
   .get('/:userId',

@@ -67,6 +67,19 @@ class Authenticator {
     }
     return next();
   }
+
+  static async isSuper(req, res, next) {
+    const { userType } = req.body.token;
+    const user = userType.toString();
+    const val = user === 'admin';
+    if (!val) {
+      return res.status(403).json({
+        status: 403,
+        error: 'Forbidden. Issuer not permitted.',
+      });
+    }
+    return next();
+  }
 }
 
 export default Authenticator;
