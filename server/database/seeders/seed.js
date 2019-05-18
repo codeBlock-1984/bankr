@@ -3,7 +3,7 @@ import debug from 'debug';
 import PasswordAuth from '../../helpers/PasswordAuth';
 import pool from '../db';
 
-const debugg = debug('Migrate undo');
+const debugg = debug('Seeding database');
 
 (async function seedDb() {
   const { encryptPassword } = PasswordAuth;
@@ -11,8 +11,12 @@ const debugg = debug('Migrate undo');
   const clientTwoPassword = await encryptPassword('securepassword2');
   const cashierOnePassword = await encryptPassword('strongpassword1');
   const cashierTwoPassword = await encryptPassword('strongpassword2');
+  const cashierThreePassword = await encryptPassword('strongpassword3');
+  const cashierFourPassword = await encryptPassword('strongpassword4');
   const adminOnePassword = await encryptPassword('adminpassword1');
   const adminTwoPassword = await encryptPassword('adminpassword2');
+  const adminThreePassword = await encryptPassword('adminpassword3');
+  const adminFourPassword = await encryptPassword('adminpassword4');
 
   const clientOne = `INSERT INTO users
                      (firstName, lastName, email, password, type, isAdmin)
@@ -34,6 +38,16 @@ const debugg = debug('Migrate undo');
                       VALUES('Michael', 'Bankole', 'mikebanks@live.com',
                       '${cashierTwoPassword}', 'cashier', true)`;
 
+  const cashierThree = `INSERT INTO users
+                      (firstName, lastName, email, password, type, isAdmin)
+                      VALUES('Sophie', 'Nwogu', 'sophie@yahoo.com',
+                      '${cashierThreePassword}', 'cashier', true)`;
+
+  const cashierFour = `INSERT INTO users
+                      (firstName, lastName, email, password, type, isAdmin)
+                      VALUES('Wendy', 'Okechukwu', 'wendyo@gmail.com',
+                      '${cashierFourPassword}', 'cashier', true)`;
+
   const adminOne = `INSERT INTO users
                     (firstName, lastName, email, password, type, isAdmin)
                     VALUES('Jessica', 'Chastain', 'misssloane@live.com',
@@ -43,6 +57,16 @@ const debugg = debug('Migrate undo');
                     (firstName, lastName, email, password, type, isAdmin)
                     VALUES('Christian', 'Bale', 'darknight@live.com',
                     '${adminTwoPassword}', 'admin', true)`;
+
+  const adminThree = `INSERT INTO users
+                    (firstName, lastName, email, password, type, isAdmin)
+                    VALUES('Kaley', 'Cuoco', 'bigbang@live.com',
+                    '${adminThreePassword}', 'admin', true)`;
+
+  const adminFour = `INSERT INTO users
+                    (firstName, lastName, email, password, type, isAdmin)
+                    VALUES('Tom', 'Hardy', 'madmax@live.com',
+                    '${adminFourPassword}', 'admin', true)`;
 
   const accountOne = `INSERT INTO accounts
                       (accountNumber, owner, type, status, balance)
@@ -84,14 +108,34 @@ const debugg = debug('Migrate undo');
                            VALUES('debit', 1020095776, 2, 3,
                            250.76, 9000.83, 8750.07)`;
 
+  const actionOne = `INSERT INTO actions
+                     (type, owner, admin)
+                     VALUES('Created User', 5, 7)`;
+
+  const actionTwo = `INSERT INTO actions
+                     (type, owner, admin)
+                     VALUES('Created User', 6, 8)`;
+
+  const actionThree = `INSERT INTO actions
+                       (type, owner, admin)
+                       VALUES('Created User', 9, 7)`;
+
+  const actionFour = `INSERT INTO actions
+                      (type, owner, admin)
+                      VALUES('Created User', 10, 8)`;
+
   const client = await pool.connect();
   try {
     await client.query(clientOne);
     await client.query(clientTwo);
     await client.query(cashierOne);
     await client.query(cashierTwo);
+    await client.query(cashierThree);
+    await client.query(cashierFour);
     await client.query(adminOne);
     await client.query(adminTwo);
+    await client.query(adminThree);
+    await client.query(adminFour);
     await client.query(accountOne);
     await client.query(accountTwo);
     await client.query(accountThree);
@@ -100,6 +144,10 @@ const debugg = debug('Migrate undo');
     await client.query(transactionTwo);
     await client.query(transactionThree);
     await client.query(transactionFour);
+    await client.query(actionOne);
+    await client.query(actionTwo);
+    await client.query(actionThree);
+    await client.query(actionFour);
   } catch (error) {
     debugg(error);
   } finally {
