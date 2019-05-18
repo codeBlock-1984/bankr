@@ -1,9 +1,17 @@
 import pool from '../database/db';
 import Responder from '../helpers/Responder';
 import userQuery from '../database/queries/user';
+import Auth from '../helpers/Auth';
+import PasswordAuth from '../helpers/PasswordAuth';
+import authQuery from '../database/queries/auth';
+import actionQuery from '../database/queries/action';
 
 const { successResponse, errorResponse } = Responder;
 const { getUser, getAllUsers } = userQuery;
+const { createToken, verifyToken } = Auth;
+const { encryptPassword } = PasswordAuth;
+const { addUser, signIn } = authQuery;
+const { addAction } = actionQuery;
 
 /**
  * @description Defines all actions that can be performed on the user resource
@@ -11,6 +19,101 @@ const { getUser, getAllUsers } = userQuery;
  * @class UserController
  */
 class UserController {
+  /**
+   * @description Creates a new cashier or admin user account
+   * @static
+   * @async
+   *
+   * @param {object} req - create new user request object
+   * @param {object} res - create new user response object
+   *
+   * @returns
+   * @memberof UserController
+   */
+  static async createUser(req, res) {
+    const client = await pool.connect();
+
+    try {
+      const adminToken = req.headers['x-auth-token'];
+      const { userId: admin } = await verifyToken(adminToken);
+
+      const {
+        firstName: firstNameInput,
+        lastName: lastNameInput,
+        email: emailInput,
+        type: userRole,
+      } = req.body;
+
+      const checkValue = [emailInput];
+
+      const {
+        rows: checkExistingRows,
+      } = await client.query(signIn, checkValue);
+
+      if (checkExistingRows[0]) {
+        return res.status(409)
+          .json(errorResponse('Email linked to existing user!'));
+      }
+
+      const userPassword = 'user123';
+      const securePassword = await encryptPassword(userPassword);
+      const isAdmin = true;
+
+      const values = [
+        firstNameInput,
+        lastNameInput,
+        emailInput,
+        securePassword,
+        userRole,
+        isAdmin
+      ];
+
+      const { rows } = await client.query(addUser, values);
+
+      if (rows[0]) {
+        const {
+          id,
+          firstname: firstName,
+          lastname: lastName,
+          email,
+          type,
+        } = rows[0];
+
+        const {
+          id: userId,
+          type: userType,
+        } = rows[0];
+        const token = createToken({ userId, userType });
+
+        const actionType = 'Created User';
+        const addActionValues = [actionType, id, admin];
+
+        await client.query(addAction, addActionValues);
+
+
+        const signupDetails = {
+          id,
+          firstName,
+          lastName,
+          email,
+          type,
+          userPassword,
+        };
+        const newSignup = { token, ...signupDetails };
+
+        const msg = 'User account successfully created.';
+        return res
+          .status(201)
+          .json(successResponse(msg, [newSignup]));
+      }
+    } catch (error) {
+      return res.status(500)
+        .json(errorResponse('Internal server error!'));
+    } finally {
+      await client.release();
+    }
+  }
+
   /**
    * @description Gets a user
    * @static
