@@ -14,7 +14,7 @@ const {
 
 const { getUserAccounts } = AccountController;
 
-const { userParamValidator } = userValidator;
+const { userParamValidator, typeValidator } = userValidator;
 
 const { nameValidator, emailValidator } = authValidator;
 
@@ -22,7 +22,8 @@ const { isAuth, isAdmin, isSuper } = Authenticator;
 
 router
   .post('/',
-    isAuth, isSuper, emailValidator, nameValidator, validate, createUser);
+    isAuth, isSuper, emailValidator, nameValidator,
+    typeValidator, validate, createUser);
 
 router
   .get('/:userId',

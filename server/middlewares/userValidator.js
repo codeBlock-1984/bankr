@@ -1,5 +1,5 @@
-import { param } from 'express-validator/check';
-import { sanitizeParam } from 'express-validator/filter';
+import { param, body } from 'express-validator/check';
+import { sanitizeParam, sanitizeBody } from 'express-validator/filter';
 
 const userValidator = {
   userParamValidator: [
@@ -10,6 +10,18 @@ const userValidator = {
       .withMessage('User id must be a number!')
       .trim(),
     sanitizeParam('userId').toInt({ radix: 10 }),
+  ],
+  typeValidator: [
+    sanitizeBody('type').customSanitizer((value) => {
+      const lowerCaseValue = value.toLowerCase();
+      return lowerCaseValue;
+    }),
+    body('type')
+      .exists({ checkFalsy: true })
+      .withMessage('User type is required!')
+      .isIn(['cashier', 'admin'])
+      .withMessage('Invalid user type!')
+      .trim(),
   ],
 };
 
