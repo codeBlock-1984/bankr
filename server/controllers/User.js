@@ -7,7 +7,9 @@ import authQuery from '../database/queries/auth';
 import actionQuery from '../database/queries/action';
 
 const { successResponse, errorResponse, messageResponse } = Responder;
-const { getUser, getAllUsers, deleteUser } = userQuery;
+const {
+  getUser, getUserEmail, getAllUsers, deleteUser,
+} = userQuery;
 const { createToken, verifyToken } = Auth;
 const { encryptPassword } = PasswordAuth;
 const { addUser, signIn } = authQuery;
@@ -85,8 +87,10 @@ class UserController {
         } = rows[0];
         const token = createToken({ userId, userType });
 
-        const actionType = 'Created User';
-        const addActionValues = [actionType, id, admin];
+        const actionType = 'created user';
+        const addActionValues = [
+          firstName, lastName, type, actionType, email, admin
+        ];
 
         await client.query(addAction, addActionValues);
 
@@ -220,9 +224,13 @@ class UserController {
     const client = await pool.connect();
 
     try {
+      const adminToken = req.headers['x-auth-token'];
+      const { userId: admin } = await verifyToken(adminToken);
+
       const { email } = req.params;
       const values = [email];
-      const { rows } = await client.query(deleteUser, values);
+
+      const { rows } = await client.query(getUserEmail, values);
 
       if (!rows[0]) {
         return res.status(404)
@@ -230,8 +238,23 @@ class UserController {
       }
 
       const {
-        id
+        firstname: firstName,
+        lastname: lastName,
+        type,
       } = rows[0];
+
+      const { rows: deleteRows } = await client.query(deleteUser, values);
+
+      const {
+        id,
+      } = deleteRows[0];
+
+      const actionType = 'deleted user';
+      const addActionValues = [
+        firstName, lastName, type, actionType, email, admin
+      ];
+
+      await client.query(addAction, addActionValues);
 
       const msg = `User with id ${id} successfully deleted.`;
 

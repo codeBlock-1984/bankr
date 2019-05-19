@@ -109,20 +109,24 @@ const debugg = debug('Seeding database');
                            250.76, 9000.83, 8750.07)`;
 
   const actionOne = `INSERT INTO actions
-                     (type, owner, admin)
-                     VALUES('Created User', 5, 7)`;
+                     (firstName, lastName, role, type, email, admin)
+                     VALUES('Sophie', 'Nwogu', 'cashier',
+                     'created user', 'sophie@yahoo.com', 7)`;
 
   const actionTwo = `INSERT INTO actions
-                     (type, owner, admin)
-                     VALUES('Created User', 6, 8)`;
+                     (firstName, lastName, role, type, email, admin)
+                     VALUES('Wendy', 'Okechukwu', 'Cashier',
+                     'created user', 'wendyo@gmail.com', 8)`;
 
   const actionThree = `INSERT INTO actions
-                       (type, owner, admin)
-                       VALUES('Created User', 9, 7)`;
+                       (firstName, lastName, role, type, email, admin)
+                       VALUES('Kaley', 'Cuoco', 'admin',
+                       'created user', 'bigbang@live.com', 7)`;
 
   const actionFour = `INSERT INTO actions
-                      (type, owner, admin)
-                      VALUES('Created User', 10, 8)`;
+                      (firstName, lastName, role, type, email, admin)
+                      VALUES('Tom', 'Hardy', 'admin',
+                      'created user', 'madmax@live.com', 8)`;
 
   const client = await pool.connect();
   try {
