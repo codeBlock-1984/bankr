@@ -8,7 +8,9 @@ import AccountController from '../controllers/Account';
 import Authenticator from '../middlewares/Authenticator';
 
 const router = express.Router();
-const { createUser, getUser, getAllUsers } = UserController;
+const {
+  createUser, getUser, getAllUsers, deleteUser,
+} = UserController;
 
 const { getUserAccounts } = AccountController;
 
@@ -32,5 +34,8 @@ router
 router
   .get('/:email/accounts',
     isAuth, emailValidator, validate, getUserAccounts);
+router
+  .delete('/:email',
+    isAuth, isSuper, emailValidator, validate, deleteUser);
 
 export default router;

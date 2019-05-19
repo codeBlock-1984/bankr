@@ -6,7 +6,11 @@ const getAllUsers = `SELECT id, firstName AS firstName, lastName AS lastName,
                      email, type, isAdmin as isAdmin, createdOn AS createdOn
                      FROM users ORDER BY id ASC`;
 
+const deleteUser = `DELETE FROM users WHERE email = $1
+                    RETURNING id`;
+
 export default {
   getUser,
   getAllUsers,
+  deleteUser,
 };

@@ -6,8 +6,8 @@ import PasswordAuth from '../helpers/PasswordAuth';
 import authQuery from '../database/queries/auth';
 import actionQuery from '../database/queries/action';
 
-const { successResponse, errorResponse } = Responder;
-const { getUser, getAllUsers } = userQuery;
+const { successResponse, errorResponse, messageResponse } = Responder;
+const { getUser, getAllUsers, deleteUser } = userQuery;
 const { createToken, verifyToken } = Auth;
 const { encryptPassword } = PasswordAuth;
 const { addUser, signIn } = authQuery;
@@ -197,6 +197,46 @@ class UserController {
       const msg = 'Successfully retrieved all user records.';
       return res.status(200)
         .json(successResponse(msg, allUsers));
+    } catch (error) {
+      return res.status(500)
+        .json(errorResponse('Internal server error!'));
+    } finally {
+      await client.release();
+    }
+  }
+
+  /**
+   * @description Deletes a user
+   * @static
+   * @async
+   *
+   * @param {object} req - delete user request object
+   * @param {object} res - delete user response object
+   *
+   * @returns
+   * @memberof UserController
+   */
+  static async deleteUser(req, res) {
+    const client = await pool.connect();
+
+    try {
+      const { email } = req.params;
+      const values = [email];
+      const { rows } = await client.query(deleteUser, values);
+
+      if (!rows[0]) {
+        return res.status(404)
+          .json(errorResponse('User with specified email not found!'));
+      }
+
+      const {
+        id
+      } = rows[0];
+
+      const msg = `User with id ${id} successfully deleted.`;
+
+      return res.status(200)
+        .json(messageResponse(msg));
     } catch (error) {
       return res.status(500)
         .json(errorResponse('Internal server error!'));
