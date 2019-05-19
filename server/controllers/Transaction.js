@@ -17,6 +17,7 @@ const {
   checkExisting,
   checkExistingAdmin,
   getUserTransactions,
+  getCashierTransactions,
 } = transactionQuery;
 
 /**
@@ -413,6 +414,46 @@ class TransactionController {
       const msg = 'Successfully retrieved user transaction records.';
       return res.status(200)
         .json(successResponse(msg, userTransactions));
+    } catch (error) {
+      return res.status(500)
+        .json(errorResponse('Internal server error!'));
+    } finally {
+      await client.release();
+    }
+  }
+
+  /**
+   * @description Gets a specific cashier's transactions
+   * @static
+   * @async
+   *
+   * @param {object} req - get cashier transactions request object
+   * @param {object} res - get cashier transactions response object
+   *
+   * @returns
+   * @memberof TransactionController
+   */
+  static async getCashierTransactions(req, res) {
+    const client = await pool.connect();
+
+    try {
+      const token = req.headers['x-auth-token'];
+      const { userId: cashier } = await verifyToken(token);
+
+      const values = [cashier];
+      const { rows } = await client.query(getCashierTransactions, values);
+
+      if (!rows[0]) {
+        return res.status(404)
+          .json(errorResponse('No transactions record found for cashier!'));
+      }
+
+      const cashierTransactions = rows;
+
+      const msg = `Successfully retrieved cashier's transaction records.`;
+
+      return res.status(200)
+        .json(successResponse(msg, [cashierTransactions]));
     } catch (error) {
       return res.status(500)
         .json(errorResponse('Internal server error!'));

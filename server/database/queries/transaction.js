@@ -49,6 +49,14 @@ const getUserTransactions = `SELECT id AS transactionId, createdOn AS createdOn,
                              newBalance AS newBalance
                              FROM transactions WHERE accountNumber = $1`;
 
+const getCashierTransactions = `SELECT id AS transactionId,
+                                createdOn AS createdOn,
+                                type, accountNumber AS accountNumber,
+                                amount, cashier,
+                                oldBalance AS oldBalance,
+                                newBalance AS newBalance
+                                FROM transactions WHERE cashier = $1`;
+
 export default {
   findAccount,
   transact,
@@ -59,4 +67,5 @@ export default {
   checkExisting,
   checkExistingAdmin,
   getUserTransactions,
+  getCashierTransactions,
 };
