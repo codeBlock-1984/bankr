@@ -13,6 +13,7 @@ const {
   debitTransaction,
   getUserTransaction,
   getAllTransactions,
+  getCashierTransactions,
 } = TransactionController;
 
 const {
@@ -35,6 +36,10 @@ router
   .post('/:accountNumber/debit',
     isAuth, isCashier, accountParamValidator,
     transactionFieldsValidator, validate, debitTransaction);
+
+router
+  .get('/cashier',
+    isAuth, isCashier, getCashierTransactions);
 
 router
   .get('/:transactionId',
