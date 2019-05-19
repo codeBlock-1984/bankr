@@ -9,6 +9,7 @@ import authRoute from './routes/auth';
 import userRoute from './routes/user';
 import accountRoute from './routes/account';
 import transactionRoute from './routes/transaction';
+import actionRoute from './routes/action';
 import swaggerDocument from '../swagger.json';
 
 const app = express();
@@ -25,6 +26,7 @@ app.use('/api/v1/auth/', authRoute);
 app.use('/api/v1/users/', userRoute);
 app.use('/api/v1/accounts/', accountRoute);
 app.use('/api/v1/transactions/', transactionRoute);
+app.use('/api/v1/actions/', actionRoute);
 app.use('/api-docs/', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.get('/', (req, res) => {
