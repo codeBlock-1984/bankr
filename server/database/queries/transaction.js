@@ -1,8 +1,9 @@
-const findAccount = `SELECT  email, firstName, balance, lastName from users
-INNER JOIN accounts ON users.id = accounts.owner WHERE accountNumber = $1`;
+const findAccount = `SELECT  email, firstName, balance, status, lastName
+                     from users INNER JOIN accounts
+                     ON users.id = accounts.owner WHERE accountNumber = $1`;
 
 const transact = `UPDATE accounts SET balance = $1 WHERE accountNumber = $2
-RETURNING id, accountNumber, balance`;
+                  RETURNING id, accountNumber, balance`;
 
 const addTransaction = `INSERT INTO transactions
                         (accountNumber, type, account, cashier,
