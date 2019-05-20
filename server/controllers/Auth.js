@@ -4,10 +4,10 @@ import PasswordAuth from '../helpers/PasswordAuth';
 import Responder from '../helpers/Responder';
 import authQuery from '../database/queries/auth';
 
-const { createToken } = Auth;
+const { createToken, verifyToken } = Auth;
 const { encryptPassword, verifyPassword } = PasswordAuth;
 
-const { successResponse, errorResponse } = Responder;
+const { successResponse, messageResponse, errorResponse } = Responder;
 
 const { addUser, signIn } = authQuery;
 
@@ -164,9 +164,45 @@ class AuthController {
         .json(successResponse(msg, [newSignin]));
     } catch (error) {
       return res.status(500)
-        .json('Internal server error!');
+        .json(errorResponse('Internal server error!'));
     } finally {
       await client.release();
+    }
+  }
+
+  /**
+   * @description Verify user token
+   * @static
+   * @async
+   *
+   * @param {object} req - validate token request object
+   * @param {object} res - validate token response object
+   *
+   * @returns
+   * @memberof AuthController
+   */
+  static async validateToken(req, res) {
+    try {
+      const { token } = req.body;
+
+      const validToken = await verifyToken(token);
+
+      if (!validToken) {
+        return res.status(401)
+          .json(errorResponse('Access denied. Invalid user token.'));
+      }
+
+      return res
+        .status(200)
+        .json(messageResponse('Token validation successful.'));
+    } catch (error) {
+      const { name, message } = error;
+      if (name === 'JsonWebTokenError' && message === 'invalid token') {
+        return res.status(401)
+          .json(errorResponse('Access denied. Invalid user token.'));
+      }
+      return res.status(500)
+        .json(errorResponse('Internal server error!'));
     }
   }
 }

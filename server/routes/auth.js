@@ -5,11 +5,12 @@ import validate from '../middlewares/validate';
 import authValidator from '../middlewares/authValidator';
 
 const router = express.Router();
-const { signUp, signIn } = Auth;
+const { signUp, signIn, validateToken } = Auth;
 const {
   emailValidator,
   passwordValidator,
   nameValidator,
+  tokenValidator,
 } = authValidator;
 
 router
@@ -19,5 +20,9 @@ router
 router
   .post('/signin',
     emailValidator, passwordValidator, validate, signIn);
+
+router
+  .post('/validate/token',
+    tokenValidator, validate, validateToken);
 
 export default router;

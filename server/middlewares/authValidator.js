@@ -2,6 +2,14 @@ import { body, check } from 'express-validator/check';
 import { sanitizeBody } from 'express-validator/filter';
 
 const authValidator = {
+  tokenValidator: [
+    body('token')
+      .trim()
+      .exists({ checkFalsy: true })
+      .withMessage('Token is required.')
+      .matches(/^[A-Za-z0-9-_=]+\.[A-Za-z0-9-_=]+\.?[A-Za-z0-9-_.+/=]*$/)
+      .withMessage('Invalid token.'),
+  ],
   passwordValidator: [
     body('password')
       .trim()
