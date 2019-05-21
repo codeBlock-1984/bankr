@@ -14,6 +14,7 @@ const {
   deleteUser,
   getPassword,
   updatePassword,
+  updatePhoto,
 } = userQuery;
 const { createToken, verifyToken } = Auth;
 const { encryptPassword, verifyPassword } = PasswordAuth;
@@ -319,6 +320,48 @@ class UserController {
       return res.status(200)
         .json(messageResponse(msg));
     } catch (error) {
+      return res.status(500)
+        .json(errorResponse('Internal server error!'));
+    } finally {
+      await client.release();
+    }
+  }
+
+  /**
+   * @description Updates a user's photo url
+   * @static
+   * @async
+   *
+   * @param {object} req - Update photo url request object
+   * @param {object} res - Update photo url response object
+   *
+   * @returns
+   * @memberof UserController
+   */
+  static async updatePhoto(req, res) {
+    const client = await pool.connect();
+    try {
+      const userToken = req.headers['x-auth-token'];
+      const { userId: user } = await verifyToken(userToken);
+      const { photoUrl } = req.body;
+
+      console.log(user);
+      console.log(photoUrl);
+      const values = [photoUrl, user];
+      const { rows } = await client.query(updatePhoto, values);
+
+      console.log(rows);
+      if (!rows[0]) {
+        const error = 'Internal server error!';
+        return res.status(500)
+          .json(errorResponse(error));
+      }
+
+      const msg = `Photo upload successful.`;
+      return res.status(200)
+        .json(messageResponse(msg));
+    } catch (error) {
+      console.log(error);
       return res.status(500)
         .json(errorResponse('Internal server error!'));
     } finally {
