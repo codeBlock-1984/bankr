@@ -23,6 +23,20 @@ const userValidator = {
       .withMessage('Invalid user type!')
       .trim(),
   ],
+  passwordUpdateValidator: [
+    body('newPassword')
+      .trim()
+      .exists({ checkFalsy: true })
+      .withMessage('New password is required.')
+      .isLength({ min: 6, max: 20 })
+      .withMessage('New password must be between 6 to 20 characters long.'),
+    body('oldPassword')
+      .trim()
+      .exists({ checkFalsy: true })
+      .withMessage('Old password is required.')
+      .isLength({ min: 6, max: 20 })
+      .withMessage('Old password must be between 6 to 20 characters long.'),
+  ],
 };
 
 export default userValidator;
