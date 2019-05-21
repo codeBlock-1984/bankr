@@ -9,12 +9,14 @@ import Authenticator from '../middlewares/Authenticator';
 
 const router = express.Router();
 const {
-  createUser, getUser, getAllUsers, deleteUser,
+  createUser, getUser, getAllUsers, deleteUser, updatePassword,
 } = UserController;
 
 const { getUserAccounts } = AccountController;
 
-const { userParamValidator, typeValidator } = userValidator;
+const {
+  userParamValidator, typeValidator, passwordUpdateValidator,
+} = userValidator;
 
 const { nameValidator, emailValidator } = authValidator;
 
@@ -35,6 +37,11 @@ router
 router
   .get('/:email/accounts',
     isAuth, emailValidator, validate, getUserAccounts);
+
+router
+  .patch('/password',
+    isAuth, passwordUpdateValidator, validate, updatePassword);
+
 router
   .delete('/:email',
     isAuth, isSuper, emailValidator, validate, deleteUser);

@@ -8,10 +8,15 @@ import actionQuery from '../database/queries/action';
 
 const { successResponse, errorResponse, messageResponse } = Responder;
 const {
-  getUser, getUserEmail, getAllUsers, deleteUser,
+  getUser,
+  getUserEmail,
+  getAllUsers,
+  deleteUser,
+  getPassword,
+  updatePassword,
 } = userQuery;
 const { createToken, verifyToken } = Auth;
-const { encryptPassword } = PasswordAuth;
+const { encryptPassword, verifyPassword } = PasswordAuth;
 const { addUser, signIn } = authQuery;
 const { addAction } = actionQuery;
 
@@ -258,6 +263,59 @@ class UserController {
 
       const msg = `User with id ${id} successfully deleted.`;
 
+      return res.status(200)
+        .json(messageResponse(msg));
+    } catch (error) {
+      return res.status(500)
+        .json(errorResponse('Internal server error!'));
+    } finally {
+      await client.release();
+    }
+  }
+
+  /**
+   * @description Updates a user's password
+   * @static
+   * @async
+   *
+   * @param {object} req - Update user password request object
+   * @param {object} res - Update user password response object
+   *
+   * @returns
+   * @memberof UserController
+   */
+  static async updatePassword(req, res) {
+    const client = await pool.connect();
+    try {
+      const userToken = req.headers['x-auth-token'];
+      const { userId: user } = await verifyToken(userToken);
+      const { newPassword, oldPassword } = req.body;
+
+      const getValue = [user];
+      const { rows: getRows } = await client.query(getPassword, getValue);
+
+      const {
+        password: userPassword,
+      } = getRows[0];
+
+      const isVerified = await verifyPassword(oldPassword, userPassword);
+
+      if (!isVerified) {
+        return res.status(400)
+          .json(errorResponse('Password is incorrect!'));
+      }
+
+      const hashedNewPassword = await encryptPassword(newPassword);
+      const values = [hashedNewPassword, user];
+      const { rows } = await client.query(updatePassword, values);
+
+      if (!rows[0]) {
+        const error = 'Internal server error!';
+        return res.status(500)
+          .json(errorResponse(error));
+      }
+
+      const msg = `Password successfully changed.`;
       return res.status(200)
         .json(messageResponse(msg));
     } catch (error) {
