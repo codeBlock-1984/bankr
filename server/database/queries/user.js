@@ -21,6 +21,10 @@ const updatePassword = `UPDATE users SET password = $1
                         WHERE id = $2
                         RETURNING id`;
 
+const updatePhoto = `UPDATE users SET photourl = $1
+                        WHERE id = $2
+                        RETURNING id`;
+
 export default {
   getUser,
   getUserEmail,
@@ -28,4 +32,5 @@ export default {
   deleteUser,
   getPassword,
   updatePassword,
+  updatePhoto,
 };

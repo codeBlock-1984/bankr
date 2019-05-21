@@ -9,13 +9,21 @@ import Authenticator from '../middlewares/Authenticator';
 
 const router = express.Router();
 const {
-  createUser, getUser, getAllUsers, deleteUser, updatePassword,
+  createUser,
+  getUser,
+  getAllUsers,
+  deleteUser,
+  updatePassword,
+  updatePhoto,
 } = UserController;
 
 const { getUserAccounts } = AccountController;
 
 const {
-  userParamValidator, typeValidator, passwordUpdateValidator,
+  userParamValidator,
+  typeValidator,
+  passwordUpdateValidator,
+  photoUrlValidator,
 } = userValidator;
 
 const { nameValidator, emailValidator } = authValidator;
@@ -41,6 +49,10 @@ router
 router
   .patch('/password',
     isAuth, passwordUpdateValidator, validate, updatePassword);
+
+router
+  .patch('/photo',
+    isAuth, photoUrlValidator, validate, updatePhoto);
 
 router
   .delete('/:email',

@@ -1,5 +1,6 @@
 import { param, body } from 'express-validator/check';
 import { sanitizeParam, sanitizeBody } from 'express-validator/filter';
+import { isWebUri } from 'valid-url';
 
 const userValidator = {
   userParamValidator: [
@@ -36,6 +37,16 @@ const userValidator = {
       .withMessage('Old password is required.')
       .isLength({ min: 6, max: 20 })
       .withMessage('Old password must be between 6 to 20 characters long.'),
+  ],
+  photoUrlValidator: [
+    body('photoUrl')
+      .trim()
+      .exists({ checkFalsy: true })
+      .withMessage('Photo url is required.')
+      .custom((value) => {
+        return isWebUri(value);
+      })
+      .withMessage('Invalid photo url.'),
   ],
 };
 
