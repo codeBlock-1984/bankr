@@ -112,9 +112,17 @@ const userViewModalTitle = document.getElementById('user-view-modal__title');
 const userViewModalMain = document.getElementById('user-view-modal__main');
 const deleteAccountBtn = document.getElementsByClassName('delete-account-btn')[0];
 
+let allUsersTable;
+let deletedAccount;
+let deleteEmail;
+
 deleteAccountBtn.addEventListener('click', deleteAccount);
 
 function displayModal() {
+  allUsersTable = this.parentNode.parentNode.parentNode;
+  deletedAccount = this.parentNode.parentNode;
+  deleteEmail = this.parentNode.parentNode.childNodes[5].innerHTML;
+
   activeModal = brandModal;
   brandModal.style.display = 'block';
 }
@@ -164,9 +172,39 @@ function displayUserModal() {
 }
 
 function deleteAccount() {
-  const accountsTable = this.parentNode.parentNode.parentNode;
-  const selectedRow = this.parentNode.parentNode;
-  accountsTable.removeChild(selectedRow);
+  loader.style.display = 'block';
+  deleteUrl = `https://bankr-server.herokuapp.com/api/v1/users/${deleteEmail}`;
+
+  deleteOptions = {
+    method: 'DELETE',
+    headers: new Headers({
+      'Content-Type': 'application/json',
+      'x-auth-token': token,
+    }),
+  };
+
+  fetch(deleteUrl, deleteOptions)
+    .then(res => res.json())
+    .then((res) => {
+      if (!res.error) {
+        const { message } = res;
+
+        if (message) {
+          allUsersTable.removeChild(deletedAccount);
+        }
+        loader.style.display = 'none';
+      } else {
+        loader.style.display = 'none';
+        console.log(res.error);
+      }
+    })
+    .catch((err) => {
+      loader.style.display = 'none';
+      console.log(err);
+    });
+  // const accountsTable = this.parentNode.parentNode.parentNode;
+  // const selectedRow = this.parentNode.parentNode;
+  // accountsTable.removeChild(selectedRow);
 }
 
 
