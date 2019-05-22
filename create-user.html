@@ -183,24 +183,30 @@
             </div>
           </div>
           <!-- End user settings modal -->
+          <div id="animated-loader" class="loader-modal">
+            <div class="loader">
+                <img src="imgs/logo.png" alt="logo">
+            </div>
+        </div>
         <main class="page-main l-flex l-flex-col">
             <section class="box-wrapper account-form-container l-flex l-flex-col">
                 <h2 class="section-heading">Create New User</h2>
                 <div class="account-form-wrapper l-flex l-flex-row">
                   <form id="create-user-account-form" class="reg-form l-flex l-flex-row m-white-bg create-user-form" action="" method="">
                     <fieldset class="reg-form__fieldset create-user-form__fieldset">
+                        <p class="alert-message m-text-center" id="message-box">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
                       <label class="reg-form__label create-user-form__label" for="fname">First name</label>
-                      <input class="reg-form__input create-user-form__input" type="text" name="fname" id="fname"><br>
+                      <input class="reg-form__input create-user-form__input" type="text" name="fname" id="fname">
                       <label class="reg-form__label create-user-form__label" for="lname">Last name</label>
-                      <input class="reg-form__input create-user-form__input" type="text" name="lname" id="lname"><br>
+                      <input class="reg-form__input create-user-form__input" type="text" name="lname" id="lname">
                       <label class="reg-form__label create-user-form__label" for="email">Email</label>
-                      <input class="reg-form__input create-user-form__input" type="text" name="email" id="email"><br>
+                      <input class="reg-form__input create-user-form__input" type="text" name="email" id="email">
                       <label class="reg-form__label create-user-form__label" for="role">Role</label>
                       <select class="reg-form__input create-user-form__input" name="role" id="role">
-                        <option value="select">Select</option>
-                        <option value="Staff">Staff</option>
-                        <option value="Admin">Admin</option>
-                      </select><br>
+                        <option value="select">Select role</option>
+                        <option value="cashier">Cashier</option>
+                        <option value="admin">Admin</option>
+                      </select>
                       <input class="reg-form__button" type="button" value="create user" id="create-user-btn">
                       <input class="reg-form__button" type="button" value="cancel" id="cancel-user-create-btn">
                     </fieldset> 
