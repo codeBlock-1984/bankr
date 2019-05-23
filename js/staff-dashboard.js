@@ -71,7 +71,7 @@ fetch(getCashierUrl, options)
 
         accountWrapper.innerHTML = singleUser;
 
-        const getTransactionsUrl = `https://bankr-server.herokuapp.com/api/v1/transactions/${id}`;
+        const getTransactionsUrl = `https://bankr-server.herokuapp.com/api/v1/transactions/cashier`;
 
         fetch(getTransactionsUrl, options)
           .then(response => response.json())
@@ -80,17 +80,19 @@ fetch(getCashierUrl, options)
               const { data: transactionsData } = response;
 
               if (transactionsData[0]) {
-                const trimmedTransactions = transactionsData.splice(0, 4);
+                const trimmedTransactions = transactionsData[0].splice(0, 2);
+                console.log(trimmedTransactions);
                 let singleTransaction;
                 console.log(data[0]);
                 actionBox.innerHTML = '';
 
                 trimmedTransactions.forEach((transaction) => {
+                  console.log(transaction);
                   const {
                     type,
                     amount,
-                    createdOn: transactionDate,
-                    accountNumber,
+                    createdon: transactionDate,
+                    accountnumber,
                   } = transaction;
 
                   const date = new Date(transactionDate).toString().slice(0, 24);
@@ -98,7 +100,7 @@ fetch(getCashierUrl, options)
                   singleTransaction = `<div class="single-box">
                                         <p class="trans-detail trans-title">${type}</p>
                                         <p class="trans-detail trans-date-time">${date}</p>
-                                        <p class="trans-detail trans-vendor">${accountNumber}</p>
+                                        <p class="trans-detail trans-vendor">${accountnumber}</p>
                                         <p class="trans-detail trans-amount">${amount} &nbsp;ngn</p>
                                       </div>`;
                   actionBox.innerHTML += singleTransaction;
