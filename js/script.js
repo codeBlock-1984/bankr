@@ -75,10 +75,22 @@ logoutLinks.forEach((logoutLink) => {
 // User settings modal
 
 const settingsLinks = document.querySelectorAll('.settings');
+const currentUserToken = localStorage.getItem('x-auth-token');
+const msgBox = document.createElement('p');
+msgBox.classList.add('alert-message', 'm-text-center');
+msgBox.setAttribute('id', 'message-box');
+msgBox.style.marginBottom = '10px';
+
+const oldPassword = document.getElementById('old-password');
+const newPassword = document.getElementById('new-password');
+const confirmPassword = document.getElementById('confirm-password');
+const inputFields = [oldPassword, newPassword, confirmPassword];
+
 let imageUploadLink;
 let changePasswordLink;
 let imageUploadTab;
 let changePasswordTab;
+let checkFlag;
 
 settingsLinks.forEach((settingsLink) => {
   settingsLink.addEventListener('click', (e) => {
@@ -98,6 +110,11 @@ settingsLinks.forEach((settingsLink) => {
 });
 
 function displayImageTab() {
+  imageUploadTab.insertBefore(msgBox, imageUploadTab.childNodes[0]);
+  msgBox.innerHTML = '';
+  msgBox.classList.remove('m-success');
+  msgBox.classList.remove('m-error');
+
   changePasswordLink.classList.remove('active-tab');
   changePasswordTab.style.display = 'none';
   imageUploadLink.classList.add('active-tab');
@@ -108,6 +125,16 @@ function displayImageTab() {
 }
 
 function displayPasswordTab() {
+  changePasswordTab.insertBefore(msgBox, changePasswordTab.childNodes[0]);
+  msgBox.innerHTML = '';
+  msgBox.classList.remove('m-success');
+  msgBox.classList.remove('m-error');
+
+  inputFields.forEach((val) => {
+    val.classList.remove('m-required');
+    val.value = '';
+  });
+
   imageUploadLink.classList.remove('active-tab');
   imageUploadTab.style.display = 'none';
   changePasswordLink.classList.add('active-tab');
@@ -122,5 +149,77 @@ function uploadImage() {
 }
 
 function changePassword() {
-  return undefined;
+  msgBox.classList.remove('m-success');
+  msgBox.classList.remove('m-error');
+  checkFlag = false;
+
+  inputFields.forEach((val) => {
+    val.classList.remove('m-required');
+    if (val.value === '' || val.value === 'select') {
+      checkFlag = true;
+      val.classList.add('m-required');
+    }
+  });
+
+  if (checkFlag) {
+    msgBox.classList.add('m-error');
+    msgBox.innerHTML = 'Fill in the required fields!';
+    return undefined;
+  }
+
+  if (newPassword.value !== confirmPassword.value) {
+    msgBox.classList.add('m-error');
+    msgBox.innerHTML = 'Password and confirm password do not match!';
+    newPassword.classList.add('m-required');
+    confirmPassword.classList.add('m-required');
+    return false;
+  }
+
+  loader.style.display = 'block';
+  msgBox.innerHTML = '';
+
+  const passwordChangeData = {
+    oldPassword: oldPassword.value,
+    newPassword: newPassword.value,
+  };
+
+  const passwordChangeOptions = {
+    method: 'PATCH',
+    headers: new Headers({
+      'Content-Type': 'application/json',
+      'x-auth-token': currentUserToken,
+    }),
+    body: JSON.stringify(passwordChangeData),
+  };
+
+  passwordChangeUrl = `https://bankr-server.herokuapp.com/api/v1/users/password`;
+
+  fetch(passwordChangeUrl, passwordChangeOptions)
+    .then(res => res.json())
+    .then((res) => {
+      // debugger;
+      if (!res.error) {
+        const { message } = res;
+        if (message) {
+          msgBox.classList.add('m-success');
+          msgBox.innerHTML = message;
+
+          inputFields.forEach((val) => {
+            val.value = '';
+          });
+        } else {
+          loader.style.display = 'none';
+        }
+      } else {
+        loader.style.display = 'none';
+        const { error } = res;
+        msgBox.classList.add('m-error');
+        msgBox.innerHTML = error;
+      }
+      loader.style.display = 'none';
+    })
+    .catch((err) => {
+      loader.style.display = 'none';
+      console.log(err);
+    });
 }
