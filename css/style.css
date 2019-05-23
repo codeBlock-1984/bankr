@@ -898,6 +898,12 @@ body {
 .action-box {
   padding: 0;
 }
+.sentence {
+  text-transform: capitalize;
+}
+.lower {
+  text-transform: lowercase;
+}
 .action-detail {
   padding-left: 20px; 
 }

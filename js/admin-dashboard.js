@@ -71,37 +71,38 @@ fetch(getCashierUrl, options)
 
         accountWrapper.innerHTML = singleUser;
 
-        const getTransactionsUrl = `https://bankr-server.herokuapp.com/api/v1/transactions/${id}`;
+        const getActionsUrl = `https://bankr-server.herokuapp.com/api/v1/actions`;
 
-        fetch(getTransactionsUrl, options)
+        fetch(getActionsUrl, options)
           .then(response => response.json())
           .then((response) => {
             if (!response.error) {
-              const { data: transactionsData } = response;
+              const { data: actionsData } = response;
 
-              if (transactionsData[0]) {
-                const trimmedTransactions = transactionsData.splice(0, 4);
-                let singleTransaction;
+              if (actionsData[0]) {
+                const trimmedActions = actionsData[0].splice(0, 4);
+                let singleAction;
                 console.log(data[0]);
                 actionBox.innerHTML = '';
 
-                trimmedTransactions.forEach((transaction) => {
+                trimmedActions.forEach((action) => {
                   const {
                     type,
-                    amount,
-                    createdOn: transactionDate,
-                    accountNumber,
-                  } = transaction;
+                    firstname,
+                    lastname,
+                    createdon: actionDate,
+                    email: userEmail,
+                  } = action;
 
-                  const date = new Date(transactionDate).toString().slice(0, 24);
+                  const date = new Date(actionDate).toString().slice(0, 24);
                   console.log(date);
-                  singleTransaction = `<div class="single-box">
+                  singleAction = `<div class="single-box">
                                         <p class="trans-detail trans-title">${type}</p>
+                                        <p class="trans-detail trans-vendor sentence">${firstname} ${lastname}</p>
+                                        <p class="trans-detail trans-amount lower">${userEmail}</p>
                                         <p class="trans-detail trans-date-time">${date}</p>
-                                        <p class="trans-detail trans-vendor">${accountNumber}</p>
-                                        <p class="trans-detail trans-amount">${amount} &nbsp;ngn</p>
                                       </div>`;
-                  actionBox.innerHTML += singleTransaction;
+                  actionBox.innerHTML += singleAction;
                 });
               } else {
                 actionBox.innerHTML = noAction;
