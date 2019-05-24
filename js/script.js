@@ -81,7 +81,7 @@ msgBox.classList.add('alert-message', 'm-text-center');
 msgBox.setAttribute('id', 'message-box');
 msgBox.style.marginBottom = '10px';
 
-// const imagePreview = document.createElement('img');
+const imagePreview = document.createElement('img');
 
 const oldPassword = document.getElementById('old-password');
 const newPassword = document.getElementById('new-password');
@@ -180,15 +180,20 @@ function uploadImage() {
     return undefined;
   }
 
-  // try {
-  //   imagePreview.src = photoUrlField.value;
-  //   imageUploadTab.insertBefore(imagePreview, imagePreview.childNodes[1]);
-  //   // return false;
-  // } catch (error) {
-  //   msgBox.classList.add('m-error');
-  //   msgBox.innerHTML = 'Could not load image. Try another url.';
-  //   // return false;
-  // }
+  try {
+    imagePreview.src = photoUrlField.value;
+    if (imagePreview.height < 1) {
+      msgBox.classList.add('m-error');
+      msgBox.innerHTML = 'Could not load image. Invalid url.';
+      return false;
+    }
+    // imageUploadTab.insertBefore(imagePreview, imagePreview.childNodes[1]);
+    // return false;
+  } catch (error) {
+    msgBox.classList.add('m-error');
+    msgBox.innerHTML = 'Could not load image. Invalid url.';
+    return false;
+  }
 
   // imagePreview.setAttribute('onload', imageOnload());
   // imagePreview.setAttribute('onerror', imageOnerror());
