@@ -30,7 +30,7 @@ const options = {
   }),
 };
 
-// debugger;
+debugger;
 fetch(getAccountsUrl, options)
   .then(res => res.json())
   .then((res) => {
@@ -47,7 +47,8 @@ fetch(getAccountsUrl, options)
 
         allAccounts.forEach((account) => {
           const {
-            ownerEmail,
+            firstname,
+            lastname,
             type,
             status,
             balance,
@@ -61,7 +62,7 @@ fetch(getAccountsUrl, options)
 
           singleAccount = `<div class="detail-table__row">
                             <div class="detail-table__cell">${serialNumber}</div>
-                            <div class="detail-table__cell">${ownerEmail}</div>
+                            <div class="detail-table__cell">${firstname} ${lastname}</div>
                             <div class="detail-table__cell">${type}</div>
                             <div class="detail-table__cell">${accountnumber}</div>
                             <div class="detail-table__cell"> ${balance}</div>
@@ -165,7 +166,6 @@ function displayAccountModal() {
   const {
     firstname,
     lastname,
-    ownerEmail,
     accountnumber,
     status,
     balance,
@@ -208,13 +208,13 @@ function displayAccountModal() {
                         </div>`;
 
   activeModal = accountViewModal;
-  accountViewModalTitle.innerHTML = `Elizabeth Okoro`;
+  accountViewModalTitle.innerHTML = `${firstname} ${lastname}`;
   accountViewModalMain.innerHTML = singleAccount;
   accountViewModal.style.display = 'block';
 }
 
 function deleteAccount() {
-  debugger;
+  // debugger;
   loader.style.display = 'block';
   deleteUrl = `https://bankr-server.herokuapp.com/api/v1/accounts/${deleteAccountNumber}`;
 
