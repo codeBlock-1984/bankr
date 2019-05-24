@@ -81,10 +81,14 @@ msgBox.classList.add('alert-message', 'm-text-center');
 msgBox.setAttribute('id', 'message-box');
 msgBox.style.marginBottom = '10px';
 
+// const imagePreview = document.createElement('img');
+
 const oldPassword = document.getElementById('old-password');
 const newPassword = document.getElementById('new-password');
 const confirmPassword = document.getElementById('confirm-password');
 const inputFields = [oldPassword, newPassword, confirmPassword];
+
+const photoUrlField = document.getElementById('image-url');
 
 let imageUploadLink;
 let changePasswordLink;
@@ -106,6 +110,16 @@ settingsLinks.forEach((settingsLink) => {
 
     imageUploadLink.addEventListener('click', displayImageTab);
     changePasswordLink.addEventListener('click', displayPasswordTab);
+
+    imageUploadTab.insertBefore(msgBox, imageUploadTab.childNodes[0]);
+    msgBox.innerHTML = '';
+    msgBox.classList.remove('m-success');
+    msgBox.classList.remove('m-error');
+
+    photoUrlField.classList.remove('m-required');
+    photoUrlField.value = '';
+    const uploadBtn = document.getElementById('upload-button');
+    uploadBtn.addEventListener('click', uploadImage);
   });
 });
 
@@ -115,13 +129,16 @@ function displayImageTab() {
   msgBox.classList.remove('m-success');
   msgBox.classList.remove('m-error');
 
+  photoUrlField.classList.remove('m-required');
+  photoUrlField.value = '';
+
   changePasswordLink.classList.remove('active-tab');
   changePasswordTab.style.display = 'none';
   imageUploadLink.classList.add('active-tab');
   imageUploadTab.style.display = 'flex';
 
-  const uploadBtn = document.getElementById('upload-button');
-  uploadBtn.addEventListener('click', uploadImage);
+  // const uploadBtn = document.getElementById('upload-button');
+  // uploadBtn.addEventListener('click', uploadImage);
 }
 
 function displayPasswordTab() {
@@ -145,8 +162,93 @@ function displayPasswordTab() {
 }
 
 function uploadImage() {
-  return undefined;
+  // debugger;
+  msgBox.classList.remove('m-success');
+  msgBox.classList.remove('m-error');
+  checkFlag = false;
+
+  photoUrlField.classList.remove('m-required');
+  if (photoUrlField.value === '') {
+    checkFlag = true;
+    photoUrlField.classList.add('m-required');
+  }
+
+
+  if (checkFlag) {
+    msgBox.classList.add('m-error');
+    msgBox.innerHTML = 'Photo url is required!';
+    return undefined;
+  }
+
+  // try {
+  //   imagePreview.src = photoUrlField.value;
+  //   imageUploadTab.insertBefore(imagePreview, imagePreview.childNodes[1]);
+  //   // return false;
+  // } catch (error) {
+  //   msgBox.classList.add('m-error');
+  //   msgBox.innerHTML = 'Could not load image. Try another url.';
+  //   // return false;
+  // }
+
+  // imagePreview.setAttribute('onload', imageOnload());
+  // imagePreview.setAttribute('onerror', imageOnerror());
+
+  loader.style.display = 'block';
+  msgBox.innerHTML = '';
+
+  const imageUploadData = {
+    photoUrl: photoUrlField.value,
+  };
+
+  const imageUploadOptions = {
+    method: 'PATCH',
+    headers: new Headers({
+      'Content-Type': 'application/json',
+      'x-auth-token': currentUserToken,
+    }),
+    body: JSON.stringify(imageUploadData),
+  };
+
+  imageUploadUrl = `https://bankr-server.herokuapp.com/api/v1/users/photo`;
+
+  fetch(imageUploadUrl, imageUploadOptions)
+    .then(res => res.json())
+    .then((res) => {
+      // debugger;
+      if (!res.error) {
+        const { message } = res;
+        if (message) {
+          msgBox.classList.add('m-success');
+          msgBox.innerHTML = message;
+
+          photoUrlField.value = '';
+        } else {
+          loader.style.display = 'none';
+        }
+      } else {
+        loader.style.display = 'none';
+        const { error } = res;
+        msgBox.classList.add('m-error');
+        msgBox.innerHTML = error;
+      }
+      loader.style.display = 'none';
+    })
+    .catch((err) => {
+      loader.style.display = 'none';
+      console.log(err);
+    });
 }
+
+// function imageOnload() {
+//   debugger;
+//   imageUploadTab.insertBefore(imagePreview, imagePreview.childNodes[1]);
+//   return false;
+// }
+// function imageOnerror() {
+//   msgBox.classList.add('m-error');
+//   msgBox.innerHTML = 'Could not load image. Try another url.';
+//   return false;
+// }
 
 function changePassword() {
   msgBox.classList.remove('m-success');
