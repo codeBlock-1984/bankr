@@ -2061,7 +2061,10 @@ Media Queries for Responsive layout
     align-items: center;
   }
 }
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 480px) and (max-width: 768px) {
+  .account-modal {
+    width: 70%;
+  }
   .single-account-box {
     padding: 0;
     margin-bottom: 20px;
@@ -2072,7 +2075,7 @@ Media Queries for Responsive layout
     padding: 20px 10px;
   }
   .single-account-table-wrapper {
-    padding: 20px 0;
+    width: 60%;
   }
   .single-account-table .detail-table__head {
     flex: unset;
@@ -2090,6 +2093,9 @@ Media Queries for Responsive layout
   }
 }
 @media screen and (min-width: 768px) {
+  .account-modal {
+    width: 40%;
+  }
   .single-account-box {
     padding: 40px;
     margin-bottom: 20px;
@@ -2348,10 +2354,12 @@ Media Queries for Responsive layout
   }
   .single-user-table {
     justify-content: center;
+    width: 95%;
+    margin: 10px;
   }
   .single-user-table .detail-table__head,
   .single-user-table .detail-table__cell {
-    flex-basis: 50%;
+    flex-basis: initial;
   }
   .user-image-box {
     flex-basis: 50%;
@@ -2366,13 +2374,39 @@ Media Queries for Responsive layout
     -o-border-radius: 50%;
   }
 }
-@media screen and (max-width: 768px) {
+@media screen and (min-width: 480px) and (max-width: 768px) {
+  .single-user-table-wrapper {
+    width: 100%;
+  }
   .user-profile-wrapper {
     flex-direction: column;
   }
-  
+  .single-user-table {
+    justify-content: center;
+    width: 95%;
+    margin: 10px;
+  }
+  .single-user-table .detail-table__head,
+  .single-user-table .detail-table__cell {
+    flex-basis: initial;
+  }
 }
 @media screen and (min-width: 768px) {
+  .single-user-table-wrapper {
+    width: 100%;
+  }
+  .user-profile-wrapper {
+    flex-direction: column;
+  }
+  .single-user-table {
+    justify-content: center;
+    width: 95%;
+    margin: 10px;
+  }
+  .single-user-table .detail-table__head,
+  .single-user-table .detail-table__cell {
+    flex-basis: initial;
+  }
   .user-profile-wrapper {
     align-self: center;
     flex-direction: column;
