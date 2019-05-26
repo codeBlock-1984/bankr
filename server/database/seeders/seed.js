@@ -84,11 +84,27 @@ const debugg = debug('Seeding database');
                        (accountNumber, owner, type, status, balance)
                        VALUES(1015779306, 2, 'savings', 'dormant', 9000.83)`;
 
+  const accountFive = `INSERT INTO accounts
+                      (accountNumber, owner, type, status, balance)
+                      VALUES(1014657734, 1, 'savings', 'dormant', 1400.45)`;
+
+  const accountSix = `INSERT INTO accounts
+                      (accountNumber, owner, type, status, balance)
+                      VALUES(1010048577, 2, 'savings', 'active', 700.05)`;
+
+  const accountSeven = `INSERT INTO accounts
+                      (accountNumber, owner, type, status, balance)
+                      VALUES(1023394885, 1, 'current', 'dormant', 198000.05)`;
+
+  const accountEight = `INSERT INTO accounts
+                      (accountNumber, owner, type, status, balance)
+                      VALUES(1026590042, 2, 'current', 'active', 500600.05)`;
+
   const transactionOne = `INSERT INTO transactions
                           (type, accountNumber, account, cashier,
                           amount, oldBalance, newBalance)
                           VALUES('credit', 1012934423, 1, 3,
-                          300.32, 5000.05, 5300.38)`;
+                          300.33, 5000.05, 5300.38)`;
 
   const transactionTwo = `INSERT INTO transactions
                           (type, accountNumber, account, cashier,
@@ -108,6 +124,30 @@ const debugg = debug('Seeding database');
                            VALUES('debit', 1020095776, 2, 3,
                            250.76, 9000.83, 8750.07)`;
 
+  const transactionFive = `INSERT INTO transactions
+                           (type, accountNumber, account, cashier, amount,
+                           oldBalance, newBalance)
+                           VALUES('credit', 1012934423, 1, 4,
+                           250000.52, 5300.38, 255300.90)`;
+
+  const transactionSix = `INSERT INTO transactions
+                           (type, accountNumber, account, cashier, amount,
+                           oldBalance, newBalance)
+                           VALUES('credit', 1012934423, 1, 4,
+                           2004.70, 255300.90, 257305.60)`;
+
+  const transactionSeven = `INSERT INTO transactions
+                           (type, accountNumber, account, cashier, amount,
+                           oldBalance, newBalance)
+                           VALUES('debit', 1012934423, 1, 4,
+                           15100.40, 257305.60, 242205.20)`;
+
+  const transactionEight = `INSERT INTO transactions
+                           (type, accountNumber, account, cashier, amount,
+                           oldBalance, newBalance)
+                           VALUES('debit', 1012934423, 1, 4,
+                           100.05, 242205.20, 242105.15)`;
+
   const actionOne = `INSERT INTO actions
                      (firstName, lastName, role, type, email, admin)
                      VALUES('Sophie', 'Nwogu', 'cashier',
@@ -116,7 +156,7 @@ const debugg = debug('Seeding database');
   const actionTwo = `INSERT INTO actions
                      (firstName, lastName, role, type, email, admin)
                      VALUES('Wendy', 'Okechukwu', 'cashier',
-                     'created user', 'wendyo@gmail.com', 8)`;
+                     'created user', 'wendyo@gmail.com', 7)`;
 
   const actionThree = `INSERT INTO actions
                        (firstName, lastName, role, type, email, admin)
@@ -126,7 +166,7 @@ const debugg = debug('Seeding database');
   const actionFour = `INSERT INTO actions
                       (firstName, lastName, role, type, email, admin)
                       VALUES('Tom', 'Hardy', 'admin',
-                      'created user', 'madmax@live.com', 8)`;
+                      'created user', 'madmax@live.com', 7)`;
 
   const client = await pool.connect();
   try {
@@ -144,10 +184,18 @@ const debugg = debug('Seeding database');
     await client.query(accountTwo);
     await client.query(accountThree);
     await client.query(accountFour);
+    await client.query(accountFive);
+    await client.query(accountSix);
+    await client.query(accountSeven);
+    await client.query(accountEight);
     await client.query(transactionOne);
     await client.query(transactionTwo);
     await client.query(transactionThree);
     await client.query(transactionFour);
+    await client.query(transactionFive);
+    await client.query(transactionSix);
+    await client.query(transactionSeven);
+    await client.query(transactionEight);
     await client.query(actionOne);
     await client.query(actionTwo);
     await client.query(actionThree);
