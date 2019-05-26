@@ -147,7 +147,7 @@ function displayUserModal() {
   const singleUser = `
                 <div class="single-user-table-wrapper">
                   <div class="account-image-box user-image-box">
-                    <img class="account-image user-image" src="http://i.pravatar.cc/150?img=64" alt="Auwal Mohammed">
+                    <img class="account-image user-image" src="imgs/user_image.png" alt="${firstname} ${lastname}">
                   </div>
                   <div class="single-user-table">
                     <div class="detail-table__row single-account-row">
