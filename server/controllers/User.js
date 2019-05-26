@@ -345,12 +345,9 @@ class UserController {
       const { userId: user } = await verifyToken(userToken);
       const { photoUrl } = req.body;
 
-      console.log(user);
-      console.log(photoUrl);
       const values = [photoUrl, user];
       const { rows } = await client.query(updatePhoto, values);
 
-      console.log(rows);
       if (!rows[0]) {
         const error = 'Internal server error!';
         return res.status(500)

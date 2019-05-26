@@ -72,6 +72,7 @@ class AuthController {
           lastname: lastName,
           email,
           type,
+          photourl,
         } = rows[0];
 
         const {
@@ -86,6 +87,7 @@ class AuthController {
           lastName,
           email,
           type,
+          photourl,
         };
         const newSignup = { token, ...signupDetails };
 
@@ -133,6 +135,7 @@ class AuthController {
         email,
         password: userPassword,
         type,
+        photourl,
       } = rows[0];
 
       const isVerified = await verifyPassword(passwordInput, userPassword);
@@ -154,6 +157,7 @@ class AuthController {
         lastName,
         email,
         type,
+        photourl,
       };
 
       const newSignin = { token, ...signinDetails };
