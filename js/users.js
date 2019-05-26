@@ -60,7 +60,7 @@ fetch(getUsersUrl, options)
 
           singleUser = `<div class="detail-table__row">
                             <div class="detail-table__cell users-table__cell">${serialNumber}</div>
-                            <div class="detail-table__cell users-table__cell">${firstname} ${lastname}</div>
+                            <div class="detail-table__cell users-table__cell m-sentence-case">${firstname} ${lastname}</div>
                             <div class="detail-table__cell users-table__cell">${email}</div>
                             <div class="detail-table__cell users-table__cell">${type}</div>        
                             <div class="detail-table__cell action-cell users-table__cell">
@@ -140,14 +140,16 @@ function displayUserModal() {
     email,
     type,
     createdon,
+    photourl: userPhotoUrl,
   } = user;
 
   const date = new Date(createdon).toString().slice(0, 15);
+  const imageUrl = userPhotoUrl || 'imgs/user_image.png';
 
   const singleUser = `
                 <div class="single-user-table-wrapper">
                   <div class="account-image-box user-image-box">
-                    <img class="account-image user-image" src="imgs/user_image.png" alt="${firstname} ${lastname}">
+                    <img class="account-image user-image" src=${imageUrl} alt="${firstname} ${lastname}">
                   </div>
                   <div class="single-user-table">
                     <div class="detail-table__row single-account-row">

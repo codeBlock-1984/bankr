@@ -62,7 +62,7 @@ fetch(getAccountsUrl, options)
 
           singleAccount = `<div class="detail-table__row">
                             <div class="detail-table__cell">${serialNumber}</div>
-                            <div class="detail-table__cell">${firstname} ${lastname}</div>
+                            <div class="detail-table__cell m-sentence-case">${firstname} ${lastname}</div>
                             <div class="detail-table__cell">${type}</div>
                             <div class="detail-table__cell">${accountnumber}</div>
                             <div class="detail-table__cell"> ${balance}</div>
@@ -170,14 +170,16 @@ function displayAccountModal() {
     status,
     balance,
     type,
+    photourl: accountPhotoUrl,
     createdon,
   } = account;
 
   const date = new Date(createdon).toString().slice(0, 15);
+  const imageUrl = accountPhotoUrl || 'imgs/user_image.png';
 
   const singleAccount = `<div class="single-account-table-wrapper">
                           <div class="account-image-box">
-                            <img class="account-image" src="imgs/user_image.png" alt="${firstname} ${lastname}">
+                            <img class="account-image" src=${imageUrl} alt="${firstname} ${lastname}">
                             <div class="account-signature-box">
                               <img class="account-signature" src="https://fontmeme.com/permalink/190322/2cc138d160c63c622e3def7fc6cdd417.png" alt="Customer signature">
                               <h2 class="account-signature-title">Customer signature</h2>
