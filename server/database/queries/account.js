@@ -23,9 +23,10 @@ const getAccountAdmin = `SELECT accounts.createdOn, accounts.accountNumber,
 const getAccountsByStatus = `SELECT * FROM accounts WHERE status = $1
                              ORDER BY id ASC`;
 
-const getAllAccounts = `SELECT accounts.id, firstName, lastName, email, owner,
-                        accounts.type, accountNumber, status, balance,
-                        accounts.createdOn FROM users INNER JOIN accounts
+const getAllAccounts = `SELECT accounts.id, firstName, lastName, photourl,
+                        email, owner, accounts.type, accountNumber, status,
+                        balance, accounts.createdOn
+                        FROM users INNER JOIN accounts
                         on users.id = accounts.owner ORDER BY id ASC`;
 
 const getUserAccounts = `SELECT accounts.createdOn, accountNumber,
