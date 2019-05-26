@@ -127,25 +127,25 @@ const debugg = debug('Seeding database');
   const transactionFive = `INSERT INTO transactions
                            (type, accountNumber, account, cashier, amount,
                            oldBalance, newBalance)
-                           VALUES('credit', 1012934423, 1, 4,
+                           VALUES('credit', 1012934423, 1, 3,
                            250000.52, 5300.38, 255300.90)`;
 
   const transactionSix = `INSERT INTO transactions
                            (type, accountNumber, account, cashier, amount,
                            oldBalance, newBalance)
-                           VALUES('credit', 1012934423, 1, 4,
+                           VALUES('credit', 1012934423, 1, 3,
                            2004.70, 255300.90, 257305.60)`;
 
   const transactionSeven = `INSERT INTO transactions
                            (type, accountNumber, account, cashier, amount,
                            oldBalance, newBalance)
-                           VALUES('debit', 1012934423, 1, 4,
+                           VALUES('debit', 1012934423, 1, 3,
                            15100.40, 257305.60, 242205.20)`;
 
   const transactionEight = `INSERT INTO transactions
                            (type, accountNumber, account, cashier, amount,
                            oldBalance, newBalance)
-                           VALUES('debit', 1012934423, 1, 4,
+                           VALUES('debit', 1012934423, 1, 3,
                            100.05, 242205.20, 242105.15)`;
 
   const actionOne = `INSERT INTO actions
@@ -156,7 +156,7 @@ const debugg = debug('Seeding database');
   const actionTwo = `INSERT INTO actions
                      (firstName, lastName, role, type, email, admin)
                      VALUES('Wendy', 'Okechukwu', 'cashier',
-                     'created user', 'wendyo@gmail.com', 7)`;
+                     'created user', 'wendyo@gmail.com', 8)`;
 
   const actionThree = `INSERT INTO actions
                        (firstName, lastName, role, type, email, admin)
