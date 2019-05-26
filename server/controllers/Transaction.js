@@ -453,7 +453,7 @@ class TransactionController {
       const msg = `Successfully retrieved cashier's transaction records.`;
 
       return res.status(200)
-        .json(successResponse(msg, [cashierTransactions]));
+        .json(successResponse(msg, cashierTransactions));
     } catch (error) {
       return res.status(500)
         .json(errorResponse('Internal server error!'));

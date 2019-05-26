@@ -3,14 +3,15 @@ import chai from 'chai';
 import chaiHttp from 'chai-http';
 
 import app from '../index';
-import pool from '../database/db';
 import authData from '../testData/users';
 
 chai.use(chaiHttp);
 chai.should();
 
-const { testUser } = authData;
+const { testUser, invalidToken, admin } = authData;
 const { email: testUserEmail } = testUser;
+let testToken;
+let adminToken;
 
 describe('Auth Endpoints', () => {
   describe('POST /auth/signup', () => {
@@ -42,6 +43,17 @@ describe('Auth Endpoints', () => {
     });
 
     it('should return 400 error if firstname is empty', (done) => {
+      chai.request(app).post('/api/v1/auth/signup')
+        .send(testUser)
+        .end((err, res) => {
+          res.should.have.status(409);
+          res.body.should.have.property('error');
+          res.body.error.should.eql('Email linked to existing user!');
+          done();
+        });
+    });
+
+    it('should return 409 error if email is in use', (done) => {
       const { firstName, ...partialUserDetails } = testUser;
       chai.request(app).post('/api/v1/auth/signup')
         .send(partialUserDetails)
@@ -96,6 +108,8 @@ describe('Auth Endpoints', () => {
         chai.request(app).post('/api/v1/auth/signin')
           .send(signinDetails)
           .end((err, res) => {
+            testToken = res.body.data[0].token;
+
             res.should.have.status(200);
             res.body.should.have.property('data');
             res.body.data.should.be.an('array');
@@ -142,18 +156,69 @@ describe('Auth Endpoints', () => {
           done();
         });
     });
+
+    it('should return 400 error if email is incorrect', (done) => {
+      chai.request(app).post('/api/v1/auth/signin')
+        .send({ email: 'doraofil@yahoo.com', password: 'dorasecurepassword', })
+        .end((err, res) => {
+          res.should.have.status(400);
+          res.body.should.have.property('error');
+          res.body.error.should.eql('Email or password incorrect!');
+          done();
+        });
+    });
+
+    it('should return 400 error if password is incorrect', (done) => {
+      chai.request(app).post('/api/v1/auth/signin')
+        .send({ email: 'doraofili@yahoo.com', password: 'dorasecurpassword', })
+        .end((err, res) => {
+          res.should.have.status(400);
+          res.body.should.have.property('error');
+          res.body.error.should.eql('Email or password incorrect!');
+          done();
+        });
+    });
+  });
+
+  describe('POST /auth/validate/token', () => {
+    it('should check whether a token is valid', (done) => {
+      try {
+        chai.request(app).post('/api/v1/auth/validate/token')
+          .send({ token: testToken })
+          .end((err, res) => {
+            res.should.have.status(200);
+            res.body.should.have.property('message');
+            res.body.message.should.be.a('string')
+              .eql('Token validation successful.');
+            done();
+          });
+      } catch (error) {
+        console.log(error);
+      }
+    });
+
+    it('should return 400 error if token is invalid', (done) => {
+      chai.request(app).post('/api/v1/auth/validate/token')
+        .send({ token: invalidToken })
+        .end((err, res) => {
+          res.should.have.status(400);
+          res.body.should.have.property('error');
+          res.body.error.token.should.eql('Invalid token.');
+          done();
+        });
+    });
   });
 
   after('Remove new user account', async () => {
-    const client = await pool.connect();
     try {
-      const removeUserQuery = `DELETE FROM users WHERE email = $1 `;
-      const value = [testUserEmail];
-      await client.query(removeUserQuery, value);
+      const res = await chai.request(app)
+        .post('/api/v1/auth/signin').send(admin);
+
+      adminToken = res.body.data[0].token;
+      await chai.request(app).delete(`/api/v1/users/${testUserEmail}`)
+        .set('x-auth-token', adminToken);
     } catch (error) {
       console.log(error);
-    } finally {
-      await client.release();
     }
   });
 });

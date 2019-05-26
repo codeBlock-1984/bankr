@@ -115,7 +115,7 @@ const debugg = debug('Seeding database');
 
   const actionTwo = `INSERT INTO actions
                      (firstName, lastName, role, type, email, admin)
-                     VALUES('Wendy', 'Okechukwu', 'Cashier',
+                     VALUES('Wendy', 'Okechukwu', 'cashier',
                      'created user', 'wendyo@gmail.com', 8)`;
 
   const actionThree = `INSERT INTO actions

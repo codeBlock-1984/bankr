@@ -73,12 +73,46 @@ describe('Accounts Endpoints', () => {
           done();
         });
     });
+
+    it('should throw error if owner is null for creator not client', (done) => {
+      const partialAccountDetails = { type: 'savings' };
+      chai.request(app).post('/api/v1/accounts').send(partialAccountDetails)
+        .set('x-auth-token', cashierToken)
+        .end((err, res) => {
+          res.should.have.status(400);
+          res.body.should.have.property('error');
+          res.body.error.should.eql('Owner is required.');
+          done();
+        });
+    });
   });
 
   describe('GET /accounts/:accountNumber', () => {
-    it('should get the account with the specified account number', (done) => {
+    it('should get the account if it belongs to the client', (done) => {
       chai.request(app).get(`/api/v1/accounts/${testAccountNumber}`)
         .set('x-auth-token', clientToken)
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.body.should.have.property('data');
+          res.body.data[0].should.be.an('object');
+          res.body.data[0].should.have.property('createdOn');
+          res.body.data[0].createdOn.should.be.a('string');
+          res.body.data[0].should.have.property('accountNumber')
+            .eql(testAccountNumber);
+          res.body.data[0].accountNumber.should.be.a('number');
+          res.body.data[0].should.have.property('type').eql('savings');
+          res.body.data[0].type.should.be.a('string');
+          res.body.data[0].should.have.property('status').eql('active');
+          res.body.data[0].status.should.be.a('string');
+          res.body.data[0].should.have.property('balance').eql(0);
+          res.body.data[0].balance.should.be.an('number');
+          done();
+        });
+    });
+
+    it('should get the account with the specified account number', (done) => {
+      chai.request(app).get(`/api/v1/accounts/${testAccountNumber}`)
+        .set('x-auth-token', adminToken)
         .end((err, res) => {
           res.should.have.status(200);
           res.body.should.have.property('data');
@@ -211,6 +245,17 @@ describe('Accounts Endpoints', () => {
           res.should.have.status(404);
           res.body.should.have.property('error')
             .eql('No accounts record found with the specified email!');
+          done();
+        });
+    });
+
+    it('should return 404 error if account with email is not found', (done) => {
+      chai.request(app).get(`/api/v1/users/${noEmail}/accounts`)
+        .set('x-auth-token', clientToken)
+        .end((err, res) => {
+          res.should.have.status(404);
+          res.body.should.have.property('error')
+            .eql('No accounts record found!');
           done();
         });
     });
