@@ -29,14 +29,13 @@ class ActionController {
 
     try {
       const token = req.headers['x-auth-token'];
-      const { userId: loggedInAdmin } = await verifyToken(token);
+      const { userId } = await verifyToken(token);
 
-      const values = [loggedInAdmin];
+      const values = [userId];
       const { rows } = await client.query(getActionAdmin, values);
 
       if (!rows[0]) {
-        const error = `No action records found for
-                       admin with id ${loggedInAdmin}!`;
+        const error = `No action records found for admin with id ${userId}!`;
 
         return res.status(404)
           .json(errorResponse(error));
@@ -46,7 +45,7 @@ class ActionController {
 
       const msg = 'Successfully retrieved admin actions.';
       return res.status(200)
-        .json(successResponse(msg, [adminActions]));
+        .json(successResponse(msg, adminActions));
     } catch (error) {
       return res.status(500)
         .json(errorResponse('Internal server error!'));

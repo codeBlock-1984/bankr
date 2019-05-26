@@ -14,17 +14,22 @@ chai.should();
 const { testTransactionData } = transactionData;
 const { amount: testAmount } = testTransactionData;
 
-const { client, clientTwo, cashier: cashierUser } = signInData;
+const {
+  client, clientTwo, cashier: cashierUser, cashierTwo,
+} = signInData;
 
 let clientToken;
 let cashierToken;
 let clientTwoToken;
+let cashierTwoToken;
 
 const testAccountNumber = 1012934423;
 let testTransactionId;
 const noTransactionId = 1009;
 const noAccountNumber = 1050003948;
+const dormantAccount = 1020095776;
 const noTransactionsAccountNumber = 1015779306;
+const noError = 'Account with given account number does not exist!';
 
 describe('Transactions Endpoints', () => {
   before('Get request tokens', async () => {
@@ -38,6 +43,9 @@ describe('Transactions Endpoints', () => {
 
       const responseThree = await chai.request(app).post(url).send(cashierUser);
       cashierToken = responseThree.body.data[0].token;
+
+      const responseFour = await chai.request(app).post(url).send(cashierTwo);
+      cashierTwoToken = responseFour.body.data[0].token;
     } catch (error) {
       console.log(error);
     }
@@ -82,6 +90,17 @@ describe('Transactions Endpoints', () => {
           done();
         });
     });
+
+    it('should return 404 error if account number does not exist', (done) => {
+      chai.request(app).post(`/api/v1/transactions/${noAccountNumber}/credit`)
+        .send(testTransactionData).set('x-auth-token', cashierToken)
+        .end((err, res) => {
+          res.should.have.status(404);
+          res.body.should.have.property('error');
+          res.body.error.should.eql(noError);
+          done();
+        });
+    });
   });
 
   describe('POST /transactions/:accountNumber/debit', () => {
@@ -119,12 +138,72 @@ describe('Transactions Endpoints', () => {
           done();
         });
     });
+
+    it('should return 404 error if account number does not exist', (done) => {
+      chai.request(app).post(`/api/v1/transactions/${noAccountNumber}/debit`)
+        .send(testTransactionData).set('x-auth-token', cashierToken)
+        .end((err, res) => {
+          res.should.have.status(404);
+          res.body.should.have.property('error');
+          res.body.error.should.eql(noError);
+          done();
+        });
+    });
+
+    it('should return 404 error if account is dormant', (done) => {
+      chai.request(app).post(`/api/v1/transactions/${dormantAccount}/debit`)
+        .send(testTransactionData).set('x-auth-token', cashierToken)
+        .end((err, res) => {
+          res.should.have.status(400);
+          res.body.should.have.property('error');
+          res.body.error.should.eql('You cannot debit a dormant account!');
+          done();
+        });
+    });
+
+    it('should throw error if account balance is less than amount', (done) => {
+      chai.request(app).post(`/api/v1/transactions/${testAccountNumber}/debit`)
+        .send({ amount: 100000 }).set('x-auth-token', cashierToken)
+        .end((err, res) => {
+          res.should.have.status(400);
+          res.body.should.have.property('error');
+          res.body.error.should.eql('Insufficient funds!');
+          done();
+        });
+    });
   });
 
   describe('GET /transactions/:transactionId', () => {
-    it('should get the transaction with the specified id', (done) => {
+    it(`should get the client's transaction with the specified id`, (done) => {
       chai.request(app).get(`/api/v1/transactions/${testTransactionId}`)
         .set('x-auth-token', clientToken)
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.body.should.have.property('data');
+          res.body.data.should.be.an('array');
+          res.body.data[0].should.have.property('transactionId')
+            .eql(testTransactionId);
+          res.body.data[0].transactionId.should.be.a('number');
+          res.body.data[0].should.have.property('createdOn');
+          res.body.data[0].createdOn.should.be.a('string');
+          res.body.data[0].should.have.property('type').eql('credit');
+          res.body.data[0].type.should.be.a('string');
+          res.body.data[0].should.have.property('accountNumber')
+            .eql(testAccountNumber);
+          res.body.data[0].accountNumber.should.be.a('number');
+          res.body.data[0].should.have.property('amount').eql(testAmount);
+          res.body.data[0].amount.should.be.a('number');
+          res.body.data[0].should.have.property('oldBalance');
+          res.body.data[0].oldBalance.should.be.a('number');
+          res.body.data[0].should.have.property('newBalance');
+          res.body.data[0].newBalance.should.be.a('number');
+          done();
+        });
+    });
+
+    it('should get the transaction with the specified id', (done) => {
+      chai.request(app).get(`/api/v1/transactions/${testTransactionId}`)
+        .set('x-auth-token', cashierToken)
         .end((err, res) => {
           res.should.have.status(200);
           res.body.should.have.property('data');
@@ -162,10 +241,37 @@ describe('Transactions Endpoints', () => {
   });
 
   describe('GET /accounts/:accountNumber/transactions', () => {
-    it('should get all transactions with the account number', (done) => {
+    it(`should get client's transactions with the account number`, (done) => {
       chai.request(app)
         .get(`/api/v1/accounts/${testAccountNumber}/transactions`)
         .set('x-auth-token', clientToken)
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.body.should.have.property('data');
+          res.body.data.should.be.an('array');
+          res.body.data[0].should.have.property('transactionid');
+          res.body.data[0].transactionid.should.be.a('number');
+          res.body.data[0].should.have.property('createdon');
+          res.body.data[0].createdon.should.be.a('string');
+          res.body.data[0].should.have.property('type');
+          res.body.data[0].type.should.be.a('string');
+          res.body.data[0].should.have.property('accountnumber')
+            .eql(testAccountNumber);
+          res.body.data[0].accountnumber.should.be.a('number');
+          res.body.data[0].should.have.property('amount');
+          res.body.data[0].amount.should.be.a('number');
+          res.body.data[0].should.have.property('oldbalance');
+          res.body.data[0].oldbalance.should.be.a('number');
+          res.body.data[0].should.have.property('newbalance');
+          res.body.data[0].newbalance.should.be.a('number');
+          done();
+        });
+    });
+
+    it('should get all transactions with the account number', (done) => {
+      chai.request(app)
+        .get(`/api/v1/accounts/${testAccountNumber}/transactions`)
+        .set('x-auth-token', cashierToken)
         .end((err, res) => {
           res.should.have.status(200);
           res.body.should.have.property('data');
@@ -220,6 +326,61 @@ describe('Transactions Endpoints', () => {
         .end((err, res) => {
           res.should.have.status(200);
           res.body.should.have.property('data');
+          res.body.data.should.be.an('array');
+          res.body.data[0].should.have.property('transactionid');
+          res.body.data[0].transactionid.should.be.a('number');
+          res.body.data[0].should.have.property('createdon');
+          res.body.data[0].createdon.should.be.a('string');
+          res.body.data[0].should.have.property('type');
+          res.body.data[0].type.should.be.a('string');
+          res.body.data[0].should.have.property('accountnumber')
+            .eql(testAccountNumber);
+          res.body.data[0].accountnumber.should.be.a('number');
+          res.body.data[0].should.have.property('amount');
+          res.body.data[0].amount.should.be.a('number');
+          res.body.data[0].should.have.property('oldbalance');
+          res.body.data[0].oldbalance.should.be.a('number');
+          res.body.data[0].should.have.property('newbalance');
+          res.body.data[0].newbalance.should.be.a('number');
+          done();
+        });
+    });
+  });
+
+  describe('GET /transactions/cashier', () => {
+    it('should get all transactions', (done) => {
+      chai.request(app).get('/api/v1/transactions/cashier')
+        .set('x-auth-token', cashierToken)
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.body.should.have.property('data');
+          res.body.data.should.be.an('array');
+          res.body.data[0].should.have.property('transactionid');
+          res.body.data[0].transactionid.should.be.a('number');
+          res.body.data[0].should.have.property('createdon');
+          res.body.data[0].createdon.should.be.a('string');
+          res.body.data[0].should.have.property('type');
+          res.body.data[0].type.should.be.a('string');
+          res.body.data[0].should.have.property('accountnumber')
+            .eql(testAccountNumber);
+          res.body.data[0].accountnumber.should.be.a('number');
+          res.body.data[0].should.have.property('amount');
+          res.body.data[0].amount.should.be.a('number');
+          res.body.data[0].should.have.property('oldbalance');
+          res.body.data[0].oldbalance.should.be.a('number');
+          res.body.data[0].should.have.property('newbalance');
+          res.body.data[0].newbalance.should.be.a('number');
+          done();
+        });
+    });
+
+    it('should throw 404 error if cashier has no transactions', (done) => {
+      chai.request(app).get('/api/v1/transactions/cashier')
+        .set('x-auth-token', cashierTwoToken)
+        .end((err, res) => {
+          res.should.have.status(404);
+          res.body.should.have.property('error')
+            .eql('No transactions record found for cashier!');
           done();
         });
     });
