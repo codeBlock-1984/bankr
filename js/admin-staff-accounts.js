@@ -21,7 +21,7 @@ profileTitle.innerHTML = `${firstName} ${lastName}`;
 const token = localStorage.getItem('x-auth-token');
 const getAccountsUrl = `https://bankr-server.herokuapp.com/api/v1/accounts`;
 
-console.log(token);
+// console.log(token);
 const options = {
   method: 'GET',
   headers: new Headers({
@@ -30,7 +30,7 @@ const options = {
   }),
 };
 
-debugger;
+// debugger;
 fetch(getAccountsUrl, options)
   .then(res => res.json())
   .then((res) => {
@@ -177,7 +177,7 @@ function displayAccountModal() {
 
   const singleAccount = `<div class="single-account-table-wrapper">
                           <div class="account-image-box">
-                            <img class="account-image" src="http://i.pravatar.cc/150?img=16" alt="Elizabeth Okoro">
+                            <img class="account-image" src="imgs/user_image.png" alt="${firstname} ${lastname}">
                             <div class="account-signature-box">
                               <img class="account-signature" src="https://fontmeme.com/permalink/190322/2cc138d160c63c622e3def7fc6cdd417.png" alt="Customer signature">
                               <h2 class="account-signature-title">Customer signature</h2>

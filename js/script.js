@@ -1,3 +1,9 @@
+// User profile picture
+const { photourl: userImgUrl } = authUser;
+const avatar = document.getElementById('user-panel-link');
+const avatarUrl = userImgUrl || 'imgs/avatar.png';
+avatar.src = avatarUrl;
+
 // ---- Mobile menu --------
 const mobileMenuLink = document.getElementById('mobile-menu-link');
 
@@ -71,6 +77,7 @@ logoutLinks.forEach((logoutLink) => {
     }, 300);
   });
 });
+
 
 // User settings modal
 
@@ -233,14 +240,17 @@ function uploadImage() {
       } else {
         loader.style.display = 'none';
         const { error } = res;
+        console.log(error);
         msgBox.classList.add('m-error');
-        msgBox.innerHTML = error;
+        msgBox.innerHTML = 'Could not load image. Invalid url.';
       }
       loader.style.display = 'none';
     })
     .catch((err) => {
       loader.style.display = 'none';
       console.log(err);
+      msgBox.classList.add('m-error');
+      msgBox.innerHTML = 'Could not load image. Invalid url.';
     });
 }
 
@@ -320,13 +330,16 @@ function changePassword() {
       } else {
         loader.style.display = 'none';
         const { error } = res;
+        console.log(error);
         msgBox.classList.add('m-error');
-        msgBox.innerHTML = error;
+        msgBox.innerHTML = 'Password must be between 6 and 20 characters.';
       }
       loader.style.display = 'none';
     })
     .catch((err) => {
       loader.style.display = 'none';
       console.log(err);
+      msgBox.classList.add('m-error');
+      msgBox.innerHTML = 'Password must be between 6 and 20 characters.';
     });
 }
