@@ -80,7 +80,7 @@ fetch(getCashierUrl, options)
               const { data: actionsData } = response;
 
               if (actionsData[0]) {
-                const trimmedActions = actionsData[0].splice(0, 4);
+                const trimmedActions = actionsData.splice(0, 4);
                 let singleAction;
                 console.log(data[0]);
                 actionBox.innerHTML = '';
