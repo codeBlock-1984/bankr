@@ -80,7 +80,7 @@ fetch(getCashierUrl, options)
               const { data: transactionsData } = response;
 
               if (transactionsData[0]) {
-                const trimmedTransactions = transactionsData[0].splice(0, 2);
+                const trimmedTransactions = transactionsData.splice(0, 4);
                 console.log(trimmedTransactions);
                 let singleTransaction;
                 console.log(data[0]);
