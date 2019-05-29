@@ -1273,10 +1273,6 @@ body {
 .trans-alert {
   display: none;
   width: 57%;
-  color: #64272c;
-}
-.trans-alert p {
-  color: #64272c;
   text-align: center;
   font-size: 13px;
 }
@@ -1291,7 +1287,7 @@ body {
   width: 95%;
 }
 .transaction-account-search input {
-  width: calc(100% - 39px);
+  width: calc(100% - 30px);
 }
 .selected-account-detail-box {
   display: none;
@@ -2130,6 +2126,9 @@ Media Queries for Responsive layout
 /* Credit-debit */
 /* Media queries */
 @media screen and (max-width: 480px) {
+  .trans-alert {
+    margin-top: 20px;
+  }
   .search {
     justify-content: center;
   }
@@ -2142,15 +2141,13 @@ Media Queries for Responsive layout
   }
   .transaction-account-search {
     display: flex;
-    width: 78%;
+    width: 90%;
     margin: 10px auto;
     margin-top: 30px;
   }
   .transaction-account-search .search__form {
-    margin: 0;
-  }
-  .transaction-account-search .search__form .search__input {
     width: 80%;
+    margin: 0;
   }
   .selected-account-detail-box {
     align-self: center;
@@ -2167,6 +2164,12 @@ Media Queries for Responsive layout
   }
 }
 @media screen and (min-width: 480px) and (max-width: 768px) {
+  .transaction-account-search .search__form {
+    width: 60%;
+  }
+  .transaction-account-search .search__form {
+    width: 95%;
+  }
   .search__input {
     font-size: 12px;
   }
@@ -2177,15 +2180,12 @@ Media Queries for Responsive layout
   }
   .transaction-account-search {
     display: flex;
-    width: 90%;
+    width: 60%;
     margin: 0 auto;
     margin-top: 20px;
   }
   .transaction-account-search .search__form {
-    width: 64%;
-  }
-  .transaction-account-search .search__form .search__input {
-    width: 94%;
+    width: 95%;
   }
   .selected-account-detail-box {
     flex: unset;
