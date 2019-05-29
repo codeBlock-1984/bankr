@@ -12,6 +12,7 @@ let transactionAccount;
 let transactionAmount;
 let transactionBalance;
 let transactionType;
+let transactionStatus;
 
 loader.style.display = 'block';
 accountSearchBtn.addEventListener('click', searchAccount);
@@ -70,6 +71,7 @@ function searchAccount() {
     searchFlag = true;
     transactionAccount = accountnumber;
     transactionBalance = balance;
+    transactionStatus = status;
 
     searchResultBox.innerHTML = `<p class="selected-account-number">Account number: ${accountnumber}</p>
                                  <p class="selected-account-name">Status: ${status}</p>
@@ -88,6 +90,9 @@ const transactionSendBtn = document.getElementById('transaction-send-btn');
 const transactionCancelBtn = document.getElementById('transaction-cancel-btn');
 const selectType = document.getElementById('transaction-type');
 
+// const debitConfirmModal = document.getElementById('debit-confirm-dialog');
+// const creditConfirmModal = document.getElementById('credit-confirm-dialog');
+
 // const transactionMessageDialog = document.getElementById('transaction-message-dialog');
 
 transactionSendBtn.addEventListener('click', displayTransactionConfirmModal);
@@ -95,12 +100,12 @@ transactionCancelBtn.addEventListener('click', cancelTransaction);
 
 function displayTransactionConfirmModal() {
   // debugger;
+  messageBox.classList.remove('m-error', 'm-success');
+  messageBox.innerHTML = '';
   messageBox.style.display = 'none';
 
   transactionType = selectType.options[selectType.selectedIndex].value;
   transactionAmount = document.getElementById('transaction-amount').value;
-  const debitConfirmModal = document.getElementById('debit-confirm-dialog');
-  const creditConfirmModal = document.getElementById('credit-confirm-dialog');
 
   const validAmount = /(([0-9]){1,7})$/;
   amountFlag = validAmount.test(parseInt(transactionAmount));
@@ -110,23 +115,23 @@ function displayTransactionConfirmModal() {
 
   if (transactFlag) {
     if (transactionType === 'credit') {
-      activeModal = creditConfirmModal;
-      creditConfirmModal.style.display = 'block';
-      const creditSendBtn = document.getElementsByClassName('credit-account-btn')[0];
-      creditSendBtn.addEventListener('click', sendCredit);
+      sendCredit();
     } else if (transactionType === 'debit') {
-      if (transactionBalance < transactionAmount) {
-        messageBox.innerHTML = `<p>Insufficient funds!</p>`;
+      if (transactionStatus === 'dormant') {
+        messageBox.classList.add('m-error');
+        messageBox.innerHTML = `Debit not allowed on dormant account!`;
+        messageBox.style.display = 'block';
+      } else if (transactionBalance < transactionAmount) {
+        messageBox.classList.add('m-error');
+        messageBox.innerHTML = `Insufficient funds!`;
         messageBox.style.display = 'block';
       } else {
-        activeModal = debitConfirmModal;
-        debitConfirmModal.style.display = 'block';
-        const debitSendBtn = document.getElementsByClassName('debit-account-btn')[0];
-        debitSendBtn.addEventListener('click', sendDebit);
+        sendDebit();
       }
     }
   } else {
-    messageBox.innerHTML = `<p>Empty or invalid input!</p>`;
+    messageBox.classList.add('m-error');
+    messageBox.innerHTML = `Empty or invalid input!`;
     messageBox.style.display = 'block';
   }
 }
@@ -135,8 +140,21 @@ function displayTransactionConfirmModal() {
 function cancelTransaction() {
   document.getElementsByClassName('transaction-form')[0].reset();
 }
+
 function sendCredit() {
-  // debugger;
+  loader.style.display = 'block';
+  // let confirmFlag = false;
+  // activeModal = creditConfirmModal;
+  // creditConfirmModal.style.display = 'block';
+  // const creditSendBtn = document.getElementsByClassName('credit-account-btn')[0];
+  // creditSendBtn.addEventListener('click', () => {
+  //   confirmFlag = true;
+  // });
+  // // debugger;
+  // if (!confirmFlag) {
+  //   return undefined;
+  // }
+
   const amount = transactionAmount;
   const transactionData = { amount };
 
@@ -158,18 +176,23 @@ function sendCredit() {
       if (!res.error) {
         const { data } = res;
         if (data[0]) {
-          const successHeader = this.parentNode.parentNode.children[0].children[0];
-          const successMessage = this.parentNode.parentNode.children[1].children[0];
-          successHeader.innerHTML = `Transaction successful`;
-          successMessage.innerHTML = `Successfully credited ${transactionAccount} with ${transactionAmount}`;
+          // const successHeader = this.parentNode.parentNode.children[0].children[0];
+          // const successMessage = this.parentNode.parentNode.children[1].children[0];
+          messageBox.classList.add('m-success');
+          messageBox.innerHTML = `Credit transaction successful`;
+          // messageBox.innerHTML = `Successfully credited ${transactionAccount} with ${transactionAmount}`;
+          messageBox.style.display = 'block';
         }
+        loader.style.display = 'none';
       }
+      loader.style.display = 'none';
     })
     .catch((err) => {
+      loader.style.display = 'none';
       console.log(err);
     });
 
-  closeModal();
+  // closeModal();
   // transactionMessageDialog.style.display = 'block';
 }
 function sendDebit() {
@@ -197,10 +220,12 @@ function sendDebit() {
       if (!res.error) {
         const { data } = res;
         if (data[0]) {
-          const successHeader = this.parentNode.parentNode.children[0].children[0];
-          const successMessage = this.parentNode.parentNode.children[1].children[0];
-          successHeader.innerHTML = `Transaction successful`;
-          successMessage.innerHTML = `Successfully credited ${transactionAccount} with ${transactionAmount}`;
+          // const successHeader = this.parentNode.parentNode.children[0].children[0];
+          // const successMessage = this.parentNode.parentNode.children[1].children[0];
+          messageBox.classList.add('m-success');
+          messageBox.innerHTML = `Debit transaction successful`;
+          // successMessage.innerHTML = `Successfully debited ${transactionAccount} with ${transactionAmount}`;
+          messageBox.style.display = 'block';
         }
       }
       loader.style.display = 'none';
@@ -210,6 +235,6 @@ function sendDebit() {
       console.log(err);
     });
 
-  closeModal();
+  // closeModal();
   // transactionMessageDialog.style.display = 'block';
 }
