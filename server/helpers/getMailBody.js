@@ -1,6 +1,6 @@
 const getMailBody = (transactionDetails) => {
   const {
-    id, type, accountNumber, amount, balance, firstName, lastName, date,
+    id, type, accountNumber, amount, balance, firstname, lastname, date,
   } = transactionDetails;
 
   const transactionDate = date.toString();
@@ -40,7 +40,7 @@ const getMailBody = (transactionDetails) => {
           </head>
           <body>
             <div class="mail-box">
-              <p>Dear ${firstName} &nbsp; ${lastName},</p>
+              <p>Dear ${firstname} &nbsp; ${lastname},</p>
               <h2 class="msg-title">Transaction Notification</h2>
               <p>
                 We wish to notify you of a ${type}
