@@ -1,0 +1,32 @@
+# template retrieved from https://docs.codeclimate.com/docs/
+
+version: "2"         # required to adjust maintainability checks
+checks:
+  argument-count:
+    config:
+      threshold: 4
+  complex-logic:
+    config:
+      threshold: 4
+  file-lines:
+    config:
+      threshold: 350
+  method-complexity:
+    config:
+      threshold: 7
+  method-count:
+    config:
+      threshold: 20
+  method-lines:
+    config:
+      threshold: 200
+  nested-control-flow:
+    config:
+      threshold: 4
+  return-statements:
+    enabled: false
+  similar-code:
+    enabled: false # language-specific defaults. an override will affect all languages.
+  identical-code:
+    config:
+      threshold: # language-specific defaults. an override will affect all languages.
